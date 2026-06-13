@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Brain, User, GraduationCap, Users, Shield, Mail, Lock, CreditCard, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui';
+import { useAuth } from '../context/AuthContext';
 
 type UserRole = 'student' | 'teacher' | 'parent' | 'admin';
 
@@ -113,6 +114,8 @@ const LoginPage: React.FC = () => {
 
   const currentConfig = roleConfigs[selectedRole];
 
+  const { login } = useAuth();
+
   const handleInputChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     setError('');
@@ -121,12 +124,42 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
 
-    // Simulate login delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const password = formData.password;
+      let identifier = '';
+      let type: 'student' | 'teacher' | 'email' = 'email';
 
-    setIsLoading(false);
-    navigate(currentConfig.dashboard);
+      if (selectedRole === 'student') {
+        identifier = formData.studentId;
+        type = 'student';
+      } else if (selectedRole === 'teacher') {
+        identifier = formData.teacherId;
+        type = 'teacher';
+      } else {
+        identifier = formData.email;
+        type = 'email';
+      }
+
+      if (!identifier || !password) {
+        setError('Please fill in all fields');
+        setIsLoading(false);
+        return;
+      }
+
+      const result = await login(type, identifier, password);
+
+      if (result.success) {
+        navigate(currentConfig.dashboard);
+      } else {
+        setError(result.error || 'Login failed');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const roles: UserRole[] = ['student', 'teacher', 'parent', 'admin'];

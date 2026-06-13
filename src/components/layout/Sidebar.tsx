@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { X, Brain, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface NavItem {
   label: string;
@@ -17,6 +18,12 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, navItems, userRole }) => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
@@ -73,7 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, navItems, use
           </button>
         </div>
         <button
-          onClick={() => navigate('/login')}
+          onClick={handleLogout}
           className="flex items-center gap-2 w-full px-3 py-2.5 mt-2 rounded-xl text-gray-500 text-sm font-medium hover:bg-gray-100 hover:text-danger-600 transition-all"
         >
           <LogOut className="w-4 h-4" />

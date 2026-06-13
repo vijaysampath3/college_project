@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, Bell, Search, User, LogOut, ChevronDown } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -10,6 +11,12 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onMenuClick, title, showSearch = true }) => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   return (
     <header className="flex items-center justify-between h-16 px-6 bg-white border-b border-gray-100 shrink-0 z-20">
@@ -58,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick, title, showSearch =
           <div className="absolute right-0 top-full mt-2 w-44 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 py-1">
               <button
-                onClick={() => navigate('/login')}
+                onClick={handleLogout}
                 className="flex items-center gap-2 px-4 py-2.5 text-sm text-danger-600 hover:bg-danger-50 transition-colors w-full"
               >
                 <LogOut className="w-4 h-4" />

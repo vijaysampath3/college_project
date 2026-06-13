@@ -5,24 +5,44 @@ import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import ParentDashboard from './pages/ParentDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { RoleGuard } from './components/auth/RoleGuard';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/student" element={<StudentDashboard />} />
-        <Route path="/student/*" element={<StudentDashboard />} />
-        <Route path="/teacher" element={<TeacherDashboard />} />
-        <Route path="/teacher/*" element={<TeacherDashboard />} />
-        <Route path="/parent" element={<ParentDashboard />} />
-        <Route path="/parent/*" element={<ParentDashboard />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/*" element={<AdminDashboard />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          
+          <Route element={<ProtectedRoute />}>
+            <Route element={<RoleGuard allowedRole="student" />}>
+              <Route path="/student" element={<StudentDashboard />} />
+              <Route path="/student/*" element={<StudentDashboard />} />
+            </Route>
+
+            <Route element={<RoleGuard allowedRole="teacher" />}>
+              <Route path="/teacher" element={<TeacherDashboard />} />
+              <Route path="/teacher/*" element={<TeacherDashboard />} />
+            </Route>
+
+            <Route element={<RoleGuard allowedRole="parent" />}>
+              <Route path="/parent" element={<ParentDashboard />} />
+              <Route path="/parent/*" element={<ParentDashboard />} />
+            </Route>
+
+            <Route element={<RoleGuard allowedRole="admin" />}>
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/*" element={<AdminDashboard />} />
+            </Route>
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
