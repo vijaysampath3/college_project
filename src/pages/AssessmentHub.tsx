@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardLayout } from '../components/layout';
+import { useAuth } from '../context/AuthContext';
+import { assessmentService } from '../services/assessment.service';
 import { AssessmentCard, AssessmentInfo } from '../components/assessments/AssessmentCard';
 import { LearningJourney } from '../components/assessments/LearningJourney';
 import { LearningHealthSummary } from '../components/assessments/LearningHealthSummary';
@@ -67,34 +69,72 @@ const initialAssessments: AssessmentInfo[] = [
 const AssessmentHub: React.FC = () => {
   const [assessments, setAssessments] = useState<AssessmentInfo[]>(initialAssessments);
 
+  const { user } = useAuth();
+
   useEffect(() => {
-    // Load status from local storage
-    const savedStatus = localStorage.getItem('neurolearn_assessment_status');
-    if (savedStatus) {
-      try {
-        const parsedStatus = JSON.parse(savedStatus);
-        setAssessments(prev => prev.map(a => ({
-          ...a,
-          status: parsedStatus[a.id]?.status || a.status,
-          progress: parsedStatus[a.id]?.progress || a.progress,
-        })));
-      } catch (e) {
-        console.error('Failed to parse assessment status', e);
+    const loadStatus = async () => {
+      let sbProgressMap: Record<string, any> = {};
+      let hasSupabaseData = false;
+
+      // 1. Try Supabase First
+      if (user) {
+        try {
+          const progressData = await assessmentService.getStudentProgress(user.id);
+          if (progressData && progressData.length > 0) {
+            hasSupabaseData = true;
+            progressData.forEach((p: any) => {
+              // Convert DB status to UI status
+              let uiStatus = 'Not Started';
+              if (p.status === 'in_progress') uiStatus = 'In Progress';
+              if (p.status === 'completed') uiStatus = 'Completed';
+
+              sbProgressMap[p.assessment_type] = {
+                status: uiStatus,
+                progress: p.progress_percentage
+              };
+            });
+            
+            // Sync Supabase data down to localStorage
+            const existingLsStr = localStorage.getItem('neurolearn_assessment_status');
+            const existingLs = existingLsStr ? JSON.parse(existingLsStr) : {};
+            const mergedStatus = { ...existingLs, ...sbProgressMap };
+            localStorage.setItem('neurolearn_assessment_status', JSON.stringify(mergedStatus));
+          }
+        } catch (err) {
+          console.error('Failed to load from Supabase, falling back to local', err);
+        }
       }
-    } else {
-      // Simulate that the first assessment is In Progress and the rest are not started for demo purposes if empty
-      const demoState = [...initialAssessments];
-      demoState[0].status = 'In Progress';
-      demoState[0].progress = 45;
-      setAssessments(demoState);
-      
-      const statusMap = demoState.reduce((acc, curr) => {
-        acc[curr.id] = { status: curr.status, progress: curr.progress };
-        return acc;
-      }, {} as Record<string, any>);
-      localStorage.setItem('neurolearn_assessment_status', JSON.stringify(statusMap));
-    }
-  }, []);
+
+      // 2. Load from localStorage (either updated by SB or fallback)
+      const savedStatus = localStorage.getItem('neurolearn_assessment_status');
+      if (savedStatus) {
+        try {
+          const parsedStatus = JSON.parse(savedStatus);
+          setAssessments(prev => prev.map(a => ({
+            ...a,
+            status: parsedStatus[a.id]?.status || a.status,
+            progress: parsedStatus[a.id]?.progress || a.progress,
+          })));
+        } catch (e) {
+          console.error('Failed to parse assessment status', e);
+        }
+      } else if (!hasSupabaseData) {
+        // 3. Demo fallback if completely empty
+        const demoState = [...initialAssessments];
+        demoState[0].status = 'In Progress';
+        demoState[0].progress = 45;
+        setAssessments(demoState);
+        
+        const statusMap = demoState.reduce((acc, curr) => {
+          acc[curr.id] = { status: curr.status, progress: curr.progress };
+          return acc;
+        }, {} as Record<string, any>);
+        localStorage.setItem('neurolearn_assessment_status', JSON.stringify(statusMap));
+      }
+    };
+
+    loadStatus();
+  }, [user]);
 
   const total = assessments.length;
   const completed = assessments.filter(a => a.status === 'Completed').length;
