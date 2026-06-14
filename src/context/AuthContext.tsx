@@ -69,19 +69,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       let emailToLogin = identifier;
 
       if (type === 'student' || type === 'teacher') {
-        const column = type === 'student' ? 'student_id' : 'teacher_id';
-        // Lookup matching profile
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('email')
-          .eq(column, identifier)
-          .maybeSingle();
+        // Use the security definer RPC function to lookup the email, bypassing RLS
+        const { data, error } = await supabase.rpc('get_email_by_id', {
+          id_type: type,
+          id_value: identifier
+        });
 
-        if (error || !data || !data.email) {
+        if (error || !data) {
           return { success: false, error: 'Invalid ID or user not found' };
         }
         
-        emailToLogin = data.email;
+        emailToLogin = data;
       }
 
       const { error } = await supabase.auth.signInWithPassword({

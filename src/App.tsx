@@ -8,6 +8,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { RoleGuard } from './components/auth/RoleGuard';
+import AssessmentHub from './pages/AssessmentHub';
+import AssessmentPlaceholder from './pages/AssessmentPlaceholder';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<RoleGuard allowedRole="student" />}>
               <Route path="/student" element={<StudentDashboard />} />
+              <Route path="/student/assessments" element={<AssessmentHub />} />
+              <Route path="/student/assessments/:type" element={<AssessmentPlaceholder />} />
               <Route path="/student/*" element={<StudentDashboard />} />
             </Route>
 
