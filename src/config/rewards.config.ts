@@ -105,11 +105,63 @@ export const REWARDS_CONFIG = {
       xp_awarded: 100
     },
     RHYTHM_KEEPER: {
-      code: 'RHYTHM_KEEPER',
-      name: 'Rhythm Keeper',
-      description: 'Accuracy > 90% and average pause < 1.5 seconds',
-      icon: 'Activity',
+      id: 'RHYTHM_KEEPER',
+      title: 'Rhythm Keeper',
+      description: 'Maintain steady typing rhythm with <150ms variance',
+      icon: 'Music',
+      xpReward: 350,
+      condition: (metrics: any) => (metrics?.hitSE || 200) < 150
+    },
+    LASER_FOCUS: {
+      id: 'LASER_FOCUS',
+      title: 'Laser Focus',
+      description: 'Complete the Continuous Performance Test with 0 omissions',
+      icon: 'Crosshair',
+      xpReward: 400,
+      condition: (metrics: any) => metrics?.omissions === 0
+    },
+    STEADY_HAND: {
+      id: 'STEADY_HAND',
+      title: 'Steady Hand',
+      description: 'Complete the Continuous Performance Test with 0 commissions',
+      icon: 'Shield',
+      xpReward: 400,
+      condition: (metrics: any) => metrics?.commissions === 0
+    },
+    VISUAL_EXPLORER: {
+      code: 'VISUAL_EXPLORER',
+      name: 'Visual Explorer',
+      description: 'First Attention Assessment Completed',
+      icon: 'Search',
+      xp_awarded: 50
+    },
+    SHARP_EYE: {
+      code: 'SHARP_EYE',
+      name: 'Sharp Eye',
+      description: 'Attention Accuracy > 95%',
+      icon: 'Target',
+      xp_awarded: 100
+    },
+    LIGHTNING_SCAN: {
+      code: 'LIGHTNING_SCAN',
+      name: 'Lightning Scan',
+      description: 'Average Reaction Time < 500ms',
+      icon: 'Zap',
       xp_awarded: 150
+    },
+    DISTRACTOR_MASTER: {
+      code: 'DISTRACTOR_MASTER',
+      name: 'Distractor Master',
+      description: '0 False Clicks during Attention tasks',
+      icon: 'ShieldCheck',
+      xp_awarded: 200
+    },
+    ATTENTION_CHAMPION: {
+      code: 'ATTENTION_CHAMPION',
+      name: 'Attention Champion',
+      description: 'Attention Score > 90',
+      icon: 'Brain',
+      xp_awarded: 250
     }
   }
 };

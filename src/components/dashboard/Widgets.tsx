@@ -46,8 +46,20 @@ export const RecentActivityList: React.FC<{ activities: ActivityItem[] }> = ({ a
           <p className="text-sm text-gray-500">{activity.date}</p>
         </div>
         {activity.score !== undefined && (
-          <Badge variant={activity.score >= 70 ? 'success' : activity.score >= 50 ? 'warning' : 'danger'}>
-            {activity.score}%
+          <Badge 
+            variant={
+              activity.title === 'CPT Assessment' 
+                ? (activity.score >= 2 ? 'success' : activity.score >= 1 ? 'warning' : 'danger')
+                : activity.title === 'Typing Assessment'
+                ? (activity.score >= 40 ? 'success' : activity.score >= 20 ? 'warning' : 'danger')
+                : (activity.score >= 70 ? 'success' : activity.score >= 50 ? 'warning' : 'danger')
+            }
+          >
+            {activity.title === 'CPT Assessment' 
+              ? activity.score.toFixed(2)
+              : activity.title === 'Typing Assessment'
+              ? `${Math.round(activity.score)} WPM`
+              : `${Math.round(activity.score)}%`}
           </Badge>
         )}
       </div>

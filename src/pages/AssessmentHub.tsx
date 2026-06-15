@@ -65,6 +65,17 @@ const initialAssessments: AssessmentInfo[] = [
     icon: <Activity className="w-6 h-6" />,
     route: '/student/assessments/learning-behaviour',
   },
+  {
+    id: 'cpt',
+    title: 'CPT Assessment (ADHD Risk)',
+    description: 'Continuous Performance Test designed to measure sustained attention and impulsivity.',
+    duration: '2 mins',
+    difficulty: 'Intermediate',
+    status: 'Not Started',
+    progress: 0,
+    icon: <Brain className="w-6 h-6" />,
+    route: '/student/assessments/cpt',
+  },
 ];
 
 const AssessmentHub: React.FC = () => {
@@ -107,8 +118,8 @@ const AssessmentHub: React.FC = () => {
           // Fetch real recent activity data
           const dashData = await dashboardService.getDashboardData(user.id);
           setRecentActivities(dashData.recentActivity);
-          if (dashData.assessmentHistory.length > 0) {
-            setReadingAccuracy(dashData.assessmentHistory[0].accuracy);
+          if (dashData.readingHistory?.length > 0) {
+            setReadingAccuracy(dashData.readingHistory[0].accuracy || null);
           }
         } catch (err) {
           console.error('Failed to load from Supabase, falling back to local', err);

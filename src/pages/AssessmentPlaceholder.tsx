@@ -6,6 +6,8 @@ import { Button, Card, CardContent } from '../components/ui';
 import ReadingAssessment from './assessments/ReadingAssessment';
 import { ComprehensionAssessment } from './assessments/ComprehensionAssessment';
 import { TypingAssessment } from './assessments/TypingAssessment';
+import { CPTAssessment } from './assessments/CPTAssessment';
+import { AttentionAssessment } from './assessments/AttentionAssessment';
 
 // Shared config with Hub (in a real app this would come from an API/context)
 const assessmentDetails: Record<string, any> = {
@@ -73,6 +75,19 @@ const assessmentDetails: Record<string, any> = {
       'Select the option that best describes you.',
       'Complete all questions to get an accurate profile.'
     ]
+  },
+  'cpt': {
+    title: 'CPT Assessment (ADHD Risk)',
+    description: 'Continuous Performance Test designed to measure sustained attention and impulsivity.',
+    duration: '2 mins',
+    icon: <Brain className="w-8 h-8" />,
+    skills: ['Sustained Attention', 'Impulse Control', 'Reaction Time', 'Selective Attention'],
+    instructions: [
+      'Focus on the center of the screen.',
+      'Press the spacebar ONLY when you see the target symbol.',
+      'Do not press any keys for non-target symbols (X).',
+      'Stay as focused as possible for the entire 2 minutes.'
+    ]
   }
 };
 
@@ -109,6 +124,14 @@ const AssessmentPlaceholder: React.FC = () => {
 
   if (type === 'typing') {
     return <TypingAssessment />;
+  }
+
+  if (type === 'cpt') {
+    return <CPTAssessment />;
+  }
+
+  if (type === 'attention') {
+    return <AttentionAssessment />;
   }
 
   if (!details) {

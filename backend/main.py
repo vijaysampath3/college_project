@@ -7,10 +7,14 @@ import uuid
 from services.whisper_service import transcribe_audio
 from services.scoring_service import analyze_transcript
 from routers.typing import router as typing_router
+from routers.adhd import router as adhd_router
+from routers.attention import router as attention_router
 
 app = FastAPI()
 
 app.include_router(typing_router, prefix="/api/typing", tags=["typing"])
+app.include_router(adhd_router, prefix="/api/adhd", tags=["adhd"])
+app.include_router(attention_router)
 
 app.add_middleware(
     CORSMiddleware,

@@ -76,7 +76,7 @@ const StudentDashboard: React.FC = () => {
           <XPProgressCard xpProgress={data.xpProgress} />
 
       {/* Score Widgets */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <StatCard
           title="Reading Risk Score"
           value={data.scores.readingRiskScore.toString()}
@@ -103,6 +103,24 @@ const StudentDashboard: React.FC = () => {
           trendValue={data.scores.typingScore === 'Pending Assessment' ? 'Needs Assessment' : 'Based on latest assessment'}
           icon={<Target className="w-6 h-6" />}
           color="success"
+        />
+        <StatCard
+          title="Attention Assessment"
+          value={data.scores.attentionScore}
+          subtitle="Not Evaluated"
+          trend="up"
+          trendValue="Needs Assessment"
+          icon={<Brain className="w-6 h-6" />}
+          color="primary"
+        />
+        <StatCard
+          title="ADHD Risk (CPT)"
+          value={data.scores.cptScore}
+          subtitle={data.scores.cptScore === 'Pending Assessment' ? 'Needs Assessment' : 'Latest Score'}
+          trend="up"
+          trendValue={data.scores.cptScore === 'Pending Assessment' ? 'Needs Assessment' : 'Based on latest assessment'}
+          icon={<Brain className="w-6 h-6" />}
+          color={getRiskColor(data.scores.cptScore)}
         />
         <StatCard
           title="Learning Behaviour"

@@ -197,6 +197,14 @@ export const rewardsService = {
       check(A.INFERENCE_EXPERT, metrics.inference === 20);
     }
 
+    if (assessmentType === 'attention') {
+      check(A.VISUAL_EXPLORER, true);
+      check(A.SHARP_EYE, metrics.accuracy >= 95);
+      check(A.ATTENTION_CHAMPION, metrics.score > 90);
+      check(A.LIGHTNING_SCAN, metrics.avgRT < 500);
+      check(A.DISTRACTOR_MASTER, metrics.falseClicks === 0);
+    }
+
     // Get reading specific attempts for READING_EXPLORER
     if (!existingCodes.has(A.READING_EXPLORER.code)) {
       const { data: readingCount } = await supabase

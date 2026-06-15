@@ -5,3 +5,7 @@ faster-whisper
 jiwer
 openai
 python-dotenv
+xgboost
+pandas
+scikit-learn
+scipy

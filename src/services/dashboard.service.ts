@@ -7,6 +7,7 @@ export interface DashboardScores {
   readingRiskLabel: string;
   comprehensionScore: string;
   attentionScore: string;
+  cptScore: string;
   typingScore: string;
   learningBehaviour: string;
   overallProgress: number;
@@ -120,6 +121,21 @@ export const dashboardService = {
       typingScore = `${latestTypingResult.result_data.metrics.wpm} WPM`;
     }
 
+    let cptScore = 'Pending Assessment';
+    const latestCPTResult = results.find(r => r.assessment_type === 'cpt');
+    if (latestCPTResult && latestCPTResult.result_data?.inference) {
+      const prob = latestCPTResult.result_data.inference.predictionProbability;
+      if (prob >= 0.7) cptScore = 'High Risk';
+      else if (prob >= 0.4) cptScore = 'Moderate Risk';
+      else cptScore = 'Low Risk';
+    }
+
+    let attentionScore = 'Pending Assessment';
+    const latestAttentionResult = results.find(r => r.assessment_type === 'attention');
+    if (latestAttentionResult && latestAttentionResult.result_data?.scores) {
+      attentionScore = `${latestAttentionResult.result_data.scores.overallAttention}%`;
+    }
+
     const totalProgress = progress.length > 0 
       ? Math.round((progress.filter(p => p.status === 'completed').length / progress.length) * 100) 
       : 0;
@@ -128,7 +144,8 @@ export const dashboardService = {
       readingRiskScore,
       readingRiskLabel,
       comprehensionScore,
-      attentionScore: 'Pending Assessment',
+      attentionScore,
+      cptScore,
       typingScore,
       learningBehaviour: 'Pending Assessment',
       overallProgress: totalProgress
@@ -197,12 +214,20 @@ export const dashboardService = {
         if (s.assessment_type === 'reading') score = result.result_data.metrics.accuracy || 0;
         if (s.assessment_type === 'comprehension') score = result.result_data.metrics.totalScore || 0;
         if (s.assessment_type === 'typing') score = result.result_data.metrics.wpm || 0;
+        if (s.assessment_type === 'cpt') score = result.result_data.metrics["Raw Score DPrime"] || 0;
+      }
+      
+      // Attention uses 'scores' not 'metrics'
+      if (s.assessment_type === 'attention' && result?.result_data?.scores) {
+        score = result.result_data.scores.overallAttention || 0;
       }
       
       const titleMap: Record<string, string> = {
         'reading': 'Reading Assessment',
         'comprehension': 'Comprehension Test',
-        'typing': 'Typing Assessment'
+        'typing': 'Typing Assessment',
+        'cpt': 'CPT Assessment',
+        'attention': 'Attention Assessment'
       };
 
       return {
