@@ -59,12 +59,12 @@ class AssessmentService {
         passage_category: passageData?.category,
         passage_difficulty: passageData?.difficulty,
       })
-      .select('id')
+      .select('id, attempt_number')
       .single();
 
     if (sessionError) throw sessionError;
 
-    return sessionData.id;
+    return { id: sessionData.id, attemptNumber: sessionData.attempt_number };
   }
 
   /**
@@ -203,6 +203,57 @@ class AssessmentService {
 
     if (error && error.code !== 'PGRST116') throw error; // ignore 0 rows error
     return data || null;
+  }
+
+  /**
+   * Fetches an active, unexpired session for a specific assessment type
+   */
+  async getActiveSession(userId: string, assessmentType: string) {
+    // 24 hour expiry
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    
+    const { data, error } = await supabase
+      .from('assessment_sessions')
+      .select('*')
+      .eq('student_id', userId)
+      .eq('assessment_type', assessmentType)
+      .eq('status', 'in_progress')
+      .gt('started_at', oneDayAgo)
+      .order('started_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error && error.code !== 'PGRST116') throw error;
+    return data || null;
+  }
+
+  /**
+   * Updates intermediate session data JSON
+   */
+  async updateSessionData(sessionId: string, data: any) {
+    const { error } = await supabase
+      .from('assessment_sessions')
+      .update({
+        session_data: data
+      })
+      .eq('id', sessionId);
+
+    if (error) throw error;
+  }
+
+  /**
+   * Abandons an active session
+   */
+  async abandonSession(sessionId: string) {
+    const { error } = await supabase
+      .from('assessment_sessions')
+      .update({
+        status: 'abandoned',
+        completed_at: new Date().toISOString()
+      })
+      .eq('id', sessionId);
+
+    if (error) throw error;
   }
 }
 

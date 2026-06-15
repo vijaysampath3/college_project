@@ -4,73 +4,121 @@ import { DashboardLayout } from '../components/layout';
 import { Card, CardContent, StatCard, Badge } from '../components/ui';
 import { AssessmentHistoryChart, WeeklyProgressChart } from '../components/charts';
 import { RecentActivityList, RecommendationCard, QuickActionCard } from '../components/dashboard/Widgets';
-import { studentData } from '../data/mockData';
+import { XPProgressCard } from '../components/dashboard/XPProgressCard';
+import { useAuth } from '../context/AuthContext';
+import { dashboardService, DashboardData } from '../services/dashboard.service';
+import { useNavigate } from 'react-router-dom';
 
 const StudentDashboard: React.FC = () => {
-  const { profile, scores, assessmentHistory, weeklyProgress, recentActivity, recommendations } = studentData;
+  const { user, profile } = useAuth();
+  const navigate = useNavigate();
+  const [data, setData] = React.useState<DashboardData | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [historyTab, setHistoryTab] = React.useState<'reading' | 'comprehension'>('reading');
 
-  const getRiskColor = (score: number) => {
-    if (score <= 30) return 'success';
-    if (score <= 60) return 'warning';
-    return 'danger';
-  };
+  React.useEffect(() => {
+    if (user?.id) {
+      dashboardService.getDashboardData(user.id).then(res => {
+        setData(res);
+        setIsLoading(false);
+      }).catch(err => {
+        console.error("Failed to load dashboard data:", err);
+        setIsLoading(false);
+      });
+    }
+  }, [user]);
 
-  const getRiskLabel = (score: number) => {
-    if (score <= 30) return 'Low Risk';
-    if (score <= 60) return 'Moderate';
-    return 'High Risk';
+  const getRiskColor = (label: string) => {
+    if (label === 'Low Risk') return 'success';
+    if (label === 'Moderate Risk') return 'warning';
+    if (label === 'High Risk') return 'danger';
+    return 'primary';
   };
 
   return (
     <DashboardLayout role="student" title="Student Dashboard">
-      {/* Welcome Section */}
-      <div className="mb-8">
-        <div className="flex items-center gap-4 mb-2">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-400 to-secondary-400 flex items-center justify-center text-white font-bold text-xl">
-            {profile.name.charAt(0)}
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Welcome back, {profile.name}!</h1>
-            <p className="text-gray-600">{profile.grade} • {profile.school}</p>
-          </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
         </div>
-      </div>
+      ) : !data?.hasAssessments ? (
+        <div className="text-center py-20">
+          <div className="w-24 h-24 mx-auto bg-primary-50 rounded-full flex items-center justify-center mb-6">
+            <Target className="w-12 h-12 text-primary-500" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Welcome to NeuroLearn!</h2>
+          <p className="text-lg text-gray-600 mb-8 max-w-lg mx-auto">
+            It looks like you haven't completed any assessments yet. Complete your first assessment to begin generating insights and unlocking achievements.
+          </p>
+          <button 
+            onClick={() => navigate('/student/assessments/reading')}
+            className="px-6 py-3 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-colors"
+          >
+            Start Reading Assessment
+          </button>
+        </div>
+      ) : (
+        <>
+          {/* Welcome Section */}
+          <div className="mb-8">
+            <div className="flex items-center gap-4 mb-2">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-400 to-secondary-400 flex items-center justify-center text-white font-bold text-xl">
+                {profile?.full_name?.charAt(0) || 'S'}
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Welcome back, {profile?.full_name?.split(' ')[0] || 'Student'}!</h1>
+                <p className="text-gray-600">{profile?.grade || 'Student'} • {profile?.school_name || 'School'}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* XP Progress Card */}
+          <XPProgressCard xpProgress={data.xpProgress} />
 
       {/* Score Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           title="Reading Risk Score"
-          value={scores.readingRisk}
-          subtitle={getRiskLabel(scores.readingRisk)}
+          value={data.scores.readingRiskScore.toString()}
+          subtitle={data.scores.readingRiskLabel}
           trend="down"
-          trendValue="-5% from last month"
+          trendValue="Based on latest assessment"
           icon={<BookOpen className="w-6 h-6" />}
-          color={getRiskColor(scores.readingRisk)}
+          color={getRiskColor(data.scores.readingRiskLabel)}
+        />
+        <StatCard
+          title="Comprehension Score"
+          value={data.scores.comprehensionScore}
+          subtitle={data.scores.comprehensionScore === 'Pending Assessment' ? 'Needs Assessment' : 'Latest Score'}
+          trend="up"
+          trendValue={data.scores.comprehensionScore === 'Pending Assessment' ? 'Needs Assessment' : 'Based on latest assessment'}
+          icon={<Brain className="w-6 h-6" />}
+          color="primary"
         />
         <StatCard
           title="Attention Score"
-          value={`${scores.attentionScore}%`}
-          subtitle="Above average"
+          value={data.scores.attentionScore}
+          subtitle="Not Evaluated"
           trend="up"
-          trendValue="+8% improvement"
+          trendValue="Needs Assessment"
           icon={<Target className="w-6 h-6" />}
           color="success"
         />
         <StatCard
           title="Learning Behaviour"
-          value={`${scores.learningBehaviour}%`}
-          subtitle="Excellent progress"
+          value={data.scores.learningBehaviour}
+          subtitle="Not Evaluated"
           trend="up"
-          trendValue="+12% improvement"
+          trendValue="Needs Assessment"
           icon={<Brain className="w-6 h-6" />}
           color="primary"
         />
         <StatCard
           title="Overall Progress"
-          value={`${scores.overallProgress}%`}
+          value={`${data.scores.overallProgress}%`}
           subtitle="Keep it up!"
           trend="up"
-          trendValue="+15% this semester"
+          trendValue="Completion Rate"
           icon={<TrendingUp className="w-6 h-6" />}
           color="secondary"
         />
@@ -80,12 +128,14 @@ const StudentDashboard: React.FC = () => {
       <div className="mb-8">
         <h2 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <QuickActionCard
-            title="Start Reading Assessment"
-            icon={<BookOpen className="w-5 h-5" />}
-            description="Test your reading comprehension"
-            color="primary"
-          />
+          <div onClick={() => navigate('/student/assessments/reading')} className="cursor-pointer">
+            <QuickActionCard
+              title={data.hasAssessments ? "Retake Reading Assessment" : "Start Reading Assessment"}
+              icon={<BookOpen className="w-5 h-5" />}
+              description="Test your reading comprehension"
+              color="primary"
+            />
+          </div>
           <QuickActionCard
             title="Typing Speed Test"
             icon={<Target className="w-5 h-5" />}
@@ -110,9 +160,25 @@ const StudentDashboard: React.FC = () => {
                 <h3 className="text-lg font-bold text-gray-900">Assessment History</h3>
                 <p className="text-sm text-gray-500">Your progress over time</p>
               </div>
-              <Badge variant="primary">5 Months</Badge>
+              <div className="flex gap-2">
+                <button 
+                  onClick={() => setHistoryTab('reading')}
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${historyTab === 'reading' ? 'bg-primary-100 text-primary-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                >
+                  Reading
+                </button>
+                <button 
+                  onClick={() => setHistoryTab('comprehension')}
+                  className={`px-3 py-1 rounded-full text-sm font-medium ${historyTab === 'comprehension' ? 'bg-primary-100 text-primary-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                >
+                  Comprehension
+                </button>
+              </div>
             </div>
-            <AssessmentHistoryChart data={assessmentHistory} />
+            <AssessmentHistoryChart 
+              data={historyTab === 'reading' ? data.readingHistory : data.comprehensionHistory} 
+              type={historyTab}
+            />
           </CardContent>
         </Card>
 
@@ -125,7 +191,7 @@ const StudentDashboard: React.FC = () => {
               </div>
               <Badge variant="secondary">This Week</Badge>
             </div>
-            <WeeklyProgressChart data={weeklyProgress} />
+            <WeeklyProgressChart data={data.weeklyProgress} />
           </CardContent>
         </Card>
       </div>
@@ -140,7 +206,7 @@ const StudentDashboard: React.FC = () => {
                 View All <ChevronRight className="w-4 h-4" />
               </button>
             </div>
-            <RecentActivityList activities={recentActivity} />
+            <RecentActivityList activities={data.recentActivity} />
           </CardContent>
         </Card>
 
@@ -148,12 +214,16 @@ const StudentDashboard: React.FC = () => {
           <CardContent>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">Recommendations</h3>
-              <Badge variant="success">3 New</Badge>
+              <Badge variant="success">{data.recommendations.length} New</Badge>
             </div>
             <div className="space-y-4">
-              {recommendations.map((rec) => (
-                <RecommendationCard key={rec.id} recommendation={rec} />
-              ))}
+              {data.recommendations.length > 0 ? (
+                data.recommendations.map((rec) => (
+                  <RecommendationCard key={rec.id} recommendation={rec} />
+                ))
+              ) : (
+                <p className="text-gray-500 text-sm">Complete an assessment to receive recommendations.</p>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -171,12 +241,7 @@ const StudentDashboard: React.FC = () => {
               <Award className="w-6 h-6 text-warning-500" />
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {[
-                { name: 'First Assessment', icon: <PlayCircle className="w-6 h-6" />, unlocked: true },
-                { name: 'Perfect Score', icon: <Target className="w-6 h-6" />, unlocked: true },
-                { name: '7-Day Streak', icon: <Clock className="w-6 h-6" />, unlocked: false },
-                { name: 'Reading Master', icon: <BookOpen className="w-6 h-6" />, unlocked: false },
-              ].map((badge, idx) => (
+              {data.achievements.map((badge, idx) => (
                 <div
                   key={idx}
                   className={`p-4 rounded-xl text-center transition-all ${
@@ -190,7 +255,12 @@ const StudentDashboard: React.FC = () => {
                       badge.unlocked ? 'bg-primary-500 text-white' : 'bg-gray-300 text-gray-500'
                     }`}
                   >
-                    {badge.icon}
+                    {badge.iconType === 'PlayCircle' && <PlayCircle className="w-6 h-6" />}
+                    {badge.iconType === 'Target' && <Target className="w-6 h-6" />}
+                    {badge.iconType === 'Clock' && <Clock className="w-6 h-6" />}
+                    {badge.iconType === 'BookOpen' && <BookOpen className="w-6 h-6" />}
+                    {badge.iconType === 'Brain' && <Brain className="w-6 h-6" />}
+                    {badge.iconType === 'Award' && <Award className="w-6 h-6" />}
                   </div>
                   <p className={`text-sm font-medium ${badge.unlocked ? 'text-gray-900' : 'text-gray-400'}`}>
                     {badge.name}
@@ -201,6 +271,7 @@ const StudentDashboard: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+      </>)}
     </DashboardLayout>
   );
 };

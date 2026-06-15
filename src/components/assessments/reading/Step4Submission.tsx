@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Headphones, RotateCcw, Send, Play, Pause } from 'lucide-react';
+import { Headphones, RotateCcw, Send, Play, Pause, UploadCloud } from 'lucide-react';
 import { Button } from '../../../components/ui';
 
 interface Step4SubmissionProps {
   audioBlob?: Blob | null;
   onRetake: () => void;
   onSubmit: () => void;
+  isProcessing?: boolean;
 }
 
-export const Step4Submission: React.FC<Step4SubmissionProps> = ({ audioBlob, onRetake, onSubmit }) => {
+export const Step4Submission: React.FC<Step4SubmissionProps> = ({ audioBlob, onRetake, onSubmit, isProcessing }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -72,13 +73,22 @@ export const Step4Submission: React.FC<Step4SubmissionProps> = ({ audioBlob, onR
       )}
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button variant="secondary" size="lg" onClick={onRetake} className="w-full sm:w-auto">
+        <Button variant="secondary" size="lg" onClick={onRetake} disabled={isProcessing} className="w-full sm:w-auto">
           <RotateCcw className="w-5 h-5 mr-2" />
           Retake Assessment
         </Button>
-        <Button size="lg" onClick={onSubmit} className="w-full sm:w-auto">
-          Submit Assessment
-          <Send className="w-5 h-5 ml-2" />
+        <Button size="lg" onClick={onSubmit} disabled={isProcessing} className="w-full sm:w-auto">
+          {isProcessing ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+              Analyzing Audio...
+            </>
+          ) : (
+            <>
+              Submit Assessment
+              <Send className="w-5 h-5 ml-2" />
+            </>
+          )}
         </Button>
       </div>
     </div>

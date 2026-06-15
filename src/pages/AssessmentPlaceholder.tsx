@@ -4,6 +4,7 @@ import { DashboardLayout } from '../components/layout';
 import { BookOpen, Keyboard, Target, Brain, Activity, Clock, CheckCircle2, ArrowLeft, PlayCircle } from 'lucide-react';
 import { Button, Card, CardContent } from '../components/ui';
 import ReadingAssessment from './assessments/ReadingAssessment';
+import { ComprehensionAssessment } from './assessments/ComprehensionAssessment';
 
 // Shared config with Hub (in a real app this would come from an API/context)
 const assessmentDetails: Record<string, any> = {
@@ -99,6 +100,10 @@ const AssessmentPlaceholder: React.FC = () => {
 
   if (type === 'reading') {
     return <ReadingAssessment />;
+  }
+
+  if (type === 'comprehension') {
+    return <ComprehensionAssessment />;
   }
 
   if (!details) {

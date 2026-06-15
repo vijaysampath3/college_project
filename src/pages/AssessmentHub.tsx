@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { DashboardLayout } from '../components/layout';
 import { useAuth } from '../context/AuthContext';
 import { assessmentService } from '../services/assessment.service';
+import { dashboardService, ActivityEntry } from '../services/dashboard.service';
 import { AssessmentCard, AssessmentInfo } from '../components/assessments/AssessmentCard';
 import { LearningJourney } from '../components/assessments/LearningJourney';
 import { LearningHealthSummary } from '../components/assessments/LearningHealthSummary';
@@ -68,6 +69,8 @@ const initialAssessments: AssessmentInfo[] = [
 
 const AssessmentHub: React.FC = () => {
   const [assessments, setAssessments] = useState<AssessmentInfo[]>(initialAssessments);
+  const [recentActivities, setRecentActivities] = useState<ActivityEntry[]>([]);
+  const [readingAccuracy, setReadingAccuracy] = useState<number | null>(null);
 
   const { user } = useAuth();
 
@@ -99,6 +102,13 @@ const AssessmentHub: React.FC = () => {
             const existingLs = existingLsStr ? JSON.parse(existingLsStr) : {};
             const mergedStatus = { ...existingLs, ...sbProgressMap };
             localStorage.setItem('neurolearn_assessment_status', JSON.stringify(mergedStatus));
+          }
+          
+          // Fetch real recent activity data
+          const dashData = await dashboardService.getDashboardData(user.id);
+          setRecentActivities(dashData.recentActivity);
+          if (dashData.assessmentHistory.length > 0) {
+            setReadingAccuracy(dashData.assessmentHistory[0].accuracy);
           }
         } catch (err) {
           console.error('Failed to load from Supabase, falling back to local', err);
@@ -196,34 +206,26 @@ const AssessmentHub: React.FC = () => {
 
         {/* Right Column: Sidebar content */}
         <div className="space-y-6">
-          <LearningHealthSummary />
+          <LearningHealthSummary accuracy={readingAccuracy} />
           <LearningJourney assessments={assessments} />
           
           <Card>
             <CardContent className="p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">Recent Activity</h3>
               <div className="space-y-4">
-                <div className="flex items-center justify-between border-b border-gray-50 pb-4">
-                  <div>
-                    <p className="font-medium text-gray-900">Baseline Reading Test</p>
-                    <p className="text-sm text-gray-500">Completed 2 days ago</p>
-                  </div>
-                  <span className="font-bold text-success-600">85%</span>
-                </div>
-                <div className="flex items-center justify-between border-b border-gray-50 pb-4">
-                  <div>
-                    <p className="font-medium text-gray-900">Visual Tracking</p>
-                    <p className="text-sm text-gray-500">Completed 5 days ago</p>
-                  </div>
-                  <span className="font-bold text-success-600">92%</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-gray-900">Initial Typing Test</p>
-                    <p className="text-sm text-gray-500">Completed 1 week ago</p>
-                  </div>
-                  <span className="font-bold text-success-600">78%</span>
-                </div>
+                {recentActivities.length > 0 ? (
+                  recentActivities.map((activity, idx) => (
+                    <div key={activity.id} className={`flex items-center justify-between ${idx !== recentActivities.length - 1 ? 'border-b border-gray-50 pb-4' : ''}`}>
+                      <div>
+                        <p className="font-medium text-gray-900">{activity.title}</p>
+                        <p className="text-sm text-gray-500">Completed {activity.date}</p>
+                      </div>
+                      <span className="font-bold text-success-600">{Math.round(activity.score)}%</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-gray-500 text-sm">No recent activity found.</p>
+                )}
               </div>
             </CardContent>
           </Card>

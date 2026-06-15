@@ -24,7 +24,26 @@ const HealthMetric: React.FC<HealthMetricProps> = ({ label, value, icon, color, 
   </div>
 );
 
-export const LearningHealthSummary: React.FC = () => {
+export const LearningHealthSummary: React.FC<{ accuracy?: number | null }> = ({ accuracy }) => {
+  let overallScore = "Pending";
+  let readingRisk = "Pending Assessment";
+  let riskColor = "bg-gray-100 text-gray-500";
+
+  if (accuracy !== undefined && accuracy !== null) {
+    overallScore = `${Math.round(accuracy)}/100`;
+    
+    if (accuracy >= 90) {
+      readingRisk = "Low Risk";
+      riskColor = "bg-success-100 text-success-600";
+    } else if (accuracy >= 75) {
+      readingRisk = "Moderate Risk";
+      riskColor = "bg-warning-100 text-warning-600";
+    } else {
+      readingRisk = "High Risk";
+      riskColor = "bg-danger-100 text-danger-600";
+    }
+  }
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
       <div className="flex items-center gap-3 mb-6">
@@ -40,28 +59,27 @@ export const LearningHealthSummary: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <HealthMetric 
           label="Overall Score"
-          value="85/100"
-          trend="+5%"
+          value={overallScore}
           icon={<Brain className="w-6 h-6" />}
           color="bg-primary-100 text-primary-600"
         />
         <HealthMetric 
           label="Reading Risk"
-          value="Low"
+          value={readingRisk}
           icon={<BookOpen className="w-6 h-6" />}
-          color="bg-success-100 text-success-600"
+          color={riskColor}
         />
         <HealthMetric 
           label="Attention"
-          value="Strong"
+          value="Pending Assessment"
           icon={<Target className="w-6 h-6" />}
-          color="bg-secondary-100 text-secondary-600"
+          color="bg-gray-100 text-gray-500"
         />
         <HealthMetric 
           label="Learning Style"
-          value="Visual"
+          value="Pending Assessment"
           icon={<Brain className="w-6 h-6" />}
-          color="bg-warning-100 text-warning-600"
+          color="bg-gray-100 text-gray-500"
         />
       </div>
     </div>

@@ -20,9 +20,10 @@ import {
 interface ChartProps {
   data: unknown[];
   height?: number;
+  type?: 'reading' | 'comprehension';
 }
 
-export const AssessmentHistoryChart: React.FC<ChartProps> = ({ data, height = 300 }) => (
+export const AssessmentHistoryChart: React.FC<ChartProps> = ({ data, height = 300, type = 'reading' }) => (
   <ResponsiveContainer width="100%" height={height}>
     <AreaChart data={data as object[]}>
       <defs>
@@ -53,30 +54,12 @@ export const AssessmentHistoryChart: React.FC<ChartProps> = ({ data, height = 30
       <Legend />
       <Area
         type="monotone"
-        dataKey="reading"
-        stroke="#4F46E5"
+        dataKey="score"
+        stroke={type === 'reading' ? "#4F46E5" : "#06B6D4"}
         strokeWidth={2}
         fillOpacity={1}
-        fill="url(#colorReading)"
-        name="Reading"
-      />
-      <Area
-        type="monotone"
-        dataKey="attention"
-        stroke="#06B6D4"
-        strokeWidth={2}
-        fillOpacity={1}
-        fill="url(#colorAttention)"
-        name="Attention"
-      />
-      <Area
-        type="monotone"
-        dataKey="behaviour"
-        stroke="#10B981"
-        strokeWidth={2}
-        fillOpacity={1}
-        fill="url(#colorBehaviour)"
-        name="Behaviour"
+        fill={type === 'reading' ? "url(#colorReading)" : "url(#colorAttention)"}
+        name={type === 'reading' ? "Reading Score" : "Comprehension Score"}
       />
     </AreaChart>
   </ResponsiveContainer>

@@ -1,6 +1,15 @@
 import { supabase } from '../lib/supabase';
 import passagesData from '../data/reading-passages.json';
 
+export interface ComprehensionQuestion {
+  id: string;
+  category: string;
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  explanation: string;
+}
+
 export interface ReadingPassage {
   id: string;
   category: string;
@@ -10,7 +19,7 @@ export interface ReadingPassage {
   expectedReadingTime: number;
   targetWPM: number;
   text: string;
-  comprehensionQuestions: any[];
+  comprehensionQuestions: ComprehensionQuestion[];
 }
 
 class PassageService {

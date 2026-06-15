@@ -9,6 +9,8 @@ import { Step2Passage } from '../../components/assessments/reading/Step2Passage'
 import { Step3Recording } from '../../components/assessments/reading/Step3Recording';
 import { Step4Submission } from '../../components/assessments/reading/Step4Submission';
 import { Step5Results } from '../../components/assessments/reading/Step5Results';
+import { backendService } from '../../services/backend.service';
+import { rewardsService, RewardResult } from '../../services/rewards.service';
 
 export type AssessmentStep = 1 | 2 | 3 | 4 | 5;
 
@@ -18,9 +20,16 @@ export interface SessionData {
   duration: number | null;
   status: 'Not Started' | 'In Progress' | 'Completed';
   sessionId: string | null;
+  attemptNumber: number | null;
   passage: ReadingPassage | null;
   blob?: Blob | null;
   blobDuration?: number;
+  transcriptData?: any;
+  metricsData?: any;
+  processingTime?: number;
+  insightsData?: any;
+  aiData?: any;
+  rewardResult?: RewardResult;
 }
 
 const ReadingAssessment: React.FC = () => {
@@ -32,10 +41,15 @@ const ReadingAssessment: React.FC = () => {
     duration: null,
     status: 'Not Started',
     sessionId: null,
+    attemptNumber: null,
     passage: null,
     blob: null,
     blobDuration: 0,
+    transcriptData: null,
+    metricsData: null
   });
+  
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const { user } = useAuth();
 
@@ -45,7 +59,7 @@ const ReadingAssessment: React.FC = () => {
       if (!session.startedAt && user) {
         try {
           const passage = await passageService.getRandomPassage(user.id);
-          const sid = await assessmentService.startAssessment(user.id, 'reading', undefined, {
+          const sessionMeta = await assessmentService.startAssessment(user.id, 'reading', undefined, {
             id: passage.id,
             category: passage.category,
             difficulty: passage.difficulty
@@ -54,7 +68,8 @@ const ReadingAssessment: React.FC = () => {
             ...prev, 
             startedAt: new Date().toISOString(), 
             status: 'In Progress', 
-            sessionId: sid,
+            sessionId: sessionMeta.id,
+            attemptNumber: sessionMeta.attemptNumber,
             passage: passage 
           }));
         } catch (error) {
@@ -75,81 +90,122 @@ const ReadingAssessment: React.FC = () => {
   };
 
   const handleComplete = async () => {
-    const completedAt = new Date().toISOString();
-    const start = new Date(session.startedAt || completedAt).getTime();
-    const end = new Date(completedAt).getTime();
-    const durationSeconds = Math.round((end - start) / 1000);
+    if (!user || !session.sessionId || !session.passage || !session.blob) return;
 
-    const finalSession = {
-      ...session,
-      completedAt,
-      duration: durationSeconds,
-      status: 'Completed' as const
-    };
+    setIsProcessing(true);
 
-    setSession(finalSession);
+    try {
+      const completedAt = new Date().toISOString();
+      const start = new Date(session.startedAt || completedAt).getTime();
+      const end = new Date(completedAt).getTime();
+      const durationSeconds = Math.round((end - start) / 1000);
 
-    if (user && session.sessionId) {
-      // Supabase persist
-      try {
-        await assessmentService.completeAssessment(user.id, 'reading', session.sessionId, durationSeconds);
-        
-        let passageMeta = {};
-        if (session.passage) {
-          passageMeta = {
-            passageId: session.passage.id,
-            category: session.passage.category,
-          };
-          await passageService.savePassageUsage(user.id, session.passage.id, session.passage.category);
-        }
+      // Process audio via backend Whisper service
+      const processStart = performance.now();
+      const backendResult = await backendService.processAudio(
+        session.blob, 
+        session.passage.text, 
+        session.blobDuration || durationSeconds || 60,
+        session.passage.category,
+        session.passage.difficulty
+      );
+      const processingTime = parseFloat(((performance.now() - processStart) / 1000).toFixed(2));
 
-        await assessmentService.saveResults(user.id, 'reading', 'reading_v1', {
-          ...passageMeta,
-          metrics: {
-            accuracy: 88,
-            wpm: 110,
-            pronunciation: 84,
-            wordErrors: 3
-          },
-          risk: {
-            level: 'Moderate',
-            confidence: 91
-          },
-          recommendations: [
-            'Practice guided reading',
-            'Increase reading fluency exercises'
-          ]
-        });
-      } catch (error) {
-        console.error("Failed to save to Supabase:", error);
+      const finalSession = {
+        ...session,
+        completedAt,
+        duration: durationSeconds,
+        status: 'Completed' as const,
+        transcriptData: backendResult.transcript,
+        metricsData: backendResult.metrics,
+        insightsData: backendResult.insights,
+        aiData: backendResult.ai,
+        processingTime
+      };
+
+      setSession(finalSession);
+
+      // Save to Supabase
+      await assessmentService.completeAssessment(user.id, 'reading', session.sessionId, durationSeconds);
+      
+      await passageService.savePassageUsage(user.id, session.passage.id, session.passage.category);
+
+      const payload = {
+        attemptNumber: session.attemptNumber || 1,
+        transcript: backendResult.transcript.text,
+        metrics: {
+          accuracy: backendResult.metrics.accuracy,
+          wpm: backendResult.metrics.wpm,
+          wer: backendResult.metrics.wer,
+          coverage: backendResult.metrics.coverage,
+          similarity: backendResult.metrics.similarity
+        },
+        wordAnalysis: {
+          matched: backendResult.metrics.details.matchedWords,
+          missing: backendResult.metrics.details.missingWords,
+          extra: backendResult.metrics.details.extraWords,
+          substituted: backendResult.metrics.details.substitutedWords,
+          expected: backendResult.metrics.details.expectedWords
+        },
+        passage: {
+          id: session.passage.id,
+          category: session.passage.category,
+          difficulty: session.passage.difficulty
+        },
+        whisper: {
+          model: 'faster-whisper-base',
+          confidence: backendResult.transcript.confidence,
+          processingTime: processingTime
+        },
+        alignment: backendResult.metrics.details.alignment,
+        insights: backendResult.insights,
+        ai: backendResult.ai
+      };
+
+      await assessmentService.saveResults(user.id, 'reading', 'reading_v1', payload);
+
+      // Award XP
+      const isRetake = (session.attemptNumber || 1) > 1;
+      const hasInsights = !!backendResult.insights;
+      const rewardResult = await rewardsService.awardXP(
+        user.id, 
+        'reading', 
+        { accuracy: backendResult.metrics.accuracy }, 
+        isRetake, 
+        hasInsights
+      );
+
+      finalSession.rewardResult = rewardResult;
+      setSession(finalSession);
+
+      // Save to localStorage for UI state
+      const savedStatus = localStorage.getItem('neurolearn_assessment_status');
+      let parsedStatus: Record<string, any> = {};
+      if (savedStatus) {
+        try {
+          parsedStatus = JSON.parse(savedStatus);
+        } catch (e) {}
       }
-    }
+      
+      parsedStatus['reading'] = { status: 'Completed', progress: 100 };
+      localStorage.setItem('neurolearn_assessment_status', JSON.stringify(parsedStatus));
 
-    // Save to localStorage
-    const savedStatus = localStorage.getItem('neurolearn_assessment_status');
-    let parsedStatus: Record<string, any> = {};
-    if (savedStatus) {
-      try {
-        parsedStatus = JSON.parse(savedStatus);
-      } catch (e) {}
-    }
-    
-    // Update basic Hub tracking
-    parsedStatus['reading'] = { 
-      status: 'Completed', 
-      progress: 100 
-    };
-    localStorage.setItem('neurolearn_assessment_status', JSON.stringify(parsedStatus));
+      localStorage.setItem('neurolearn_reading_session', JSON.stringify({
+        assessment: 'reading',
+        startedAt: finalSession.startedAt,
+        completedAt: finalSession.completedAt,
+        duration: finalSession.duration,
+        status: finalSession.status,
+        audioDuration: finalSession.blobDuration
+      }));
 
-    // Save detailed session metadata
-    localStorage.setItem('neurolearn_reading_session', JSON.stringify({
-      assessment: 'reading',
-      startedAt: finalSession.startedAt,
-      completedAt: finalSession.completedAt,
-      duration: finalSession.duration,
-      status: finalSession.status,
-      audioDuration: finalSession.blobDuration
-    }));
+      handleNextStep(5);
+    } catch (error) {
+      console.error("Failed to complete assessment:", error);
+      alert("Error processing audio. Make sure the backend server is running.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleReturnToHub = () => {
@@ -172,8 +228,8 @@ const ReadingAssessment: React.FC = () => {
         {step === 1 && <Step1Overview passage={session.passage} onNext={() => handleNextStep(2)} />}
         {step === 2 && <Step2Passage passage={session.passage} onNext={() => handleNextStep(3)} />}
         {step === 3 && <Step3Recording passage={session.passage} onNext={(blob, duration) => handleNextStep(4, { blob, blobDuration: duration })} />}
-        {step === 4 && <Step4Submission audioBlob={session.blob} onRetake={() => handleNextStep(3)} onSubmit={() => { handleComplete(); handleNextStep(5); }} />}
-        {step === 5 && <Step5Results onReturn={handleReturnToHub} />}
+        {step === 4 && <Step4Submission audioBlob={session.blob} isProcessing={isProcessing} onRetake={() => handleNextStep(3)} onSubmit={handleComplete} />}
+        {step === 5 && <Step5Results session={session} onReturn={handleReturnToHub} />}
       </div>
     </DashboardLayout>
   );

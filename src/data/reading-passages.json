@@ -1,277 +1,1927 @@
 [
   {
-    "id": "technology_1",
+    "id": "tech_1",
     "category": "technology",
-    "title": "The Evolution of Technology - Part 1",
-    "difficulty": "easy",
+    "title": "Artificial Intelligence in Education",
+    "difficulty": "medium",
+    "text": "The integration of artificial intelligence into educational environments has sparked significant debate among scholars and practitioners. Proponents argue that intelligent tutoring systems can provide personalized feedback, dynamically adapting to a student's unique learning pace. For instance, natural language processing algorithms can analyze written assignments to identify specific grammatical weaknesses, thereby allowing educators to focus their instruction on targeted remediation rather than generalized corrections. However, critics caution against an over-reliance on algorithms. They highlight the risk of diminishing the fundamental human connection that has historically defined the teacher-student relationship. A machine may accurately calculate the probability of a student failing a module, but it cannot empathize with the emotional distress underlying poor academic performance. Furthermore, there are persistent concerns regarding data privacy and the potential for algorithmic bias to inadvertently reinforce existing socioeconomic disparities. Ultimately, the consensus suggests that artificial intelligence should not be viewed as a substitute for human educators. Instead, it must be carefully positioned as a supplementary tool. When implemented responsibly, these technologies have the profound potential to alleviate administrative burdens, democratize access to high-quality educational resources, and empower teachers to dedicate more time to meaningful, individualized mentorship.",
     "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 130,
-    "text": "The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "targetWPM": 150,
+    "expectedReadingTime": 76,
+    "comprehensionQuestions": [
+      {
+        "id": "tech_1_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The benefits of personalized learning",
+          "B. The debate surrounding AI in education",
+          "C. The history of educational methodologies",
+          "D. The role of teachers in the digital age"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage discusses the debates and arguments for and against the integration of AI in educational settings."
+      },
+      {
+        "id": "tech_1_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'algorithmic bias' refer to in the context of the passage?",
+        "options": [
+          "A. The accuracy of algorithms",
+          "B. The potential unfairness in algorithm decisions",
+          "C. The efficiency of algorithms",
+          "D. The complex nature of algorithm design"
+        ],
+        "correctAnswer": "B",
+        "explanation": "Algorithmic bias refers to unfair outcomes that algorithms might produce, which could reinforce existing inequalities."
+      },
+      {
+        "id": "tech_1_q3",
+        "category": "DetailRecall",
+        "question": "According to the passage, what can natural language processing algorithms do?",
+        "options": [
+          "A. Evaluate a student's emotional state",
+          "B. Analyze written assignments for grammatical weaknesses",
+          "C. Replace human teachers entirely",
+          "D. Conduct educational research studies"
+        ],
+        "correctAnswer": "B",
+        "explanation": "Natural language processing algorithms analyze written assignments to identify specific grammatical weaknesses."
+      },
+      {
+        "id": "tech_1_q4",
+        "category": "Inference",
+        "question": "Based on the passage, which of the following can be inferred about the author's viewpoint on AI's role in education?",
+        "options": [
+          "A. AI will completely take over teaching roles in the future.",
+          "B. AI should only be used if it replaces human oversight.",
+          "C. AI has potential benefits but should complement, not replace, teachers.",
+          "D. AI is an ineffective tool and should not be used."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The author suggests that AI can be beneficial but emphasizes it should serve as a supplementary tool rather than a substitute for teachers."
+      },
+      {
+        "id": "tech_1_q5",
+        "category": "CriticalThinking",
+        "question": "What are some potential consequences of over-relying on AI in educational settings, as suggested in the passage?",
+        "options": [
+          "A. Enhanced emotional understanding of students",
+          "B. Strengthening of socioeconomic disparities",
+          "C. Improved teacher-student relationships",
+          "D. Greater access to educational resources for everyone"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage highlights concerns that over-reliance on AI could reinforce existing socioeconomic disparities and diminish the human connection in education."
+      }
+    ]
   },
   {
-    "id": "technology_2",
+    "id": "tech_2",
     "category": "technology",
-    "title": "The Evolution of Technology - Part 2",
-    "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 130,
-    "text": "The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "title": "Cybersecurity and Digital Safety",
+    "difficulty": "hard",
+    "text": "In an increasingly interconnected global economy, the importance of robust cybersecurity infrastructure cannot be overstated. As digital networks expand to encompass critical public utilities, financial systems, and personal communications, the attack surface available to malicious actors has grown exponentially. Modern cyber threats range from sophisticated state-sponsored espionage campaigns to highly coordinated ransomware attacks targeting municipal governments and healthcare providers. Consequently, organizations are compelled to adopt proactive defense strategies, moving beyond traditional perimeter security models. Concepts such as zero-trust architecture, which operates on the principle that no user or device is inherently trustworthy regardless of their network location, are becoming foundational. Furthermore, educating the general public about digital safety is paramount. Phishing schemes and social engineering tactics often exploit human psychology rather than technical vulnerabilities. Therefore, cultivating a culture of security awareness is just as critical as deploying advanced encryption protocols. As we navigate this complex digital landscape, the continuous evolution of protective technologies must remain a top priority to safeguard sensitive data and maintain the integrity of our digital institutions.",
+    "wordCount": 170,
+    "targetWPM": 170,
+    "expectedReadingTime": 60,
+    "comprehensionQuestions": [
+      {
+        "id": "tech_2_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A: The significance of cybersecurity in the modern economy",
+          "B: The role of state-sponsored espionage",
+          "C: The evolution of fintech",
+          "D: The psychology behind phishing schemes"
+        ],
+        "correctAnswer": "A",
+        "explanation": "The passage primarily discusses the importance of robust cybersecurity infrastructure in an interconnected global economy."
+      },
+      {
+        "id": "tech_2_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'zero-trust architecture' imply in the context of cybersecurity?",
+        "options": [
+          "A: Trusting all users within a network",
+          "B: Assuming no user or device is trustworthy by default",
+          "C: A framework for data encryption",
+          "D: A method to improve internet speeds"
+        ],
+        "correctAnswer": "B",
+        "explanation": "Zero-trust architecture is based on the principle that no user or device is inherently trustworthy, necessitating verification before granting access."
+      },
+      {
+        "id": "tech_2_q3",
+        "category": "DetailRecall",
+        "question": "Which factors are cited as contributing to the growth of modern cyber threats?",
+        "options": [
+          "A: Increased reliance on physical security measures",
+          "B: Expansion of digital networks to vital services",
+          "C: Proliferation of open-source software",
+          "D: Decrease in internet usage"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage specifically states that the attack surface for cyber threats has grown due to the expansion of digital networks encompassing critical public utilities and financial systems."
+      },
+      {
+        "id": "tech_2_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the passage's perspective on public education related to cybersecurity?",
+        "options": [
+          "A: It believes public education has little impact on cybersecurity.",
+          "B: It suggests public education is essential for strengthening cybersecurity.",
+          "C: It implies that public knowledge is overrated.",
+          "D: It views cybersecurity as primarily a technical issue, not a human one."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage emphasizes that educating the public about digital safety is crucial, indicating that public knowledge plays a significant role in effective cybersecurity."
+      },
+      {
+        "id": "tech_2_q5",
+        "category": "CriticalThinking",
+        "question": "Considering the importance of cybersecurity discussed in the passage, what might be a potential consequence of neglecting to adopt modern cybersecurity practices?",
+        "options": [
+          "A: Increased efficiency in business operations",
+          "B: A reduced risk of digital data breaches",
+          "C: A higher likelihood of successful cyber attacks",
+          "D: A decline in the importance of technology in society"
+        ],
+        "correctAnswer": "C",
+        "explanation": "Neglecting modern cybersecurity practices would likely lead to an increased risk of successful cyber attacks, as highlighted by the discussions on sophisticated threats and the need for proactive defenses."
+      }
+    ]
   },
   {
-    "id": "technology_3",
+    "id": "tech_3",
     "category": "technology",
-    "title": "The Evolution of Technology - Part 3",
-    "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 150,
-    "text": "The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "title": "Cloud Computing",
+    "difficulty": "easy",
+    "text": "Cloud computing has completely transformed the way businesses and individuals store, manage, and process data. Instead of keeping files on a local hard drive or managing physical servers, people can now access their digital resources over the internet. This shift offers remarkable flexibility and cost savings. For a small startup, cloud services mean there is no need to purchase expensive hardware upfront. They can simply rent server space and computing power on demand, scaling up as their user base grows. Moreover, the cloud facilitates global collaboration. Teams located across different continents can work on the same document simultaneously, seeing changes in real time. Popular applications like web-based email, streaming platforms, and online photo galleries all rely on cloud infrastructure to deliver seamless experiences. Despite these tremendous benefits, some organizations still hesitate to fully migrate to the cloud due to concerns about data ownership and reliance on third-party vendors. However, major cloud providers continually enhance their security protocols and offer redundant backup systems, ensuring that cloud computing remains the dominant paradigm for modern computing.",
+    "wordCount": 173,
+    "targetWPM": 130,
+    "expectedReadingTime": 79,
+    "comprehensionQuestions": [
+      {
+        "id": "tech_3_q1",
+        "category": "MainIdea",
+        "question": "What is the main idea of the passage?",
+        "options": [
+          "A) Cloud computing helps only large businesses.",
+          "B) Cloud computing has transformed data management and offers flexibility.",
+          "C) Local hard drives are better than cloud services.",
+          "D) Cloud providers can compromise data security."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage discusses how cloud computing has changed data management and emphasizes its flexibility and benefits."
+      },
+      {
+        "id": "tech_3_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'scaling up' most likely mean in the context of the passage?",
+        "options": [
+          "A) Increasing capacity or resources.",
+          "B) Decreasing the need for hardware.",
+          "C) Collaborating with global teams.",
+          "D) Reducing costs."
+        ],
+        "correctAnswer": "A",
+        "explanation": "'Scaling up' refers to increasing capacity or resources as needed, which is mentioned in the context of cloud services."
+      },
+      {
+        "id": "tech_3_q3",
+        "category": "DetailRecall",
+        "question": "What is one reason some organizations hesitate to fully migrate to the cloud?",
+        "options": [
+          "A) Lack of internet access.",
+          "B) Concerns about data ownership.",
+          "C) The cost of cloud services.",
+          "D) Too many users on the platform."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage explicitly states that organizations hesitate due to concerns about data ownership and reliance on third-party vendors."
+      },
+      {
+        "id": "tech_3_q4",
+        "category": "Inference",
+        "question": "Based on the passage, what might organizations be encouraged to consider in the future regarding cloud computing?",
+        "options": [
+          "A) Abandoning local storage solutions.",
+          "B) Trusting third-party vendors more due to enhanced security.",
+          "C) Decreasing global collaboration efforts.",
+          "D) Increasing expenses related to server hardware."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage mentions that major cloud providers are enhancing security protocols, which suggests organizations may feel more secure in trusting them."
+      },
+      {
+        "id": "tech_3_q5",
+        "category": "CriticalThinking",
+        "question": "If a new technology emerged that promised even greater flexibility than cloud computing, what should businesses consider based on the information in the passage?",
+        "options": [
+          "A) Completely disregard cloud services.",
+          "B) Evaluate data ownership concerns before switching.",
+          "C) Limit collaboration to avoid confusion.",
+          "D) Immediately invest in the new technology."
+        ],
+        "correctAnswer": "B",
+        "explanation": "Businesses should evaluate data ownership concerns, as this is a key issue mentioned in the passage when adopting new tech."
+      }
+    ]
   },
   {
-    "id": "technology_4",
+    "id": "tech_4",
     "category": "technology",
-    "title": "The Evolution of Technology - Part 4",
+    "title": "The Future of Robotics",
     "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "The field of robotics is advancing rapidly, shifting from clunky assembly line machines to highly sophisticated, autonomous systems. Historically, robots were confined to cages in manufacturing plants, performing repetitive tasks that required precision and endurance. Today, collaborative robots, or \"cobots,\" are designed to operate safely alongside human workers, assisting with complex assembly processes and logistics. Beyond the factory floor, robotic applications are expanding into healthcare, where surgical robots enable minimally invasive procedures with unprecedented accuracy. In the agricultural sector, autonomous drones and harvesting robots are optimizing crop yields and reducing reliance on manual labor. A key driver of this robotic revolution is the integration of machine learning and advanced sensor technology. Modern robots can interpret visual data, navigate unpredictable environments, and adapt to changing circumstances without explicit human programming. However, this rapid automation raises important socioeconomic questions. As machines become capable of performing tasks previously reserved for humans, societies must address the potential displacement of workers and consider new educational paradigms to prepare future generations for a highly automated workforce.",
+    "wordCount": 170,
     "targetWPM": 150,
-    "text": "The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 68,
+    "comprehensionQuestions": [
+      {
+        "id": "tech_4_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The history of robots",
+          "B. The benefits of cobots in manufacturing",
+          "C. The evolution of robotics and its societal implications",
+          "D. The technology behind autonomous drones"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses the evolution of robotics, new technologies involved, and the socioeconomic implications of increasing automation."
+      },
+      {
+        "id": "tech_4_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'cobots' refer to in the passage?",
+        "options": [
+          "A. Robots designed for agricultural tasks",
+          "B. Collaborative robots that work with humans",
+          "C. Autonomous drones for surveillance",
+          "D. Traditional assembly line robots"
+        ],
+        "correctAnswer": "B",
+        "explanation": "'Cobots' specifically refers to collaborative robots that are designed to work alongside human workers."
+      },
+      {
+        "id": "tech_4_q3",
+        "category": "DetailRecall",
+        "question": "According to the passage, what technological advancements are key drivers of the robotic revolution?",
+        "options": [
+          "A. Manual labor techniques",
+          "B. Machine learning and advanced sensor technology",
+          "C. Increased investment in traditional manufacturing",
+          "D. Human-robot interaction training"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage states that machine learning and advanced sensor technology are crucial for the advancements in robotics."
+      },
+      {
+        "id": "tech_4_q4",
+        "category": "Inference",
+        "question": "Based on the passage, why might societies need to consider new educational paradigms?",
+        "options": [
+          "A. To support traditional jobs that will remain in demand",
+          "B. To prepare future generations for a workforce dominated by automation",
+          "C. To emphasize the importance of manual labor skills",
+          "D. To enhance cooperation between robots and human workers"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage suggests that as robots take over more tasks, there will be a need for new education to prepare future generations for a highly automated labor market."
+      },
+      {
+        "id": "tech_4_q5",
+        "category": "CriticalThinking",
+        "question": "What could be a potential consequence of the rapid advancement of robotics mentioned in the passage?",
+        "options": [
+          "A. Increased job opportunities in all sectors",
+          "B. Greater reliance on human labor for complex tasks",
+          "C. Displacement of workers and the need for new training programs",
+          "D. A complete halt in robotic development"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses how the rise of robots capable of performing human tasks may lead to worker displacement and necessitate new educational programs to adapt."
+      }
+    ]
   },
   {
-    "id": "technology_5",
+    "id": "tech_5",
     "category": "technology",
-    "title": "The Evolution of Technology - Part 5",
-    "difficulty": "hard",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 170,
-    "text": "The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of technology has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "title": "Internet of Things",
+    "difficulty": "easy",
+    "text": "The Internet of Things, commonly known as IoT, refers to the growing network of physical objects connected to the internet. These objects range from ordinary household items, like smart thermostats and light bulbs, to complex industrial machinery. By embedding sensors and communication chips into everyday devices, they can collect and exchange data without requiring human intervention. In a smart home environment, IoT allows a refrigerator to track expiration dates or a heating system to learn a family's daily schedule, automatically adjusting the temperature to save energy. On a larger scale, cities are utilizing IoT technology to monitor traffic flow, manage waste collection efficiently, and reduce urban energy consumption. Wearable fitness trackers are another popular example, seamlessly syncing health metrics to smartphones. While the convenience is undeniable, the sheer volume of data generated by billions of connected devices presents significant challenges. Ensuring privacy and protecting these interconnected networks from cyberattacks are critical issues that developers must address as the Internet of Things continues to weave itself into the fabric of daily life.",
+    "wordCount": 171,
+    "targetWPM": 130,
+    "expectedReadingTime": 78,
+    "comprehensionQuestions": [
+      {
+        "id": "tech_5_q1",
+        "category": "MainIdea",
+        "question": "What is the main focus of the passage?",
+        "options": [
+          "A. The history of the Internet",
+          "B. Benefits and challenges of the Internet of Things",
+          "C. Different types of internet networks",
+          "D. Future technology predictions"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage discusses both the advantages and challenges associated with the Internet of Things (IoT)."
+      },
+      {
+        "id": "tech_5_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'intervention' most closely mean in the context of the passage?",
+        "options": [
+          "A. Assistance",
+          "B. Interference",
+          "C. Participation",
+          "D. Interaction"
+        ],
+        "correctAnswer": "B",
+        "explanation": "In this context, 'intervention' refers to human interference, which the devices are designed to operate without."
+      },
+      {
+        "id": "tech_5_q3",
+        "category": "DetailRecall",
+        "question": "Which of the following is mentioned as a smart home feature of IoT?",
+        "options": [
+          "A. Smart fridges tracking expiration dates",
+          "B. Smart mirrors displaying news",
+          "C. Smart locks controlling entries",
+          "D. Smart TVs streaming shows"
+        ],
+        "correctAnswer": "A",
+        "explanation": "The passage specifically notes that refrigerators can track expiration dates in a smart home environment."
+      },
+      {
+        "id": "tech_5_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the future development of IoT based on the passage?",
+        "options": [
+          "A. It will likely decrease in popularity.",
+          "B. Privacy concerns will be fully resolved soon.",
+          "C. More devices will be connected over time.",
+          "D. Cities will revert back to traditional methods."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage implies that as IoT continues to integrate into daily life, the number of connected devices is expected to grow."
+      },
+      {
+        "id": "tech_5_q5",
+        "category": "CriticalThinking",
+        "question": "Considering the challenges mentioned, what should developers prioritize to protect IoT systems?",
+        "options": [
+          "A. Expanding the number of connected devices",
+          "B. Enhancing data privacy and security measures",
+          "C. Reducing the functionality of devices",
+          "D. Promoting smart technology usage among users"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage highlights that privacy and cybersecurity are critical issues, suggesting developers should focus on improving these areas."
+      }
+    ]
   },
   {
-    "id": "science_1",
+    "id": "sci_1",
     "category": "science",
-    "title": "The Evolution of Science - Part 1",
-    "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 130,
-    "text": "The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "title": "Renewable Energy",
+    "difficulty": "medium",
+    "text": "The global transition toward renewable energy sources represents one of the most critical challenges and opportunities of the 21st century. As the detrimental impacts of fossil fuel consumption become increasingly apparent, nations are prioritizing sustainable alternatives to power their economies. Solar and wind energy have emerged as the primary pillars of this transition, driven by significant technological advancements and plunging manufacturing costs. Large-scale solar farms and offshore wind turbines are now capable of generating electricity at prices competitive with traditional coal and natural gas plants. However, the intermittent nature of sunshine and wind necessitates the development of advanced energy storage solutions. High-capacity lithium-ion batteries and innovative grid-scale storage methods are essential to ensure a reliable and continuous power supply. Additionally, upgrading aging electrical grids to accommodate decentralized energy production is a massive infrastructural undertaking. Despite these logistical hurdles, the environmental imperatives are clear. By embracing renewable energy, societies can significantly reduce greenhouse gas emissions, mitigate the severe effects of climate change, and establish a more resilient and sustainable energy future for generations to come.",
+    "wordCount": 174,
+    "targetWPM": 150,
+    "expectedReadingTime": 69,
+    "comprehensionQuestions": [
+      {
+        "id": "sci_1_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The benefits of fossil fuels",
+          "B. The challenges of transitioning to renewable energy",
+          "C. The history of energy production",
+          "D. The costs of manufacturing energy sources"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage discusses the global transition to renewable energy, highlighting both the challenges and opportunities this transition presents."
+      },
+      {
+        "id": "sci_1_q2",
+        "category": "Vocabulary",
+        "question": "What does the word 'detrimental' in the passage most closely mean?",
+        "options": [
+          "A. Beneficial",
+          "B. Harmful",
+          "C. Uncertain",
+          "D. Unnoticeable"
+        ],
+        "correctAnswer": "B",
+        "explanation": "'Detrimental' refers to causing harm or damage, which is fitting in the context of discussing the impacts of fossil fuels."
+      },
+      {
+        "id": "sci_1_q3",
+        "category": "DetailRecall",
+        "question": "Which two renewable energy sources are identified as the primary pillars of the transition?",
+        "options": [
+          "A. Solar and coal",
+          "B. Wind and natural gas",
+          "C. Solar and wind",
+          "D. Hydro and biomass"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage explicitly mentions solar and wind energy as the primary pillars of the transition to renewable energy."
+      },
+      {
+        "id": "sci_1_q4",
+        "category": "Inference",
+        "question": "Based on the passage, why are advanced energy storage solutions necessary for renewable energy?",
+        "options": [
+          "A. They decrease production costs",
+          "B. They ensure a consistent power supply despite variable energy generation",
+          "C. They increase the amount of energy produced",
+          "D. They eliminate the need for fossil fuels"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage notes that the intermittent nature of renewable sources necessitates energy storage to maintain a continuous power supply."
+      },
+      {
+        "id": "sci_1_q5",
+        "category": "CriticalThinking",
+        "question": "Considering the passage, what might be a potential consequence if nations fail to transition to renewable energy?",
+        "options": [
+          "A. An increase in fossil fuel production",
+          "B. Greater greenhouse gas emissions and climate change effects",
+          "C. A decrease in technological advancements",
+          "D. Improved energy efficiency worldwide"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage emphasizes that embracing renewable energy can reduce greenhouse gas emissions and mitigate climate change effects; failure to transition could lead to the opposite outcome."
+      }
+    ]
   },
   {
-    "id": "science_2",
+    "id": "sci_2",
     "category": "science",
-    "title": "The Evolution of Science - Part 2",
+    "title": "Space Exploration",
     "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Space exploration has always captured the human imagination, inspiring generations to look up at the stars and wonder what lies beyond our planet. For decades, government agencies like NASA led the charge, sending astronauts to the Moon and launching satellites to study distant galaxies. Recently, however, a new era has begun with the rise of private space companies. These ambitious corporations are developing reusable rockets, significantly lowering the astronomical costs traditionally associated with space travel. This commercialization of space has accelerated plans for returning humans to the lunar surface and eventually establishing a permanent colony on Mars. Beyond the thrill of exploration, studying space provides practical benefits here on Earth. Satellites monitor global weather patterns, enable worldwide communication, and help scientists track environmental changes. While the vast distances and harsh conditions of space present extreme technical challenges, the continuous push to explore the cosmos drives technological innovation, expanding our understanding of the universe and humanity's place within it.",
+    "wordCount": 158,
     "targetWPM": 130,
-    "text": "The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 72,
+    "comprehensionQuestions": [
+      {
+        "id": "sci_2_q1",
+        "category": "MainIdea",
+        "question": "What is the main focus of the passage?",
+        "options": [
+          "A. The history of NASA's space missions.",
+          "B. The technological advancements in space travel.",
+          "C. The impact of private companies on space exploration.",
+          "D. The challenges of living on Mars."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses how private companies are changing the landscape of space exploration, focusing on their role and the implications for the future of space travel."
+      },
+      {
+        "id": "sci_2_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'astronomical' refer to in the context of the passage?",
+        "options": [
+          "A. Very small.",
+          "B. Relating to stars.",
+          "C. Enormously large or costly.",
+          "D. Related to astronomy."
+        ],
+        "correctAnswer": "C",
+        "explanation": "'Astronomical' in this context refers to very large costs associated with space travel, emphasizing how these costs have been reduced by new technologies."
+      },
+      {
+        "id": "sci_2_q3",
+        "category": "DetailRecall",
+        "question": "What are some benefits of space exploration mentioned in the passage?",
+        "options": [
+          "A. Improving international relations.",
+          "B. Monitoring global weather patterns.",
+          "C. Discovering new species.",
+          "D. Redeveloping Earth's resources."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage specifically mentions that satellites monitor weather patterns, which is a practical benefit of space exploration."
+      },
+      {
+        "id": "sci_2_q4",
+        "category": "Inference",
+        "question": "Based on the passage, how might the commercialization of space affect future exploration?",
+        "options": [
+          "A. It could slow exploration due to high costs.",
+          "B. It might hinder technological innovation.",
+          "C. It is likely to make space travel more accessible.",
+          "D. It will eliminate the need for government agencies."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage suggests that the rise of private companies is lowering costs and accelerating plans, indicating that commercialization is likely making space exploration more accessible."
+      },
+      {
+        "id": "sci_2_q5",
+        "category": "CriticalThinking",
+        "question": "Why is studying space important for humanity according to the passage?",
+        "options": [
+          "A. It leads to profits for private companies.",
+          "B. It provides insights into potential resources on Mars.",
+          "C. It helps us understand our own planet better.",
+          "D. It distracts us from problems on Earth."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage highlights that studying space has practical benefits for understanding Earth's environment, emphasizing the connection between space exploration and our knowledge of our planet."
+      }
+    ]
   },
   {
-    "id": "science_3",
+    "id": "sci_3",
     "category": "science",
-    "title": "The Evolution of Science - Part 3",
-    "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 150,
-    "text": "The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "title": "Genetic Engineering",
+    "difficulty": "hard",
+    "text": "The advent of precision genetic engineering, particularly the development of CRISPR-Cas9 technology, has revolutionized the biological sciences. This groundbreaking tool allows scientists to edit genomic sequences with unprecedented accuracy, efficiency, and affordability. By utilizing a specialized enzyme guided by synthetic RNA, researchers can target specific DNA sequences, enabling them to remove, alter, or insert genetic material. The implications for medicine are profound. Genetic engineering holds the promise of curing inherited genetic disorders, such as cystic fibrosis and sickle cell anemia, by correcting the underlying mutations at their source. Furthermore, it is transforming agriculture through the creation of genetically modified crops that exhibit enhanced resistance to pests, diseases, and extreme environmental stressors. However, this immense power is accompanied by complex ethical dilemmas. The possibility of making heritable changes to the human germline raises profound concerns regarding unforeseen long-term consequences and the potential exacerbation of societal inequalities. Consequently, the international scientific community continues to engage in rigorous debates to establish comprehensive ethical frameworks and regulatory guidelines governing the application of these powerful genomic editing tools.",
+    "wordCount": 173,
+    "targetWPM": 170,
+    "expectedReadingTime": 61,
+    "comprehensionQuestions": [
+      {
+        "id": "sci_3_q1",
+        "category": "MainIdea",
+        "question": "What is the main focus of the passage?",
+        "options": [
+          "A. The history of genetic engineering",
+          "B. The ethical implications of CRISPR-Cas9 technology",
+          "C. The advancements and implications of CRISPR-Cas9 in biological sciences",
+          "D. The technical processes involved in genetic editing"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage primarily discusses the advancements brought by CRISPR-Cas9 technology and its implications in medicine and agriculture."
+      },
+      {
+        "id": "sci_3_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'germline' refer to in the context of genetic engineering?",
+        "options": [
+          "A. A type of genetic mutation",
+          "B. The reproductive cells that can pass genetic information to offspring",
+          "C. A method of gene editing",
+          "D. An approach to curing diseases"
+        ],
+        "correctAnswer": "B",
+        "explanation": "In genetics, 'germline' refers to the reproductive cells that pass genetic material from one generation to the next."
+      },
+      {
+        "id": "sci_3_q3",
+        "category": "DetailRecall",
+        "question": "Which genetic disorders are mentioned as potentially curable through genetic engineering?",
+        "options": [
+          "A. Diabetes and heart disease",
+          "B. Cystic fibrosis and sickle cell anemia",
+          "C. Alzheimer\u2019s disease and Parkinson\u2019s disease",
+          "D. Asthma and allergies"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage specifically mentions cystic fibrosis and sickle cell anemia as examples of inherited genetic disorders that could be cured."
+      },
+      {
+        "id": "sci_3_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the relationship between CRISPR technology and agricultural practices?",
+        "options": [
+          "A. CRISPR technology increases the use of chemical pesticides.",
+          "B. CRISPR technology has no effect on agriculture.",
+          "C. CRISPR technology allows for the development of crops with better resilience.",
+          "D. CRISPR technology is only applicable to human health."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage indicates that CRISPR technology is transforming agriculture by creating genetically modified crops that are more resistant to pests and environmental stressors."
+      },
+      {
+        "id": "sci_3_q5",
+        "category": "CriticalThinking",
+        "question": "Considering the ethical dilemmas mentioned, what should be a priority for the international scientific community when using CRISPR technology?",
+        "options": [
+          "A. To increase public awareness about genetic engineering",
+          "B. To focus solely on the scientific advancements",
+          "C. To establish ethical frameworks and regulatory guidelines for its application",
+          "D. To limit the use of CRISPR to agriculture only"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage emphasizes the need for the international scientific community to engage in debates to establish ethical frameworks and regulatory guidelines in light of the ethical dilemmas posed by CRISPR technology."
+      }
+    ]
   },
   {
-    "id": "science_4",
+    "id": "sci_4",
     "category": "science",
-    "title": "The Evolution of Science - Part 4",
+    "title": "Ocean Research",
     "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Despite covering over seventy percent of the Earth's surface, the world's oceans remain largely unexplored, harboring vast ecosystems and geological features that are yet to be fully understood. Oceanographic research is crucial for comprehending global climate systems, as oceans absorb a significant portion of the carbon dioxide emitted by human activities and regulate global temperatures through complex current networks. Modern marine biologists and geologists utilize advanced technologies, including remotely operated vehicles and autonomous underwater gliders, to map the ocean floor and study life in the extreme pressures of the deep sea. These expeditions routinely discover previously unknown species thriving in the dark, mineral-rich environments surrounding hydrothermal vents. However, the oceans are currently facing unprecedented threats from pollution, overfishing, and climate change. The rising acidity of seawater, caused by excessive carbon absorption, severely impacts marine organisms with calcium carbonate shells, threatening the foundation of the marine food web. Consequently, expanding our knowledge through dedicated ocean research is vital for developing effective conservation strategies and ensuring the long-term health of these critical aquatic ecosystems.",
+    "wordCount": 172,
     "targetWPM": 150,
-    "text": "The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 68,
+    "comprehensionQuestions": [
+      {
+        "id": "sci_4_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The exploration of oceanic ecosystems and their importance to the environment.",
+          "B. The history of oceanographic research and its technological advancements.",
+          "C. The impact of climate change on terrestrial ecosystems.",
+          "D. The role of marine biologists in understanding weather patterns."
+        ],
+        "correctAnswer": "A",
+        "explanation": "The passage centers around the exploration of oceans, their ecosystems, and the importance of oceanographic research for understanding global climate systems."
+      },
+      {
+        "id": "sci_4_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'marine' in the passage refer to?",
+        "options": [
+          "A. Related to land",
+          "B. Related to freshwater",
+          "C. Related to the sea",
+          "D. Related to air"
+        ],
+        "correctAnswer": "C",
+        "explanation": "'Marine' pertains specifically to the sea or ocean, indicating that the context of the passage is focused on oceanic environments."
+      },
+      {
+        "id": "sci_4_q3",
+        "category": "DetailRecall",
+        "question": "Which advanced technologies are mentioned in the passage as being used by marine biologists and geologists?",
+        "options": [
+          "A. Satellites and drones",
+          "B. Remotely operated vehicles and autonomous underwater gliders",
+          "C. Submarines and diving suits",
+          "D. Surface boats and sonar equipment"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage specifically mentions 'remotely operated vehicles and autonomous underwater gliders' as technologies used for ocean exploration."
+      },
+      {
+        "id": "sci_4_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the relationship between oceans and climate change from the passage?",
+        "options": [
+          "A. Oceans have no effect on climate change.",
+          "B. The climate will improve without oceanic intervention.",
+          "C. The health of ocean ecosystems directly influences global climate systems.",
+          "D. Climate change only affects land ecosystems."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage suggests that oceans play a crucial role in regulating climate and that their health is tied to global climate systems, as they absorb carbon dioxide and help regulate temperatures."
+      },
+      {
+        "id": "sci_4_q5",
+        "category": "CriticalThinking",
+        "question": "Given the threats to ocean ecosystems mentioned in the passage, why is it essential to expand knowledge through ocean research?",
+        "options": [
+          "A. To maintain the popularity of marine life in aquariums.",
+          "B. To foster tourism in coastal regions.",
+          "C. To develop effective conservation strategies and ensure the long-term health of oceans.",
+          "D. To increase fishing quotas for commercial gain."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage emphasizes the need for dedicated ocean research to develop conservation strategies and maintain the health of critical aquatic ecosystems, highlighting its importance."
+      }
+    ]
   },
   {
-    "id": "science_5",
+    "id": "sci_5",
     "category": "science",
-    "title": "The Evolution of Science - Part 5",
+    "title": "Medical Innovations",
+    "difficulty": "easy",
+    "text": "Medical innovations have dramatically improved human health and increased life expectancy over the past century. From the discovery of antibiotics to the development of life-saving vaccines, science has continuously found ways to combat deadly diseases. Today, medical research is advancing faster than ever, focusing on personalized treatments and minimally invasive procedures. One exciting area of innovation is the use of 3D printing in medicine. Doctors can now use a patient's scans to print custom-fitted prosthetics and surgical models, allowing for precise planning before an operation even begins. Another major breakthrough is the development of targeted therapies for cancer, which attack specific cancer cells without harming healthy tissue, significantly reducing the severe side effects associated with traditional chemotherapy. Telemedicine has also transformed healthcare delivery, enabling patients in remote areas to consult with specialists via video calls. As technology and biology continue to merge, these incredible medical advancements promise to provide more effective, accessible, and individualized care, further enhancing the quality of life for people around the world.",
+    "wordCount": 166,
+    "targetWPM": 130,
+    "expectedReadingTime": 76,
+    "comprehensionQuestions": [
+      {
+        "id": "sci_5_q1",
+        "category": "MainIdea",
+        "question": "What is the main idea of the passage?",
+        "options": [
+          "A. Medical innovations have changed the way we treat diseases.",
+          "B. Life expectancy has significantly decreased over the past century.",
+          "C. Antibiotics are the only important medical discovery.",
+          "D. All medical treatments are equally effective."
+        ],
+        "correctAnswer": "A",
+        "explanation": "The passage discusses various medical innovations that have improved health and life expectancy."
+      },
+      {
+        "id": "sci_5_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'telemedicine' refer to in the passage?",
+        "options": [
+          "A. A type of medicine that uses robots.",
+          "B. Remote consultations with healthcare providers using technology.",
+          "C. Medicine that can only be practiced in hospitals.",
+          "D. Medicine involving the physical examination of patients."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage describes telemedicine as enabling patients in remote areas to consult with specialists via video calls."
+      },
+      {
+        "id": "sci_5_q3",
+        "category": "DetailRecall",
+        "question": "Which innovation is mentioned as aiding in the creation of prosthetics?",
+        "options": [
+          "A. Telemedicine",
+          "B. Targeted therapies for cancer",
+          "C. 3D printing",
+          "D. Antibiotics"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage states that 3D printing is used to print custom-fitted prosthetics."
+      },
+      {
+        "id": "sci_5_q4",
+        "category": "Inference",
+        "question": "Based on the passage, how might future medical advancements affect healthcare?",
+        "options": [
+          "A. They will likely reduce the quality of care.",
+          "B. They will probably make care less accessible.",
+          "C. They may enhance care by making it more personalized.",
+          "D. They will eliminate the need for doctors."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage suggests that advancements promise to provide more effective and individualized care."
+      },
+      {
+        "id": "sci_5_q5",
+        "category": "CriticalThinking",
+        "question": "Considering the advancements mentioned in the passage, what might be a possible drawback of relying on technology in medicine?",
+        "options": [
+          "A. It could lead to more personalized treatments.",
+          "B. It may reduce face-to-face interactions between patients and doctors.",
+          "C. It has no potential drawbacks.",
+          "D. It can only be used for remote consultations."
+        ],
+        "correctAnswer": "B",
+        "explanation": "Improvements in technology such as telemedicine could limit personal interactions, which might be seen as a drawback."
+      }
+    ]
+  },
+  {
+    "id": "env_1",
+    "category": "environment",
+    "title": "Climate Change",
     "difficulty": "hard",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Climate change constitutes the most pervasive and multifaceted environmental crisis of the modern era, fundamentally driven by the anthropogenic emission of greenhouse gases. The accumulated carbon dioxide and methane in the atmosphere have initiated an accelerated warming trend, precipitating a cascade of severe ecological disruptions. The rapid retreat of polar ice caps and alpine glaciers contributes directly to rising global sea levels, posing an existential threat to low-lying coastal communities and island nations. Furthermore, the increased thermal energy trapped within the climate system is significantly altering established atmospheric circulation patterns, resulting in more frequent and intense extreme weather events, including prolonged droughts, torrential precipitation, and devastating hurricanes. The disruption of these delicate climatic balances also threatens global biodiversity, as many species find themselves unable to adapt to the rapid shift in their natural habitats. Addressing this monumental challenge requires an unprecedented level of international cooperation. Mitigating the worst impacts of climate change demands a comprehensive restructuring of global economic systems, a rapid decarbonization of energy production, and an unwavering commitment to sustainable ecological practices.",
+    "wordCount": 174,
     "targetWPM": 170,
-    "text": "The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of science has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 61,
+    "comprehensionQuestions": [
+      {
+        "id": "env_1_q1",
+        "category": "MainIdea",
+        "question": "What is the central theme of the passage?",
+        "options": [
+          "A. The importance of recycling and sustainable practices.",
+          "B. The urgent challenges posed by climate change and the need for global action.",
+          "C. The effects of individual actions on climate change.",
+          "D. The history of climate science and its development."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage discusses climate change as a significant environmental crisis and emphasizes the need for international cooperation to address its impacts."
+      },
+      {
+        "id": "env_1_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'anthropogenic' most likely mean in the context of the passage?",
+        "options": [
+          "A. Natural",
+          "B. Caused by humans",
+          "C. Irreversible",
+          "D. Unimportant"
+        ],
+        "correctAnswer": "B",
+        "explanation": "'Anthropogenic' refers to effects, processes, or substances that are a direct result of human activity, particularly in relation to environmental impact."
+      },
+      {
+        "id": "env_1_q3",
+        "category": "DetailRecall",
+        "question": "Which specific environmental change is mentioned as directly contributing to rising global sea levels?",
+        "options": [
+          "A. Increased deforestation",
+          "B. The melting of polar ice caps and alpine glaciers",
+          "C. The use of fossil fuels",
+          "D. Urbanization in coastal areas"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage explicitly states that the rapid retreat of polar ice caps and alpine glaciers contributes directly to rising global sea levels."
+      },
+      {
+        "id": "env_1_q4",
+        "category": "Inference",
+        "question": "Based on the passage, which of the following can be inferred about the long-term impacts of climate change?",
+        "options": [
+          "A. Economic systems will remain unchanged.",
+          "B. Biodiversity will likely decline unless measures are taken.",
+          "C. Weather patterns will become less extreme over time.",
+          "D. Coastal communities will thrive despite rising sea levels."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage indicates that climate change threatens global biodiversity, suggesting that without action, many species may struggle to survive."
+      },
+      {
+        "id": "env_1_q5",
+        "category": "CriticalThinking",
+        "question": "Considering the challenges outlined in the passage, which of the following solutions might be most effective in combating climate change?",
+        "options": [
+          "A. Promoting individual lifestyle changes among consumers.",
+          "B. Implementing immediate and structured international agreements for emissions reduction.",
+          "C. Focusing solely on technological advancements in energy production.",
+          "D. Increasing public awareness through social media platforms."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage emphasizes the necessity for unprecedented international cooperation and comprehensive restructuring of global systems to effectively address climate change."
+      }
+    ]
   },
   {
-    "id": "environment_1",
+    "id": "env_2",
     "category": "environment",
-    "title": "The Evolution of Environment - Part 1",
-    "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 130,
-    "text": "The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
-  },
-  {
-    "id": "environment_2",
-    "category": "environment",
-    "title": "The Evolution of Environment - Part 2",
-    "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 130,
-    "text": "The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
-  },
-  {
-    "id": "environment_3",
-    "category": "environment",
-    "title": "The Evolution of Environment - Part 3",
+    "title": "Water Conservation",
     "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Freshwater is an indispensable resource for human survival, agriculture, and industry, yet it remains finite and increasingly scarce in many regions worldwide. Population growth, rapid urbanization, and inefficient agricultural practices place immense pressure on available water supplies. Aquifers are being depleted faster than natural hydrological cycles can replenish them, leading to severe water stress and ecological degradation. Consequently, water conservation has transitioned from an environmental ideal to an urgent socioeconomic necessity. Implementing efficient irrigation techniques, such as drip irrigation, can drastically reduce agricultural water consumption, which accounts for the vast majority of global usage. In urban environments, modernizing infrastructure to prevent leakages and promoting the use of low-flow appliances are vital conservation strategies. Furthermore, wastewater recycling and desalination technologies offer innovative, albeit energy-intensive, methods for augmenting freshwater supplies in arid regions. Ultimately, fostering a deeper cultural appreciation for water and adopting stringent conservation policies are essential steps toward ensuring long-term water security and preventing future conflicts over this vital natural resource.",
+    "wordCount": 161,
     "targetWPM": 150,
-    "text": "The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 64,
+    "comprehensionQuestions": [
+      {
+        "id": "env_2_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The importance of freshwater resources",
+          "B. The effects of population growth",
+          "C. The mechanisms of irrigation technology",
+          "D. The practices for water conservation"
+        ],
+        "correctAnswer": "D",
+        "explanation": "The passage discusses the need for water conservation techniques due to the scarcity of freshwater resources."
+      },
+      {
+        "id": "env_2_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'aquifers' refer to in the context of the passage?",
+        "options": [
+          "A. A type of irrigation system",
+          "B. Underground layers of water-bearing rock",
+          "C. Urban water supply frameworks",
+          "D. Practices to save water"
+        ],
+        "correctAnswer": "B",
+        "explanation": "Aquifers are described as underground layers of rock that contain freshwater, relevant to water supply discussions."
+      },
+      {
+        "id": "env_2_q3",
+        "category": "DetailRecall",
+        "question": "According to the passage, what technique can drastically reduce agricultural water consumption?",
+        "options": [
+          "A. Traditional irrigation",
+          "B. Flood irrigation",
+          "C. Drip irrigation",
+          "D. Rainwater harvesting"
+        ],
+        "correctAnswer": "C",
+        "explanation": "Drip irrigation is specifically mentioned in the passage as an effective method to reduce water use in agriculture."
+      },
+      {
+        "id": "env_2_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the impact of urbanization on freshwater resources?",
+        "options": [
+          "A. It has no impact on water scarcity.",
+          "B. It contributes to increased demand and stress on water supplies.",
+          "C. It helps improve water availability.",
+          "D. It reduces the population's need for water."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage implies that rapid urbanization increases pressure on available water supplies, contributing to scarcity."
+      },
+      {
+        "id": "env_2_q5",
+        "category": "CriticalThinking",
+        "question": "Why might wastewater recycling and desalination technologies be described as 'energy-intensive'?",
+        "options": [
+          "A. They require elaborate physical infrastructure.",
+          "B. They consume significant energy in the processing stage.",
+          "C. They are only as effective as traditional sources.",
+          "D. They are less sustainable than other methods."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage characterizes these technologies as innovative but notes they demand considerable energy to implement."
+      }
+    ]
   },
   {
-    "id": "environment_4",
+    "id": "env_3",
     "category": "environment",
-    "title": "The Evolution of Environment - Part 4",
+    "title": "Sustainable Agriculture",
+    "difficulty": "easy",
+    "text": "Sustainable agriculture is an approach to farming that focuses on producing food while protecting the environment and preserving natural resources. Traditional industrial farming often relies heavily on chemical fertilizers and pesticides, which can degrade soil quality and pollute nearby water sources. In contrast, sustainable farming utilizes natural methods to maintain healthy soil and control pests. Techniques like crop rotation, where different types of plants are grown in the same area across different seasons, help prevent the depletion of essential nutrients in the earth. Additionally, using compost and natural fertilizers enriches the soil without introducing harmful chemicals into the ecosystem. Another important aspect of sustainable agriculture is reducing water usage by employing smarter irrigation methods and collecting rainwater. By prioritizing biodiversity and ecological balance, sustainable farms can produce nutritious crops while ensuring that the land remains fertile for future generations. This mindful approach to food production is essential for supporting a growing global population without causing irreversible damage to our fragile planet.",
+    "wordCount": 161,
+    "targetWPM": 130,
+    "expectedReadingTime": 74,
+    "comprehensionQuestions": [
+      {
+        "id": "env_3_q1",
+        "category": "MainIdea",
+        "question": "What is the main focus of sustainable agriculture?",
+        "options": [
+          "A. Maximizing crop yield using chemicals",
+          "B. Producing food while protecting the environment",
+          "C. Increasing profits for farmers",
+          "D. Reducing the cost of farming"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage emphasizes that sustainable agriculture aims to produce food while also protecting the environment and preserving natural resources."
+      },
+      {
+        "id": "env_3_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'biodiversity' refer to in the context of sustainable agriculture?",
+        "options": [
+          "A. Variety of crops grown",
+          "B. Use of chemical fertilizers",
+          "C. Equal land distribution",
+          "D. Water conservation methods"
+        ],
+        "correctAnswer": "A",
+        "explanation": "In the context of sustainable agriculture, 'biodiversity' refers to the variety of crops and species that contribute to a balanced ecosystem."
+      },
+      {
+        "id": "env_3_q3",
+        "category": "DetailRecall",
+        "question": "Which technique is mentioned as a method to maintain soil health in sustainable agriculture?",
+        "options": [
+          "A. Using synthetic pesticides",
+          "B. Increasing land size",
+          "C. Crop rotation",
+          "D. Monoculture farming"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage states that crop rotation helps maintain healthy soil and prevents nutrient depletion."
+      },
+      {
+        "id": "env_3_q4",
+        "category": "Inference",
+        "question": "Why might sustainable agriculture be considered essential for future generations?",
+        "options": [
+          "A. It guarantees higher profits for farmers.",
+          "B. It allows for more chemical use in farming.",
+          "C. It helps to ensure that the land remains fertile.",
+          "D. It promotes the extinction of less popular crops."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage suggests that sustainable agriculture supports soil fertility and natural resources, which is essential for future generations."
+      },
+      {
+        "id": "env_3_q5",
+        "category": "CriticalThinking",
+        "question": "How might the practices of sustainable agriculture influence global food production in the coming years?",
+        "options": [
+          "A. They will lead to reduced food production.",
+          "B. They will predominantly focus on individual crop types.",
+          "C. They could sustainably support a growing population while protecting the planet.",
+          "D. They will create a dependency on chemical fertilizers."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage explains that sustainable practices are designed to ensure food production can meet future needs while protecting the environment."
+      }
+    ]
+  },
+  {
+    "id": "env_4",
+    "category": "environment",
+    "title": "Forest Ecosystems",
     "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Forest ecosystems are incredibly complex biological communities that play an essential role in sustaining life on Earth. These vast woodlands cover nearly a third of the planet's landmass and serve as critical carbon sinks, absorbing immense quantities of atmospheric carbon dioxide through the process of photosynthesis. This natural carbon sequestration is a vital defense mechanism against the escalating threats of global climate change. Furthermore, forests are the primary terrestrial reservoirs of biodiversity, providing complex habitats for countless species of flora and fauna, many of which remain undiscovered by science. The intricate root systems of trees also prevent soil erosion, regulate local hydrological cycles, and naturally filter water supplies. Despite their critical importance, forests face relentless destruction driven by commercial logging, agricultural expansion, and urban development. Deforestation not only releases stored carbon back into the atmosphere but also drives countless species toward extinction. Consequently, implementing rigorous conservation strategies and promoting sustainable forestry management are imperative actions to preserve these irreplaceable ecosystems for future generations.",
+    "wordCount": 163,
     "targetWPM": 150,
-    "text": "The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 65,
+    "comprehensionQuestions": [
+      {
+        "id": "env_4_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The role of forests in carbon storage",
+          "B. The impact of deforestation on wildlife",
+          "C. The importance of forest ecosystems and their threats",
+          "D. Methods for preventing soil erosion"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses the importance of forest ecosystems, their benefits, and the threats they face."
+      },
+      {
+        "id": "env_4_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'sequestration' most closely mean in the context of the passage?",
+        "options": [
+          "A. Extraction",
+          "B. Storage",
+          "C. Transformation",
+          "D. Distribution"
+        ],
+        "correctAnswer": "B",
+        "explanation": "'Sequestration' refers to the act of storing, specifically in relation to carbon being removed from the atmosphere and stored in forests."
+      },
+      {
+        "id": "env_4_q3",
+        "category": "DetailRecall",
+        "question": "Which of the following is NOT mentioned as a benefit provided by forest ecosystems?",
+        "options": [
+          "A. They regulate local hydrological cycles.",
+          "B. They provide habitats for undiscovered species.",
+          "C. They directly produce food for humans.",
+          "D. They filter water supplies."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage does not mention that forests directly produce food for humans."
+      },
+      {
+        "id": "env_4_q4",
+        "category": "Inference",
+        "question": "Based on the passage, why might sustainable forestry management be vital for the future?",
+        "options": [
+          "A. It increases urban development.",
+          "B. It helps in finding new species.",
+          "C. It decreases the chances of extinction for many species.",
+          "D. It reduces commercial logging activities."
+        ],
+        "correctAnswer": "C",
+        "explanation": "Sustainable forestry management aims to protect forests, thereby reducing extinction rates among species relying on these ecosystems."
+      },
+      {
+        "id": "env_4_q5",
+        "category": "CriticalThinking",
+        "question": "If deforestation continues at the current rate described in the passage, what might be a long-term consequence for human society?",
+        "options": [
+          "A. Improved air quality",
+          "B. Increased biodiversity",
+          "C. Heightened risk of climate change",
+          "D. More agricultural land"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage indicates that deforestation releases stored carbon, contributing to climate change, which poses a significant threat to human society."
+      }
+    ]
   },
   {
-    "id": "environment_5",
+    "id": "env_5",
     "category": "environment",
-    "title": "The Evolution of Environment - Part 5",
+    "title": "Urban Green Spaces",
+    "difficulty": "easy",
+    "text": "As cities continue to grow and expand, incorporating urban green spaces has become increasingly important for maintaining a high quality of life. Urban green spaces include public parks, community gardens, tree-lined streets, and even rooftop greenery. These natural areas offer residents a much-needed escape from the concrete, noise, and fast pace of city living. Spending time in nature has been proven to reduce stress, lower blood pressure, and improve overall mental health. Beyond human well-being, green spaces provide substantial environmental benefits. Trees and plants act as natural air filters, absorbing harmful pollutants and producing fresh oxygen. They also help reduce the \"urban heat island\" effect by providing shade and cooling the surrounding air, making cities more comfortable during hot summer months. Furthermore, parks offer habitats for local wildlife, such as birds and beneficial insects, right in the middle of bustling neighborhoods. By prioritizing the creation and maintenance of these green areas, city planners can create healthier, more vibrant, and sustainable communities for everyone.",
+    "wordCount": 163,
+    "targetWPM": 130,
+    "expectedReadingTime": 75,
+    "comprehensionQuestions": [
+      {
+        "id": "env_5_q1",
+        "category": "MainIdea",
+        "question": "What is the main idea of the passage?",
+        "options": [
+          "A) Urban green spaces are essential for life in cities.",
+          "B) Parks are places where people can play sports.",
+          "C) City planning is primarily concerned with transportation.",
+          "D) Wildlife is negatively affected by urban development."
+        ],
+        "correctAnswer": "A",
+        "explanation": "The passage emphasizes the importance of urban green spaces for quality of life and environmental benefits."
+      },
+      {
+        "id": "env_5_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'urban heat island' refer to in the passage?",
+        "options": [
+          "A) A park in a city",
+          "B) An area in a city that is hotter than its surroundings",
+          "C) A wildlife habitat",
+          "D) A type of community garden"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage describes the 'urban heat island' effect as a phenomenon related to temperature in cities."
+      },
+      {
+        "id": "env_5_q3",
+        "category": "DetailRecall",
+        "question": "Which of the following is NOT mentioned as a benefit of urban green spaces?",
+        "options": [
+          "A) Lower blood pressure",
+          "B) Increased sports facilities",
+          "C) Stress reduction",
+          "D) Cleaner air"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage lists benefits related to health and the environment but does not mention increased sports facilities."
+      },
+      {
+        "id": "env_5_q4",
+        "category": "Inference",
+        "question": "Why might city planners prioritize the creation of green spaces?",
+        "options": [
+          "A) To increase property values",
+          "B) To provide more shopping areas",
+          "C) To enhance residents' quality of life",
+          "D) To reduce the number of cars in the city"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses the positive impact of green spaces on quality of life, suggesting that planners would prioritize them for this reason."
+      },
+      {
+        "id": "env_5_q5",
+        "category": "CriticalThinking",
+        "question": "How might the absence of urban green spaces affect a city's residents?",
+        "options": [
+          "A) Residents may become uninterested in community activities.",
+          "B) There could be an increase in stress and health issues.",
+          "C) The variety of wildlife would become more diverse.",
+          "D) The city would become less populated."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage indicates that green spaces contribute to mental and physical health, so their absence could lead to increased stress and health issues."
+      }
+    ]
+  },
+  {
+    "id": "edu_1",
+    "category": "education",
+    "title": "Online Learning",
+    "difficulty": "medium",
+    "text": "The rapid expansion of online learning platforms has fundamentally disrupted traditional educational paradigms, offering unprecedented access to knowledge for students worldwide. Digital classrooms transcend geographical limitations, enabling individuals in remote or underserved areas to participate in courses taught by leading academic experts. This modality provides significant flexibility, allowing adult learners and working professionals to balance their educational pursuits with existing occupational responsibilities. However, the efficacy of online learning relies heavily on robust technological infrastructure and reliable internet connectivity. The \"digital divide\" highlights the socioeconomic disparities that can prevent marginalized students from fully engaging in remote education. Furthermore, the absence of physical proximity presents unique pedagogical challenges. Maintaining student engagement and fostering a sense of academic community requires educators to employ innovative, interactive digital strategies. While online learning lacks the spontaneous social interactions characteristic of traditional campuses, its ability to democratize access to education ensures it will remain a permanent and evolving component of the global educational landscape.",
+    "wordCount": 157,
+    "targetWPM": 150,
+    "expectedReadingTime": 62,
+    "comprehensionQuestions": [
+      {
+        "id": "edu_1_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The benefits of traditional schooling.",
+          "B. The limitations of online learning.",
+          "C. The impact of online learning on education.",
+          "D. The history of digital classrooms."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses how online learning platforms have changed education by providing access to knowledge and flexibility."
+      },
+      {
+        "id": "edu_1_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'pedagogical' most closely relate to in the context of the passage?",
+        "options": [
+          "A. Technical skills",
+          "B. Teaching methods",
+          "C. Student behavior",
+          "D. Educational policy"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The term 'pedagogical' refers to matters related to teaching and education, as highlighted in the context of online learning."
+      },
+      {
+        "id": "edu_1_q3",
+        "category": "DetailRecall",
+        "question": "What is mentioned as a requirement for effective online learning?",
+        "options": [
+          "A. Strong student motivation.",
+          "B. Robust technological infrastructure.",
+          "C. Physical classrooms.",
+          "D. Traditional textbooks."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage specifically states that effective online learning depends on robust technological infrastructure and reliable internet."
+      },
+      {
+        "id": "edu_1_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the future of online learning based on the passage?",
+        "options": [
+          "A. It will likely fade away as traditional schools regain popularity.",
+          "B. It will continue to evolve and remain an important educational method.",
+          "C. It will only benefit affluent students.",
+          "D. It will require fewer resources over time."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage concludes by suggesting that online learning's ability to democratize access will ensure its permanence and evolution in the educational landscape."
+      },
+      {
+        "id": "edu_1_q5",
+        "category": "CriticalThinking",
+        "question": "How might the 'digital divide' affect the efficacy of online learning for marginalized students according to the passage?",
+        "options": [
+          "A. It enables all students to learn equally.",
+          "B. It diminishes their ability to access and engage in online education.",
+          "C. It provides better resources to all students.",
+          "D. It increases student engagement."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage highlights the 'digital divide' as a factor that can prevent marginalized students from fully participating in online education."
+      }
+    ]
+  },
+  {
+    "id": "edu_2",
+    "category": "education",
+    "title": "Personalized Education",
     "difficulty": "hard",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "The conceptual shift toward personalized education represents a significant departure from the standardized, \"one-size-fits-all\" instructional models that dominated the twentieth century. Recognizing that cognitive development and learning styles vary profoundly among individuals, educators are increasingly leveraging data analytics and adaptive learning technologies to tailor curricular experiences to the specific needs of each student. This pedagogical approach entails dynamic pacing, where learners progress through academic material based on their demonstrated mastery rather than arbitrary chronological schedules. Sophisticated diagnostic algorithms continuously assess student performance, identifying discrete knowledge gaps and automatically adjusting the difficulty of subsequent instructional modules to maintain an optimal cognitive load. Consequently, advanced students are provided with rigorous enrichment opportunities, while struggling learners receive targeted interventions precisely when required. Implementing personalized education, however, necessitates a substantial transformation in the role of the teacher, transitioning them from primary content deliverers to sophisticated facilitators of individualized learning pathways. This evolution demands ongoing professional development and significant institutional investment in adaptive technological infrastructure.",
+    "wordCount": 160,
     "targetWPM": 170,
-    "text": "The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of environment has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 56,
+    "comprehensionQuestions": [
+      {
+        "id": "edu_2_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage regarding education?",
+        "options": [
+          "A. The history of standardized education",
+          "B. The importance of teacher-centered learning",
+          "C. The transition to personalized education models",
+          "D. The role of standardized tests in education"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses how education is evolving from standardized models to personalized ones that cater to individual learning needs."
+      },
+      {
+        "id": "edu_2_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'cognitive load' refer to in the context of the passage?",
+        "options": [
+          "A. The amount of information a person can learn",
+          "B. The emotional burden on students",
+          "C. The physical space needed for learning materials",
+          "D. The variability in personal experiences"
+        ],
+        "correctAnswer": "A",
+        "explanation": "In educational contexts, 'cognitive load' typically refers to the amount of information that working memory can hold at one time."
+      },
+      {
+        "id": "edu_2_q3",
+        "category": "DetailRecall",
+        "question": "According to the passage, what technology is used to help personalize education?",
+        "options": [
+          "A. Standardized testing systems",
+          "B. Diagnostic algorithms",
+          "C. Traditional textbooks",
+          "D. Lecture-based teaching"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage mentions that sophisticated diagnostic algorithms assess student performance to tailor educational experiences."
+      },
+      {
+        "id": "edu_2_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the role of teachers in a personalized education model?",
+        "options": [
+          "A. Teachers will have less responsibility when using technology",
+          "B. Teachers will remain the primary source of information",
+          "C. Teachers will need to adapt to new methods of facilitating learning",
+          "D. Teachers will focus solely on advanced learners"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage indicates that teachers will transition to facilitators of individualized learning, requiring adaptation to new teaching roles."
+      },
+      {
+        "id": "edu_2_q5",
+        "category": "CriticalThinking",
+        "question": "Discuss the potential challenges of implementing personalized education as described in the passage.",
+        "options": [
+          "A. Increased student engagement and performance",
+          "B. Challenges in teacher training and resource allocation",
+          "C. The preference for traditional teaching methods",
+          "D. The assurance of uniform learning experiences"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage highlights the need for significant teacher transformation and institutional investment, suggesting challenges in training and resources."
+      }
+    ]
   },
   {
-    "id": "education_1",
+    "id": "edu_3",
     "category": "education",
-    "title": "The Evolution of Education - Part 1",
+    "title": "Digital Classrooms",
     "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Digital classrooms are changing the way students learn and interact with their teachers. Instead of relying solely on heavy textbooks and traditional chalkboards, modern classrooms are equipped with interactive smartboards, tablets, and educational software. This technology brings lessons to life, allowing teachers to use engaging videos, interactive simulations, and colorful digital presentations to explain complex concepts. For example, rather than just reading about the solar system, students can explore a 3D model of the planets on their devices. Digital tools also make it easier for students to organize their work. Assignments can be submitted online, and teachers can provide quick, typed feedback directly on the digital document. Furthermore, educational software often includes fun, game-like activities that make practicing math or spelling much more enjoyable. While technology is incredibly helpful, it is important to remember that computers cannot replace the encouragement and guidance of a good teacher. The best digital classrooms use technology to support the teacher's lessons, making learning more exciting and accessible for everyone.",
+    "wordCount": 165,
     "targetWPM": 130,
-    "text": "The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 76,
+    "comprehensionQuestions": [
+      {
+        "id": "edu_3_q1",
+        "category": "MainIdea",
+        "question": "What is the main idea of the passage?",
+        "options": [
+          "A. Technology is replacing teachers in the classroom.",
+          "B. Digital classrooms enhance learning through modern technology.",
+          "C. Textbooks are no longer useful in education.",
+          "D. Students prefer digital tools over traditional learning methods."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage discusses how digital classrooms use technology to improve and support learning."
+      },
+      {
+        "id": "edu_3_q2",
+        "category": "Vocabulary",
+        "question": "What does the word 'interact' most closely mean in the context of the passage?",
+        "options": [
+          "A. To fight",
+          "B. To communicate",
+          "C. To ignore",
+          "D. To read"
+        ],
+        "correctAnswer": "B",
+        "explanation": "'Interact' refers to the communication and engagement between students and teachers in a digital classroom setting."
+      },
+      {
+        "id": "edu_3_q3",
+        "category": "DetailRecall",
+        "question": "What type of model can students explore of the solar system?",
+        "options": [
+          "A. A 2D drawing",
+          "B. A textbook diagram",
+          "C. A 3D model",
+          "D. A video"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage mentions that students can explore a 3D model of the planets on their devices."
+      },
+      {
+        "id": "edu_3_q4",
+        "category": "Inference",
+        "question": "Why might students enjoy using digital tools for learning?",
+        "options": [
+          "A. They are always easier than traditional methods.",
+          "B. They are more colorful and engaging.",
+          "C. They allow students to avoid homework.",
+          "D. They do not require teacher involvement."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage states that digital tools include fun, game-like activities that make learning more enjoyable, suggesting students find them visually engaging."
+      },
+      {
+        "id": "edu_3_q5",
+        "category": "CriticalThinking",
+        "question": "How might the role of a teacher change in a digital classroom?",
+        "options": [
+          "A. Teachers will no longer be needed.",
+          "B. Teachers will focus more on technology than on teaching.",
+          "C. Teachers will use technology to enhance their lessons.",
+          "D. Teachers will teach less because technology does everything."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage emphasizes that the best digital classrooms use technology to support and enhance the teacher's lessons, indicating a partnership rather than replacement."
+      }
+    ]
   },
   {
-    "id": "education_2",
+    "id": "edu_4",
     "category": "education",
-    "title": "The Evolution of Education - Part 2",
+    "title": "Lifelong Learning",
     "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "The concept of lifelong learning suggests that education does not stop when a person graduates from high school or college. In today's rapidly changing world, continuing to learn new skills and acquire new knowledge is more important than ever. As technology advances and new industries emerge, the types of jobs available are constantly shifting. Therefore, professionals must regularly update their skills to remain competitive in the workforce. Lifelong learning can take many forms, from attending formal workshops and taking online certificate courses to simply reading books or watching instructional videos. Beyond career advancement, continuous learning keeps the mind sharp and active, contributing to better cognitive health in older age. It also allows individuals to explore new hobbies and passions, whether that means learning a new language, discovering how to play a musical instrument, or studying history. By embracing a mindset of curiosity and remaining open to new ideas, individuals can enrich their personal lives and adapt successfully to an ever-evolving world.",
+    "wordCount": 161,
     "targetWPM": 130,
-    "text": "The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 74,
+    "comprehensionQuestions": [
+      {
+        "id": "edu_4_q1",
+        "category": "MainIdea",
+        "question": "What is the main idea of the passage?",
+        "options": [
+          "A. Lifelong learning is necessary for career progression.",
+          "B. Education ends after college.",
+          "C. Technology changes the importance of hobbies.",
+          "D. Older people should stop learning new things."
+        ],
+        "correctAnswer": "A",
+        "explanation": "The passage emphasizes the importance of lifelong learning in various forms to remain competitive and enhance personal life."
+      },
+      {
+        "id": "edu_4_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'lifelong learning' refer to in the passage?",
+        "options": [
+          "A. Learning only in school.",
+          "B. Continuing education throughout one's life.",
+          "C. Learning from mistakes.",
+          "D. A type of online course."
+        ],
+        "correctAnswer": "B",
+        "explanation": "Lifelong learning refers to the ongoing process of acquiring new skills and knowledge throughout a person's life."
+      },
+      {
+        "id": "edu_4_q3",
+        "category": "DetailRecall",
+        "question": "Which of the following is NOT mentioned as a form of lifelong learning?",
+        "options": [
+          "A. Attending formal workshops.",
+          "B. Taking online certificate courses.",
+          "C. Watching instructional videos.",
+          "D. Attending traditional lecture series."
+        ],
+        "correctAnswer": "D",
+        "explanation": "The passage does not mention attending traditional lecture series as a form of lifelong learning."
+      },
+      {
+        "id": "edu_4_q4",
+        "category": "Inference",
+        "question": "Why is lifelong learning particularly important in today's workforce?",
+        "options": [
+          "A. Job security is guaranteed.",
+          "B. Technology is advancing and job types are changing.",
+          "C. College degrees are sufficient.",
+          "D. Hobbies are more important than careers."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage states that as technology advances and industries emerge, jobs shift, making continuous learning vital for competitiveness."
+      },
+      {
+        "id": "edu_4_q5",
+        "category": "CriticalThinking",
+        "question": "How might embracing a mindset of curiosity impact an individual's life beyond their career?",
+        "options": [
+          "A. It may lead to job loss.",
+          "B. It limits personal development opportunities.",
+          "C. It can enhance personal hobbies and cognitive health.",
+          "D. It is not beneficial."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage suggests that curiosity enriches personal lives and supports cognitive health, indicating its positive impact beyond just career."
+      }
+    ]
   },
   {
-    "id": "education_3",
+    "id": "edu_5",
     "category": "education",
-    "title": "The Evolution of Education - Part 3",
+    "title": "Collaborative Learning",
     "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Collaborative learning is an instructional methodology that emphasizes the importance of social interaction and peer-to-peer engagement in the educational process. Unlike traditional lecture-based formats, collaborative learning requires students to work together in small groups to solve complex problems, complete projects, or analyze academic texts. This approach is rooted in the cognitive theory that learners construct deeper understanding when they articulate their ideas and critically evaluate the perspectives of others. Through active debate and joint problem-solving, students develop essential communication and interpersonal skills that are highly valued in the modern workforce. Furthermore, collaborative environments encourage a sense of shared responsibility, as the success of the group depends on the active participation of each member. Teachers act as facilitators in this model, guiding discussions and providing support rather than simply transmitting information. While managing group dynamics and ensuring equitable participation can present challenges, the benefits of collaborative learning are substantial, fostering critical thinking, empathy, and a more engaging classroom atmosphere.",
+    "wordCount": 158,
     "targetWPM": 150,
-    "text": "The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 63,
+    "comprehensionQuestions": [
+      {
+        "id": "edu_5_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of collaborative learning as described in the passage?",
+        "options": [
+          "A. Individual study techniques",
+          "B. The role of teachers in lectures",
+          "C. Social interaction and group work among students",
+          "D. Standardized testing methods"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage highlights that collaborative learning emphasizes social interaction and peer engagement as central components of the educational process."
+      },
+      {
+        "id": "edu_5_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'facilitators' refer to in the context of the passage?",
+        "options": [
+          "A. Students who lead discussions",
+          "B. Teachers who manage the learning process",
+          "C. External experts providing knowledge",
+          "D. Group members responsible for tasks"
+        ],
+        "correctAnswer": "B",
+        "explanation": "In the context of collaborative learning, 'facilitators' refers to teachers who guide discussions and provide support."
+      },
+      {
+        "id": "edu_5_q3",
+        "category": "DetailRecall",
+        "question": "What is one benefit of collaborative learning mentioned in the passage?",
+        "options": [
+          "A. It reduces the need for group projects.",
+          "B. It increases standardized test scores.",
+          "C. It fosters critical thinking and empathy.",
+          "D. It minimizes social interactions among students."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage explicitly mentions that collaborative learning fosters critical thinking and empathy among students."
+      },
+      {
+        "id": "edu_5_q4",
+        "category": "Inference",
+        "question": "Why might teachers prefer collaborative learning over traditional lecture-based methods?",
+        "options": [
+          "A. It is easier to manage than individual study.",
+          "B. It allows for greater student engagement and participation.",
+          "C. It requires less preparation time for the teachers.",
+          "D. It leads to higher grades for all students."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage indicates that collaborative learning encourages student engagement and interaction, which might appeal to teachers looking for more dynamic classroom environments."
+      },
+      {
+        "id": "edu_5_q5",
+        "category": "CriticalThinking",
+        "question": "How could the challenges of managing group dynamics impact the success of collaborative learning?",
+        "options": [
+          "A. They create a better learning experience.",
+          "B. They may hinder equitable participation and group success.",
+          "C. They simplify problem-solving.",
+          "D. They encourage individual learning styles."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage notes that managing group dynamics can present challenges that may affect equitable participation and thus the overall success of collaborative learning."
+      }
+    ]
   },
   {
-    "id": "education_4",
-    "category": "education",
-    "title": "The Evolution of Education - Part 4",
-    "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 150,
-    "text": "The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
-  },
-  {
-    "id": "education_5",
-    "category": "education",
-    "title": "The Evolution of Education - Part 5",
+    "id": "inn_1",
+    "category": "innovation",
+    "title": "Smart Cities",
     "difficulty": "hard",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "The conceptualization and development of smart cities represent a sophisticated integration of urban planning, advanced data analytics, and the Internet of Things (IoT). As global populations increasingly concentrate within metropolitan areas, municipal administrations face profound challenges regarding resource allocation, traffic congestion, and environmental sustainability. Smart cities address these systemic issues by deploying extensive networks of environmental sensors and ubiquitous connectivity to continuously monitor and optimize urban infrastructure. For instance, intelligent traffic management systems utilize real-time vehicular data to dynamically adjust signal timings, thereby reducing congestion and lowering localized greenhouse gas emissions. Similarly, intelligent utility grids autonomously balance energy distribution based on predictive consumption models, maximizing efficiency. However, the pervasive nature of this urban surveillance infrastructure introduces profound civic complexities. The continuous collection of granular behavioral data necessitates rigorous data governance frameworks to safeguard citizen privacy and prevent the misuse of personal information. Successfully navigating the tension between technological optimization and fundamental civil liberties remains the paramount challenge in realizing the transformative potential of the smart city paradigm.",
+    "wordCount": 167,
     "targetWPM": 170,
-    "text": "The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of education has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 58,
+    "comprehensionQuestions": [
+      {
+        "id": "inn_1_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage regarding smart cities?",
+        "options": [
+          "A. The environmental impact of urban areas",
+          "B. The integration of technology in urban management",
+          "C. The history of urban planning",
+          "D. The population growth in metropolitan areas"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage discusses how smart cities integrate technology, data analytics, and IoT to address urban challenges."
+      },
+      {
+        "id": "inn_1_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'ubiquitous' most closely mean in the context of the passage?",
+        "options": [
+          "A. Rare",
+          "B. Limited",
+          "C. Omnipresent",
+          "D. Temporary"
+        ],
+        "correctAnswer": "C",
+        "explanation": "'Ubiquitous' refers to being present everywhere, which in this context describes the widespread connectivity in smart cities."
+      },
+      {
+        "id": "inn_1_q3",
+        "category": "DetailRecall",
+        "question": "According to the passage, how do intelligent traffic management systems help mitigate congestion?",
+        "options": [
+          "A. By reducing the number of vehicles on the road",
+          "B. By providing more roads for traffic",
+          "C. By adjusting signal timings based on real-time data",
+          "D. By increasing the speed limits in urban areas"
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage states that intelligent traffic management systems use real-time vehicular data to adjust signal timings, thus helping to reduce congestion."
+      },
+      {
+        "id": "inn_1_q4",
+        "category": "Inference",
+        "question": "What can be inferred about the tension mentioned in the passage between technological optimization and civil liberties?",
+        "options": [
+          "A. It is easily resolved through regulations.",
+          "B. It is a significant issue requiring careful governance.",
+          "C. It is largely ignored by municipal administrations.",
+          "D. It only pertains to traffic management systems."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The text suggests that balancing technological benefits with the protection of civil liberties is a major challenge needing careful governance."
+      },
+      {
+        "id": "inn_1_q5",
+        "category": "CriticalThinking",
+        "question": "Considering the benefits and challenges discussed, should municipalities prioritize the development of smart cities despite privacy concerns? Justify your reasoning.",
+        "options": [
+          "A. Yes, because the benefits outweigh the risks.",
+          "B. No, privacy concerns should take precedence.",
+          "C. Yes, but only if strict data governance policies are implemented.",
+          "D. No, smart cities will never be fully effective."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage emphasizes the need for rigorous data governance to address privacy concerns, suggesting that technological development can proceed if these measures are in place."
+      }
+    ]
   },
   {
-    "id": "innovation_1",
+    "id": "inn_2",
     "category": "innovation",
-    "title": "The Evolution of Innovation - Part 1",
-    "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 130,
-    "text": "The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
-  },
-  {
-    "id": "innovation_2",
-    "category": "innovation",
-    "title": "The Evolution of Innovation - Part 2",
-    "difficulty": "easy",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 130,
-    "text": "The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This easy level overview highlights key concepts.",
-    "comprehensionQuestions": []
-  },
-  {
-    "id": "innovation_3",
-    "category": "innovation",
-    "title": "The Evolution of Innovation - Part 3",
+    "title": "3D Printing",
     "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "Three-dimensional printing, also known as additive manufacturing, is fundamentally transforming traditional production methods across a wide array of industries. Unlike subtractive manufacturing, which involves cutting away material from a larger block, 3D printing builds objects layer by precise layer using digital blueprints. This revolutionary approach allows for the creation of incredibly complex geometries that would be impossible or prohibitively expensive to produce using conventional molds or machining techniques. In aerospace and automotive engineering, 3D printing is utilized to manufacture lightweight, high-strength components that improve fuel efficiency. In the medical field, it enables the production of custom-fitted prosthetics and precise anatomical models used by surgeons for pre-operative planning. The technology is also democratizing manufacturing, allowing small businesses and individual inventors to rapidly prototype their ideas without requiring massive upfront capital investments in factory tooling. As printing materials continue to evolve\u2014ranging from durable plastics to advanced metal alloys and even biological tissues\u2014the potential applications of additive manufacturing appear virtually limitless, promising to shorten supply chains and redefine global production logistics.",
+    "wordCount": 168,
     "targetWPM": 150,
-    "text": "The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 67,
+    "comprehensionQuestions": [
+      {
+        "id": "inn_2_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The challenges of traditional manufacturing methods",
+          "B. The advantages and applications of three-dimensional printing",
+          "C. The history of manufacturing technologies",
+          "D. The comparison between different types of materials used in manufacturing"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage primarily discusses how three-dimensional printing is transforming manufacturing and its various applications."
+      },
+      {
+        "id": "inn_2_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'additive manufacturing' refer to in the context of the passage?",
+        "options": [
+          "A. A manufacturing process that removes materials",
+          "B. A modern printing technique that builds objects layer by layer",
+          "C. A traditional method of creating prototypes",
+          "D. A process that exclusively uses plastics"
+        ],
+        "correctAnswer": "B",
+        "explanation": "'Additive manufacturing' refers to three-dimensional printing, which builds items layer by layer rather than removing material."
+      },
+      {
+        "id": "inn_2_q3",
+        "category": "DetailRecall",
+        "question": "Which of the following industries is mentioned as using 3D printing for producing components?",
+        "options": [
+          "A. Food and beverage",
+          "B. Aerospace and automotive",
+          "C. Textile and fashion",
+          "D. Construction and architecture"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage specifically mentions aerospace and automotive engineering as industries utilizing 3D printing."
+      },
+      {
+        "id": "inn_2_q4",
+        "category": "Inference",
+        "question": "Based on the passage, how might 3D printing affect small businesses and inventors?",
+        "options": [
+          "A. It will likely increase their production costs significantly.",
+          "B. It may limit their ability to prototype new ideas.",
+          "C. It can facilitate rapid prototyping without large initial investments.",
+          "D. It will discourage innovation by making manufacturing complex."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage suggests that 3D printing democratizes manufacturing, helping small businesses to prototype more easily and affordably."
+      },
+      {
+        "id": "inn_2_q5",
+        "category": "CriticalThinking",
+        "question": "What potential long-term effect of 3D printing on global production logistics is implied in the passage?",
+        "options": [
+          "A. It will likely lead to job losses in manufacturing.",
+          "B. It will complicate supply chains and manufacturing processes.",
+          "C. It is expected to shorten supply chains and redefine logistics.",
+          "D. It will result in a decrease in product quality."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage implies that as 3D printing evolves, it could shorten supply chains and change how global production is organized."
+      }
+    ]
   },
   {
-    "id": "innovation_4",
+    "id": "inn_3",
     "category": "innovation",
-    "title": "The Evolution of Innovation - Part 4",
+    "title": "Electric Vehicles",
+    "difficulty": "easy",
+    "text": "Electric vehicles, or EVs, are rapidly changing the way people travel, offering a cleaner and quieter alternative to traditional gas-powered cars. Instead of relying on an internal combustion engine that burns fossil fuels, electric vehicles are powered by large, rechargeable battery packs. Because they do not have an exhaust pipe, EVs produce zero tailpipe emissions, which significantly reduces air pollution in busy cities. The technology behind electric cars has improved dramatically in recent years. Modern batteries can store much more energy, allowing drivers to travel hundreds of miles on a single charge. Furthermore, the number of public charging stations is growing quickly, making it easier for people to take long road trips. While the initial purchase price of an electric car can be higher, owners often save money over time because electricity is generally cheaper than gasoline, and electric motors require far less maintenance than complex gas engines. As automotive companies continue to innovate, electric vehicles are becoming the standard for the future of sustainable transportation.",
+    "wordCount": 166,
+    "targetWPM": 130,
+    "expectedReadingTime": 76,
+    "comprehensionQuestions": [
+      {
+        "id": "inn_3_q1",
+        "category": "MainIdea",
+        "question": "What is the main idea of the passage?",
+        "options": [
+          "A. Electric vehicles are more expensive than gas-powered cars.",
+          "B. Electric vehicles offer a cleaner and more efficient mode of transportation.",
+          "C. Charging stations for electric vehicles are scarce.",
+          "D. Gas-powered cars will always be the preferred choice."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage emphasizes the advantages of electric vehicles as a cleaner and quieter alternative to gas-powered cars."
+      },
+      {
+        "id": "inn_3_q2",
+        "category": "Vocabulary",
+        "question": "What does the word 'emissions' most likely refer to in the passage?",
+        "options": [
+          "A. Pollution released into the air",
+          "B. Electric charging stations",
+          "C. Battery power levels",
+          "D. Maintenance costs"
+        ],
+        "correctAnswer": "A",
+        "explanation": "In this context, 'emissions' refers to the pollutants released into the air, highlighting the environmental benefit of electric vehicles."
+      },
+      {
+        "id": "inn_3_q3",
+        "category": "DetailRecall",
+        "question": "What recent improvement has been made to modern batteries used in electric vehicles?",
+        "options": [
+          "A. They have become smaller.",
+          "B. They can store more energy.",
+          "C. They are less expensive.",
+          "D. They require more maintenance."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage states that modern batteries can store much more energy, enabling longer travel distances on a single charge."
+      },
+      {
+        "id": "inn_3_q4",
+        "category": "Inference",
+        "question": "Based on the passage, what can be inferred about the future of electric vehicles?",
+        "options": [
+          "A. They will eventually replace all gas-powered cars.",
+          "B. They will cost more than gas cars in the future.",
+          "C. Their popularity and accessibility will likely continue to grow.",
+          "D. They will only be used in specific regions."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage suggests that electric vehicles are becoming the standard for sustainable transportation, indicating their growing popularity."
+      },
+      {
+        "id": "inn_3_q5",
+        "category": "CriticalThinking",
+        "question": "Consider the benefits of electric vehicles mentioned in the passage. How might the shift to EVs impact urban environments?",
+        "options": [
+          "A. Urban environments will have more traffic jams.",
+          "B. Air quality in cities is likely to improve.",
+          "C. Gasoline prices will increase significantly.",
+          "D. There will be fewer roads needed."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage highlights that electric vehicles produce zero tailpipe emissions, which would logically lead to improved air quality in urban areas."
+      }
+    ]
+  },
+  {
+    "id": "inn_4",
+    "category": "innovation",
+    "title": "Entrepreneurship",
+    "difficulty": "easy",
+    "text": "Entrepreneurship is the process of developing, organizing, and running a new business venture, often in the face of uncertainty and risk. Entrepreneurs are individuals who identify a problem or a gap in the market and create innovative solutions to address it. They are the driving force behind new products, creative services, and technological advancements. Starting a business requires a unique combination of creativity, determination, and practical planning. An entrepreneur must figure out how to secure funding, build a dedicated team, and successfully market their idea to potential customers. While many new businesses face significant challenges and some inevitably fail, the entrepreneurial spirit is essential for economic growth. Successful startups create new jobs, stimulate local economies, and encourage healthy competition, which ultimately leads to better products for consumers. Whether it is a small local bakery or a massive tech company, entrepreneurship encourages people to think outside the box and turn their unique visions into reality, continuously pushing society forward.",
+    "wordCount": 158,
+    "targetWPM": 130,
+    "expectedReadingTime": 72,
+    "comprehensionQuestions": [
+      {
+        "id": "inn_4_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The challenges faced by entrepreneurs",
+          "B. The definition and importance of entrepreneurship",
+          "C. The financial aspects of starting a business",
+          "D. The history of entrepreneurship"
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage primarily discusses the definition of entrepreneurship and emphasizes its importance in economic growth."
+      },
+      {
+        "id": "inn_4_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'entrepreneur' refer to in the passage?",
+        "options": [
+          "A. A type of business plan",
+          "B. A person who starts a new business",
+          "C. A financial investor",
+          "D. A market analyst"
+        ],
+        "correctAnswer": "B",
+        "explanation": "An entrepreneur is defined in the passage as individuals who start new business ventures."
+      },
+      {
+        "id": "inn_4_q3",
+        "category": "DetailRecall",
+        "question": "According to the passage, what is one of the major roles of successful startups?",
+        "options": [
+          "A. They increase prices for consumers.",
+          "B. They create new jobs.",
+          "C. They limit market competition.",
+          "D. They operate without funding."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage states that successful startups create new jobs, which is a major role they play in the economy."
+      },
+      {
+        "id": "inn_4_q4",
+        "category": "Inference",
+        "question": "Why might entrepreneurship be considered crucial for economic growth?",
+        "options": [
+          "A. It only leads to successful companies.",
+          "B. It encourages innovation and job creation.",
+          "C. It eliminates competition in the market.",
+          "D. It prevents business failures."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage suggests that entrepreneurship is essential for economic growth because it stimulates job creation and innovation."
+      },
+      {
+        "id": "inn_4_q5",
+        "category": "CriticalThinking",
+        "question": "How does entrepreneurship contribute to improvements in products for consumers?",
+        "options": [
+          "A. By maintaining traditional methods of production.",
+          "B. By promoting a competitive market environment.",
+          "C. By reducing the variety of products available.",
+          "D. By focusing solely on large corporations."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage indicates that entrepreneurship encourages healthy competition, which leads to better products for consumers."
+      }
+    ]
+  },
+  {
+    "id": "inn_5",
+    "category": "innovation",
+    "title": "Future Technologies",
     "difficulty": "medium",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
+    "text": "As we look toward the horizon of technological advancement, several emerging fields hold the potential to dramatically reshape human society. Quantum computing, for example, utilizes the strange principles of quantum mechanics to process information at speeds millions of times faster than classical supercomputers. This immense computational power could accelerate the discovery of new life-saving pharmaceuticals and solve incredibly complex logistical problems. Simultaneously, advancements in brain-computer interfaces seek to establish direct communication pathways between the human mind and external devices. While still in its infancy, this technology offers profound hope for restoring mobility to individuals with severe paralysis. In the realm of transportation, the development of hyperloop systems\u2014which propel passenger pods through near-vacuum tubes at supersonic speeds\u2014could revolutionize long-distance travel, drastically reducing commute times between major cities. However, the rapid pace of these innovations demands careful ethical consideration. Society must proactively establish regulatory frameworks to ensure that these powerful new technologies are deployed responsibly, maximizing their benefit to humanity while mitigating potential risks and preventing the exacerbation of global inequalities.",
+    "wordCount": 169,
     "targetWPM": 150,
-    "text": "The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This medium level overview highlights key concepts.",
-    "comprehensionQuestions": []
-  },
-  {
-    "id": "innovation_5",
-    "category": "innovation",
-    "title": "The Evolution of Innovation - Part 5",
-    "difficulty": "hard",
-    "wordCount": 190,
-    "expectedReadingTime": 90,
-    "targetWPM": 170,
-    "text": "The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts. The field of innovation has seen unprecedented growth over the last decade. Researchers and practitioners alike have focused their efforts on understanding the complex mechanisms that drive innovation in this domain. This hard level overview highlights key concepts.",
-    "comprehensionQuestions": []
+    "expectedReadingTime": 67,
+    "comprehensionQuestions": [
+      {
+        "id": "inn_5_q1",
+        "category": "MainIdea",
+        "question": "What is the primary focus of the passage?",
+        "options": [
+          "A. The impact of classical supercomputers on modern technology.",
+          "B. The ethical implications of emerging technologies.",
+          "C. Various emerging technologies that may change society.",
+          "D. The history of technological advancement over the years."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage discusses multiple emerging technologies and their potential impact on society."
+      },
+      {
+        "id": "inn_5_q2",
+        "category": "Vocabulary",
+        "question": "What does the term 'hyperloop' refer to in the context of the passage?",
+        "options": [
+          "A. A type of computer processing.",
+          "B. A form of transportation technology.",
+          "C. A medical advancement for treating paralysis.",
+          "D. A new pharmaceutical product."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage describes hyperloop systems as new technology for transport."
+      },
+      {
+        "id": "inn_5_q3",
+        "category": "DetailRecall",
+        "question": "Which potential benefit of quantum computing is mentioned in the passage?",
+        "options": [
+          "A. Faster internet speeds for users.",
+          "B. The ability to create video games.",
+          "C. Accelerating the discovery of new pharmaceuticals.",
+          "D. Reducing traffic congestion in cities."
+        ],
+        "correctAnswer": "C",
+        "explanation": "The passage states that quantum computing could accelerate the discovery of new life-saving pharmaceuticals."
+      },
+      {
+        "id": "inn_5_q4",
+        "category": "Inference",
+        "question": "Based on the passage, why might regulatory frameworks be important for emerging technologies?",
+        "options": [
+          "A. To increase the speed of technological advancement.",
+          "B. To ensure responsible use and avoid negative consequences.",
+          "C. To promote competition among tech companies.",
+          "D. To limit access to technology for certain populations."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage highlights the need for careful ethical consideration and responsible deployment of new technologies."
+      },
+      {
+        "id": "inn_5_q5",
+        "category": "CriticalThinking",
+        "question": "How might the advancements in brain-computer interfaces impact individuals with paralysis, according to the passage?",
+        "options": [
+          "A. They will become more reliant on caregivers.",
+          "B. They could lead to significant improvements in mobility.",
+          "C. They may increase the cost of medical treatments.",
+          "D. They will eliminate the need for rehabilitation."
+        ],
+        "correctAnswer": "B",
+        "explanation": "The passage states these interfaces offer hope for restoring mobility to individuals with severe paralysis."
+      }
+    ]
   }
 ]
