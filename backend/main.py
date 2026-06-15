@@ -6,8 +6,11 @@ import uuid
 
 from services.whisper_service import transcribe_audio
 from services.scoring_service import analyze_transcript
+from routers.typing import router as typing_router
 
 app = FastAPI()
+
+app.include_router(typing_router, prefix="/api/typing", tags=["typing"])
 
 app.add_middleware(
     CORSMiddleware,

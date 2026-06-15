@@ -7,6 +7,7 @@ export interface DashboardScores {
   readingRiskLabel: string;
   comprehensionScore: string;
   attentionScore: string;
+  typingScore: string;
   learningBehaviour: string;
   overallProgress: number;
 }
@@ -57,6 +58,7 @@ export interface DashboardData {
   scores: DashboardScores;
   readingHistory: AssessmentHistoryEntry[];
   comprehensionHistory: AssessmentHistoryEntry[];
+  typingHistory: AssessmentHistoryEntry[];
   recentActivity: ActivityEntry[];
   recommendations: RecommendationEntry[];
   achievements: Achievement[];
@@ -112,6 +114,12 @@ export const dashboardService = {
       comprehensionScore = `${latestCompResult.result_data.metrics.totalScore}%`;
     }
 
+    let typingScore = 'Pending Assessment';
+    const latestTypingResult = results.find(r => r.assessment_type === 'typing');
+    if (latestTypingResult && latestTypingResult.result_data?.metrics) {
+      typingScore = `${latestTypingResult.result_data.metrics.wpm} WPM`;
+    }
+
     const totalProgress = progress.length > 0 
       ? Math.round((progress.filter(p => p.status === 'completed').length / progress.length) * 100) 
       : 0;
@@ -121,6 +129,7 @@ export const dashboardService = {
       readingRiskLabel,
       comprehensionScore,
       attentionScore: 'Pending Assessment',
+      typingScore,
       learningBehaviour: 'Pending Assessment',
       overallProgress: totalProgress
     };
@@ -155,22 +164,45 @@ export const dashboardService = {
       })
       .reverse();
 
+    const typingHistory: AssessmentHistoryEntry[] = results
+      .filter(r => r.assessment_type === 'typing' && r.result_data?.metrics)
+      .map(r => {
+        const metrics = r.result_data.metrics;
+        return {
+          id: r.id,
+          date: `Attempt ${r.result_data.attemptNumber || 1}`,
+          attemptNumber: r.result_data.attemptNumber || 1,
+          score: metrics.wpm || 0,
+          accuracy: metrics.accuracy || 0,
+        };
+      })
+      .reverse();
+
     // 3. Recent Activity
     const recentActivity: ActivityEntry[] = completedSessions.slice(0, 5).map(s => {
       // Find corresponding result to get score
-      const result = results.find(r => 
-        r.assessment_type === s.assessment_type && 
-        (r.result_data?.attemptNumber === s.attempt_number || (!r.result_data?.attemptNumber && s.attempt_number === 1))
-      );
+      // Match by exact sessionId if present, else fallback to time-based matching (within 10 minutes)
+      const result = results.find(r => {
+        if (r.assessment_type !== s.assessment_type) return false;
+        if (r.result_data?.sessionId === s.id) return true;
+        
+        if (!s.completed_at) return false;
+        
+        const rTime = new Date(r.created_at).getTime();
+        const sTime = new Date(s.completed_at).getTime();
+        return Math.abs(rTime - sTime) < 10 * 60 * 1000; // within 10 minutes
+      });
       let score = 0;
       if (result?.result_data?.metrics) {
         if (s.assessment_type === 'reading') score = result.result_data.metrics.accuracy || 0;
         if (s.assessment_type === 'comprehension') score = result.result_data.metrics.totalScore || 0;
+        if (s.assessment_type === 'typing') score = result.result_data.metrics.wpm || 0;
       }
       
       const titleMap: Record<string, string> = {
         'reading': 'Reading Assessment',
-        'comprehension': 'Comprehension Test'
+        'comprehension': 'Comprehension Test',
+        'typing': 'Typing Assessment'
       };
 
       return {
@@ -212,7 +244,12 @@ export const dashboardService = {
       { name: 'Comprehension Starter', iconType: 'BookOpen', unlocked: dbAchievementCodes.has('COMPREHENSION_STARTER') },
       { name: 'Deep Thinker', iconType: 'Brain', unlocked: dbAchievementCodes.has('DEEP_THINKER') },
       { name: 'Inference Expert', iconType: 'Target', unlocked: dbAchievementCodes.has('INFERENCE_EXPERT') },
-      { name: 'Knowledge Builder', iconType: 'Award', unlocked: dbAchievementCodes.has('KNOWLEDGE_BUILDER') }
+      { name: 'Knowledge Builder', iconType: 'Award', unlocked: dbAchievementCodes.has('KNOWLEDGE_BUILDER') },
+      { name: 'Typing Starter', iconType: 'Keyboard', unlocked: dbAchievementCodes.has('TYPING_STARTER') },
+      { name: 'Speed Demon', iconType: 'Zap', unlocked: dbAchievementCodes.has('SPEED_DEMON') },
+      { name: 'Precision Typist', iconType: 'Target', unlocked: dbAchievementCodes.has('PRECISION_TYPIST') },
+      { name: 'Focus Master', iconType: 'Brain', unlocked: dbAchievementCodes.has('FOCUS_MASTER') },
+      { name: 'Rhythm Keeper', iconType: 'Activity', unlocked: dbAchievementCodes.has('RHYTHM_KEEPER') }
     ];
 
     // 6. XP Progress
@@ -274,6 +311,7 @@ export const dashboardService = {
       scores,
       readingHistory,
       comprehensionHistory,
+      typingHistory,
       recentActivity,
       recommendations,
       achievements,

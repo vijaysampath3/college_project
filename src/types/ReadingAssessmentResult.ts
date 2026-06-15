@@ -71,6 +71,7 @@ export interface ReadingAssessmentResult {
 }
 
 export interface ComprehensionAssessmentResult {
+  sessionId?: string;
   attemptNumber: number;
   metrics: ComprehensionMetrics;
   questionResults: ComprehensionQuestionResult[];

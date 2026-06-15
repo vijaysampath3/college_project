@@ -96,11 +96,11 @@ const StudentDashboard: React.FC = () => {
           color="primary"
         />
         <StatCard
-          title="Attention Score"
-          value={data.scores.attentionScore}
-          subtitle="Not Evaluated"
+          title="Typing Score"
+          value={data.scores.typingScore}
+          subtitle={data.scores.typingScore === 'Pending Assessment' ? 'Needs Assessment' : 'Latest WPM'}
           trend="up"
-          trendValue="Needs Assessment"
+          trendValue={data.scores.typingScore === 'Pending Assessment' ? 'Needs Assessment' : 'Based on latest assessment'}
           icon={<Target className="w-6 h-6" />}
           color="success"
         />
@@ -136,12 +136,14 @@ const StudentDashboard: React.FC = () => {
               color="primary"
             />
           </div>
-          <QuickActionCard
-            title="Typing Speed Test"
-            icon={<Target className="w-5 h-5" />}
-            description="Measure your typing skills"
-            color="secondary"
-          />
+          <div onClick={() => navigate('/student/assessments/typing')} className="cursor-pointer">
+            <QuickActionCard
+              title="Typing Speed Test"
+              icon={<Target className="w-5 h-5" />}
+              description="Measure your typing skills"
+              color="secondary"
+            />
+          </div>
           <QuickActionCard
             title="View Full Reports"
             icon={<TrendingUp className="w-5 h-5" />}

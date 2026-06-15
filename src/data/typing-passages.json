@@ -1,0 +1,58 @@
+[
+  {
+    "id": "typ_tech_1",
+    "category": "Technology",
+    "title": "The First Computer Bug",
+    "difficulty": "easy",
+    "text": "The first actual computer bug was a real moth. It was found trapped in a relay of the Mark II computer at Harvard University in 1947. Grace Hopper, a pioneer of computer programming, taped the moth into the logbook."
+  },
+  {
+    "id": "typ_sci_1",
+    "category": "Science",
+    "title": "Water on Earth",
+    "difficulty": "easy",
+    "text": "Water covers about seventy percent of the Earth's surface. Most of this water is found in the oceans and is too salty to drink. Only a small fraction is fresh water, which we need to survive."
+  },
+  {
+    "id": "typ_env_1",
+    "category": "Environment",
+    "title": "The Amazon Rainforest",
+    "difficulty": "medium",
+    "text": "The Amazon Rainforest, often referred to as the lungs of the Earth, produces about twenty percent of the world's oxygen. It spans across nine nations and contains a staggering diversity of plant and animal life."
+  },
+  {
+    "id": "typ_edu_1",
+    "category": "Education",
+    "title": "The Power of Reading",
+    "difficulty": "medium",
+    "text": "Reading regularly can significantly improve your vocabulary and cognitive skills. It exposes you to new ideas and perspectives, expanding your understanding of the world. Moreover, reading can be a great way to reduce stress."
+  },
+  {
+    "id": "typ_inn_1",
+    "category": "Innovation",
+    "title": "The Printing Press",
+    "difficulty": "hard",
+    "text": "Invented by Johannes Gutenberg in the 15th century, the printing press revolutionized the dissemination of knowledge. By enabling the mass production of books, it democratized information, catalyzed the Renaissance, and permanently altered the trajectory of human civilization."
+  },
+  {
+    "id": "typ_gen_1",
+    "category": "General",
+    "title": "A Walk in the Park",
+    "difficulty": "easy",
+    "text": "Walking in the park is a simple yet effective way to exercise. The fresh air and natural surroundings can boost your mood. Taking just thirty minutes a day to walk outside can make a big difference in your health."
+  },
+  {
+    "id": "typ_tech_2",
+    "category": "Technology",
+    "title": "Cloud Computing",
+    "difficulty": "medium",
+    "text": "Cloud computing allows users to access and store data over the internet instead of on a local hard drive. This technology has transformed how businesses operate, offering scalable resources and remote collaboration capabilities."
+  },
+  {
+    "id": "typ_sci_2",
+    "category": "Science",
+    "title": "Quantum Mechanics",
+    "difficulty": "hard",
+    "text": "Quantum mechanics is a fundamental theory in physics that describes the physical properties of nature at the scale of atoms and subatomic particles. It departs significantly from classical mechanics, introducing concepts like wave-particle duality and uncertainty principles."
+  }
+]

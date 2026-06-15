@@ -75,6 +75,41 @@ export const REWARDS_CONFIG = {
       description: 'Achieve a 90% or higher total score in Comprehension',
       icon: 'Award',
       xp_awarded: 150
+    },
+    TYPING_STARTER: {
+      code: 'TYPING_STARTER',
+      name: 'Typing Starter',
+      description: 'Complete your first typing assessment',
+      icon: 'Keyboard',
+      xp_awarded: 50
+    },
+    SPEED_DEMON: {
+      code: 'SPEED_DEMON',
+      name: 'Speed Demon',
+      description: 'Achieve greater than 60 WPM',
+      icon: 'Zap',
+      xp_awarded: 100
+    },
+    PRECISION_TYPIST: {
+      code: 'PRECISION_TYPIST',
+      name: 'Precision Typist',
+      description: 'Achieve 100% accuracy on a typing assessment',
+      icon: 'Target',
+      xp_awarded: 150
+    },
+    FOCUS_MASTER: {
+      code: 'FOCUS_MASTER',
+      name: 'Focus Master',
+      description: 'Complete assessment with 0 pauses over 2 seconds',
+      icon: 'Brain',
+      xp_awarded: 100
+    },
+    RHYTHM_KEEPER: {
+      code: 'RHYTHM_KEEPER',
+      name: 'Rhythm Keeper',
+      description: 'Accuracy > 90% and average pause < 1.5 seconds',
+      icon: 'Activity',
+      xp_awarded: 150
     }
   }
 };

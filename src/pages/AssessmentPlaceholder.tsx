@@ -5,6 +5,7 @@ import { BookOpen, Keyboard, Target, Brain, Activity, Clock, CheckCircle2, Arrow
 import { Button, Card, CardContent } from '../components/ui';
 import ReadingAssessment from './assessments/ReadingAssessment';
 import { ComprehensionAssessment } from './assessments/ComprehensionAssessment';
+import { TypingAssessment } from './assessments/TypingAssessment';
 
 // Shared config with Hub (in a real app this would come from an API/context)
 const assessmentDetails: Record<string, any> = {
@@ -104,6 +105,10 @@ const AssessmentPlaceholder: React.FC = () => {
 
   if (type === 'comprehension') {
     return <ComprehensionAssessment />;
+  }
+
+  if (type === 'typing') {
+    return <TypingAssessment />;
   }
 
   if (!details) {

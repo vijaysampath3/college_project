@@ -263,6 +263,7 @@ export const ComprehensionAssessment: React.FC = () => {
     }
 
     const finalResult: ComprehensionAssessmentResult = {
+      sessionId,
       attemptNumber,
       metrics,
       questionResults,
