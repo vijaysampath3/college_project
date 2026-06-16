@@ -162,6 +162,34 @@ export const REWARDS_CONFIG = {
       description: 'Attention Score > 90',
       icon: 'Brain',
       xp_awarded: 250
+    },
+    FOCUS_EXPLORER: {
+      code: 'FOCUS_EXPLORER',
+      name: 'Focus Explorer',
+      description: 'First Focus & Engagement Assessment Completed',
+      icon: 'Eye',
+      xp_awarded: 50
+    },
+    ENGAGED_LEARNER: {
+      code: 'ENGAGED_LEARNER',
+      name: 'Engaged Learner',
+      description: 'Engagement Score > 85',
+      icon: 'Activity',
+      xp_awarded: 100
+    },
+    LASER_VISION: {
+      code: 'LASER_VISION',
+      name: 'Laser Vision',
+      description: 'Focus Score > 90',
+      icon: 'Crosshair',
+      xp_awarded: 150
+    },
+    SCREEN_CHAMPION: {
+      code: 'SCREEN_CHAMPION',
+      name: 'Screen Champion',
+      description: 'Screen Focus > 95%',
+      icon: 'Monitor',
+      xp_awarded: 100
     }
   }
 };

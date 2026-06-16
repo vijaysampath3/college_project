@@ -205,6 +205,13 @@ export const rewardsService = {
       check(A.DISTRACTOR_MASTER, metrics.falseClicks === 0);
     }
 
+    if (assessmentType === 'focus') {
+      check(A.FOCUS_EXPLORER, true);
+      check(A.ENGAGED_LEARNER, metrics.engagementScore > 85);
+      check(A.LASER_VISION, metrics.focusScore > 90);
+      check(A.SCREEN_CHAMPION, metrics.screenFocusPercent > 95);
+    }
+
     // Get reading specific attempts for READING_EXPLORER
     if (!existingCodes.has(A.READING_EXPLORER.code)) {
       const { data: readingCount } = await supabase

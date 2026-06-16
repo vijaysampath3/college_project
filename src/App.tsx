@@ -10,6 +10,8 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { RoleGuard } from './components/auth/RoleGuard';
 import AssessmentHub from './pages/AssessmentHub';
 import AssessmentPlaceholder from './pages/AssessmentPlaceholder';
+import { CPTAssessment } from './pages/assessments/CPTAssessment';
+import { FocusAssessment } from './pages/assessments/FocusAssessment';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route element={<RoleGuard allowedRole="student" />}>
               <Route path="/student" element={<StudentDashboard />} />
               <Route path="/student/assessments" element={<AssessmentHub />} />
+              <Route path="/student/assessments/cpt" element={<CPTAssessment />} />
+              <Route path="/student/assessments/focus" element={<FocusAssessment />} />
               <Route path="/student/assessments/:type" element={<AssessmentPlaceholder />} />
               <Route path="/student/*" element={<StudentDashboard />} />
             </Route>

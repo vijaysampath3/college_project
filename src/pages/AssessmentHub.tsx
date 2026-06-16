@@ -6,7 +6,7 @@ import { dashboardService, ActivityEntry } from '../services/dashboard.service';
 import { AssessmentCard, AssessmentInfo } from '../components/assessments/AssessmentCard';
 import { LearningJourney } from '../components/assessments/LearningJourney';
 import { LearningHealthSummary } from '../components/assessments/LearningHealthSummary';
-import { BookOpen, Keyboard, Target, Brain, Activity } from 'lucide-react';
+import { BookOpen, Keyboard, Target, Brain, Activity, Eye, Camera } from 'lucide-react';
 import { Card, CardContent } from '../components/ui';
 
 const initialAssessments: AssessmentInfo[] = [
@@ -53,6 +53,17 @@ const initialAssessments: AssessmentInfo[] = [
     progress: 0,
     icon: <Brain className="w-6 h-6" />,
     route: '/student/assessments/comprehension',
+  },
+  {
+    id: 'focus',
+    title: 'Focus & Engagement',
+    description: 'Webcam-based assessment tracking screen focus, head stability, and engagement patterns.',
+    duration: '3 mins',
+    difficulty: 'Intermediate',
+    status: 'Not Started',
+    progress: 0,
+    icon: <Camera className="w-6 h-6" />,
+    route: '/student/assessments/focus',
   },
   {
     id: 'learning-behaviour',

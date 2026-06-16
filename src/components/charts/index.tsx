@@ -20,50 +20,80 @@ import {
 interface ChartProps {
   data: unknown[];
   height?: number;
-  type?: 'reading' | 'comprehension';
+  type?: 'reading' | 'comprehension' | 'typing' | 'attention' | 'cpt' | 'focus' | 'learning-behaviour';
 }
 
-export const AssessmentHistoryChart: React.FC<ChartProps> = ({ data, height = 300, type = 'reading' }) => (
-  <ResponsiveContainer width="100%" height={height}>
-    <AreaChart data={data as object[]}>
-      <defs>
-        <linearGradient id="colorReading" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3} />
-          <stop offset="95%" stopColor="#4F46E5" stopOpacity={0} />
-        </linearGradient>
-        <linearGradient id="colorAttention" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#06B6D4" stopOpacity={0.3} />
-          <stop offset="95%" stopColor="#06B6D4" stopOpacity={0} />
-        </linearGradient>
-        <linearGradient id="colorBehaviour" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
-          <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
-        </linearGradient>
-      </defs>
-      <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-      <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-      <YAxis stroke="#9CA3AF" fontSize={12} domain={[0, 100]} />
-      <Tooltip
-        contentStyle={{
-          background: 'white',
-          border: 'none',
-          borderRadius: '12px',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-        }}
-      />
-      <Legend />
-      <Area
-        type="monotone"
-        dataKey="score"
-        stroke={type === 'reading' ? "#4F46E5" : "#06B6D4"}
-        strokeWidth={2}
-        fillOpacity={1}
-        fill={type === 'reading' ? "url(#colorReading)" : "url(#colorAttention)"}
-        name={type === 'reading' ? "Reading Score" : "Comprehension Score"}
-      />
-    </AreaChart>
-  </ResponsiveContainer>
-);
+const chartConfig = {
+  'reading': { stroke: '#4F46E5', fill: 'url(#colorReading)', name: 'Reading Score' },
+  'comprehension': { stroke: '#10B981', fill: 'url(#colorComprehension)', name: 'Comprehension Score' },
+  'typing': { stroke: '#8B5CF6', fill: 'url(#colorTyping)', name: 'Typing WPM' },
+  'attention': { stroke: '#F59E0B', fill: 'url(#colorAttention)', name: 'Attention Score' },
+  'cpt': { stroke: '#EF4444', fill: 'url(#colorCpt)', name: 'CPT DPrime' },
+  'focus': { stroke: '#3B82F6', fill: 'url(#colorFocus)', name: 'Focus Score' },
+  'learning-behaviour': { stroke: '#06B6D4', fill: 'url(#colorBehaviour)', name: 'Behaviour Score' },
+};
+
+export const AssessmentHistoryChart: React.FC<ChartProps> = ({ data, height = 300, type = 'reading' }) => {
+  const config = chartConfig[type] || chartConfig['reading'];
+  
+  return (
+    <ResponsiveContainer width="100%" height={height}>
+      <AreaChart data={data as object[]}>
+        <defs>
+          <linearGradient id="colorReading" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#4F46E5" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorComprehension" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorTyping" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorAttention" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#F59E0B" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorCpt" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorFocus" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorBehaviour" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#06B6D4" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#06B6D4" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+        <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+        <YAxis stroke="#9CA3AF" fontSize={12} />
+        <Tooltip
+          contentStyle={{
+            background: 'white',
+            border: 'none',
+            borderRadius: '12px',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          }}
+        />
+        <Legend />
+        <Area
+          type="monotone"
+          dataKey="score"
+          name={config.name}
+          stroke={config.stroke}
+          strokeWidth={2}
+          fillOpacity={1}
+          fill={config.fill}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+};
 
 export const WeeklyProgressChart: React.FC<ChartProps> = ({ data, height = 250 }) => (
   <ResponsiveContainer width="100%" height={height}>

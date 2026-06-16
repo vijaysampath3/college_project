@@ -7,6 +7,8 @@ export interface DashboardScores {
   readingRiskLabel: string;
   comprehensionScore: string;
   attentionScore: string;
+  focusScore: string;
+  focusEngagement: string;
   cptScore: string;
   typingScore: string;
   learningBehaviour: string;
@@ -60,6 +62,10 @@ export interface DashboardData {
   readingHistory: AssessmentHistoryEntry[];
   comprehensionHistory: AssessmentHistoryEntry[];
   typingHistory: AssessmentHistoryEntry[];
+  attentionHistory: AssessmentHistoryEntry[];
+  cptHistory: AssessmentHistoryEntry[];
+  focusHistory: AssessmentHistoryEntry[];
+  learningBehaviourHistory: AssessmentHistoryEntry[];
   recentActivity: ActivityEntry[];
   recommendations: RecommendationEntry[];
   achievements: Achievement[];
@@ -136,6 +142,18 @@ export const dashboardService = {
       attentionScore = `${latestAttentionResult.result_data.scores.overallAttention}%`;
     }
 
+    let focusScore = 'Pending Assessment';
+    let focusEngagement = 'Pending';
+    const latestFocusResult = results.find(r => r.assessment_type === 'focus');
+    if (latestFocusResult && latestFocusResult.result_data?.scores) {
+      const fs = latestFocusResult.result_data.scores.focusScore;
+      const es = latestFocusResult.result_data.scores.engagementScore;
+      focusScore = `${fs}%`;
+      if (es >= 85) focusEngagement = 'High';
+      else if (es >= 60) focusEngagement = 'Medium';
+      else focusEngagement = 'Low';
+    }
+
     const totalProgress = progress.length > 0 
       ? Math.round((progress.filter(p => p.status === 'completed').length / progress.length) * 100) 
       : 0;
@@ -145,6 +163,8 @@ export const dashboardService = {
       readingRiskLabel,
       comprehensionScore,
       attentionScore,
+      focusScore,
+      focusEngagement,
       cptScore,
       typingScore,
       learningBehaviour: 'Pending Assessment',
@@ -195,6 +215,59 @@ export const dashboardService = {
       })
       .reverse();
 
+    const attentionHistory: AssessmentHistoryEntry[] = results
+      .filter(r => r.assessment_type === 'attention' && r.result_data?.scores)
+      .map(r => {
+        const scores = r.result_data.scores;
+        return {
+          id: r.id,
+          date: `Attempt ${r.result_data.attemptNumber || 1}`,
+          attemptNumber: r.result_data.attemptNumber || 1,
+          score: scores.overallAttention || 0,
+        };
+      })
+      .reverse();
+
+    const focusHistory: AssessmentHistoryEntry[] = results
+      .filter(r => r.assessment_type === 'focus' && r.result_data?.scores)
+      .map(r => {
+        const scores = r.result_data.scores;
+        return {
+          id: r.id,
+          date: `Attempt ${r.result_data.attemptNumber || 1}`,
+          attemptNumber: r.result_data.attemptNumber || 1,
+          score: scores.focusScore || 0,
+        };
+      })
+      .reverse();
+
+    const cptHistory: AssessmentHistoryEntry[] = results
+      .filter(r => r.assessment_type === 'cpt' && r.result_data?.metrics)
+      .map(r => {
+        const metrics = r.result_data.metrics;
+        return {
+          id: r.id,
+          date: `Attempt ${r.result_data.attemptNumber || 1}`,
+          attemptNumber: r.result_data.attemptNumber || 1,
+          // using DPrime as score metric
+          score: metrics["Raw Score DPrime"] || 0,
+        };
+      })
+      .reverse();
+
+    const learningBehaviourHistory: AssessmentHistoryEntry[] = results
+      .filter(r => r.assessment_type === 'learning-behaviour')
+      .map(r => {
+        return {
+          id: r.id,
+          date: `Attempt ${r.result_data.attemptNumber || 1}`,
+          attemptNumber: r.result_data.attemptNumber || 1,
+          // Since learning behavior may not have a numeric score, we can use 100 to show completion or extract it if available
+          score: r.result_data?.scores?.overallScore || 100,
+        };
+      })
+      .reverse();
+
     // 3. Recent Activity
     const recentActivity: ActivityEntry[] = completedSessions.slice(0, 5).map(s => {
       // Find corresponding result to get score
@@ -215,6 +288,7 @@ export const dashboardService = {
         if (s.assessment_type === 'comprehension') score = result.result_data.metrics.totalScore || 0;
         if (s.assessment_type === 'typing') score = result.result_data.metrics.wpm || 0;
         if (s.assessment_type === 'cpt') score = result.result_data.metrics["Raw Score DPrime"] || 0;
+        if (s.assessment_type === 'focus') score = result.result_data.metrics.focusScore || 0;
       }
       
       // Attention uses 'scores' not 'metrics'
@@ -227,7 +301,8 @@ export const dashboardService = {
         'comprehension': 'Comprehension Test',
         'typing': 'Typing Assessment',
         'cpt': 'CPT Assessment',
-        'attention': 'Attention Assessment'
+        'attention': 'Attention Assessment',
+        'focus': 'Focus Assessment'
       };
 
       return {
@@ -337,6 +412,10 @@ export const dashboardService = {
       readingHistory,
       comprehensionHistory,
       typingHistory,
+      attentionHistory,
+      focusHistory,
+      cptHistory,
+      learningBehaviourHistory,
       recentActivity,
       recommendations,
       achievements,

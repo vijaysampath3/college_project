@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Brain, Target, TrendingUp, Clock, Award, ChevronRight, PlayCircle } from 'lucide-react';
+import { BookOpen, Brain, Target, TrendingUp, Clock, Award, ChevronRight, PlayCircle, Camera } from 'lucide-react';
 import { DashboardLayout } from '../components/layout';
 import { Card, CardContent, StatCard, Badge } from '../components/ui';
 import { AssessmentHistoryChart, WeeklyProgressChart } from '../components/charts';
@@ -9,12 +9,14 @@ import { useAuth } from '../context/AuthContext';
 import { dashboardService, DashboardData } from '../services/dashboard.service';
 import { useNavigate } from 'react-router-dom';
 
+type AssessmentType = 'reading' | 'comprehension' | 'typing' | 'attention' | 'cpt' | 'focus' | 'learning-behaviour';
+
 const StudentDashboard: React.FC = () => {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [data, setData] = React.useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [historyTab, setHistoryTab] = React.useState<'reading' | 'comprehension'>('reading');
+  const [historyTab, setHistoryTab] = React.useState<AssessmentType>('reading');
 
   React.useEffect(() => {
     if (user?.id) {
@@ -132,6 +134,15 @@ const StudentDashboard: React.FC = () => {
           color="primary"
         />
         <StatCard
+          title="Focus & Engagement"
+          value={data.scores.focusScore}
+          subtitle={data.scores.focusScore === 'Pending Assessment' ? 'Needs Assessment' : `Engagement: ${data.scores.focusEngagement}`}
+          trend="up"
+          trendValue={data.scores.focusScore === 'Pending Assessment' ? 'Needs Assessment' : 'Based on latest assessment'}
+          icon={<Camera className="w-6 h-6" />}
+          color="secondary"
+        />
+        <StatCard
           title="Overall Progress"
           value={`${data.scores.overallProgress}%`}
           subtitle="Keep it up!"
@@ -180,23 +191,32 @@ const StudentDashboard: React.FC = () => {
                 <h3 className="text-lg font-bold text-gray-900">Assessment History</h3>
                 <p className="text-sm text-gray-500">Your progress over time</p>
               </div>
-              <div className="flex gap-2">
-                <button 
-                  onClick={() => setHistoryTab('reading')}
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${historyTab === 'reading' ? 'bg-primary-100 text-primary-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+              <div className="w-48">
+                <select 
+                  value={historyTab}
+                  onChange={(e) => setHistoryTab(e.target.value as AssessmentType)}
+                  className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 outline-none cursor-pointer"
                 >
-                  Reading
-                </button>
-                <button 
-                  onClick={() => setHistoryTab('comprehension')}
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${historyTab === 'comprehension' ? 'bg-primary-100 text-primary-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-                >
-                  Comprehension
-                </button>
+                  <option value="reading">Reading</option>
+                  <option value="comprehension">Comprehension</option>
+                  <option value="typing">Typing</option>
+                  <option value="attention">Attention</option>
+                  <option value="cpt">CPT (ADHD Risk)</option>
+                  <option value="focus">Focus & Engagement</option>
+                  <option value="learning-behaviour">Learning Behaviour</option>
+                </select>
               </div>
             </div>
             <AssessmentHistoryChart 
-              data={historyTab === 'reading' ? data.readingHistory : data.comprehensionHistory} 
+              data={
+                historyTab === 'reading' ? data.readingHistory :
+                historyTab === 'comprehension' ? data.comprehensionHistory :
+                historyTab === 'typing' ? data.typingHistory :
+                historyTab === 'attention' ? data.attentionHistory :
+                historyTab === 'cpt' ? data.cptHistory :
+                historyTab === 'focus' ? data.focusHistory :
+                data.learningBehaviourHistory
+              } 
               type={historyTab}
             />
           </CardContent>
