@@ -124,15 +124,48 @@ const StudentDashboard: React.FC = () => {
           icon={<Brain className="w-6 h-6" />}
           color={getRiskColor(data.scores.cptScore)}
         />
-        <StatCard
-          title="Learning Behaviour"
-          value={data.scores.learningBehaviour}
-          subtitle="Not Evaluated"
-          trend="up"
-          trendValue="Needs Assessment"
-          icon={<Brain className="w-6 h-6" />}
-          color="primary"
-        />
+        {data.scores.learningBehaviour === 'Pending Assessment' ? (
+          <StatCard
+            title="Learning Behaviour"
+            value="Pending"
+            subtitle="Needs Assessment"
+            trend="up"
+            trendValue="Take assessment to unlock"
+            icon={<Brain className="w-6 h-6" />}
+            color="primary"
+          />
+        ) : (
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full col-span-1 md:col-span-2 lg:col-span-1">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="text-gray-500 font-medium mb-1">Learning Profile</h3>
+                <div className="text-xl font-bold text-gray-900">{data.scores.learningBehaviour}</div>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center">
+                <Brain className="w-5 h-5 text-primary-600" />
+              </div>
+            </div>
+            
+            <div className="space-y-3 mt-auto">
+              {[
+                { label: 'Visual', value: data.scores.learningProfileData?.visual || 0, color: 'bg-indigo-500' },
+                { label: 'Interactive', value: data.scores.learningProfileData?.interactive || 0, color: 'bg-emerald-500' },
+                { label: 'Sequential', value: data.scores.learningProfileData?.sequential || 0, color: 'bg-rose-500' },
+                { label: 'Analytical', value: data.scores.learningProfileData?.analytical || 0, color: 'bg-amber-500' },
+              ].map(trait => (
+                <div key={trait.label}>
+                  <div className="flex justify-between text-xs font-medium mb-1">
+                    <span className="text-gray-600">{trait.label}</span>
+                    <span className="text-gray-900">{trait.value}%</span>
+                  </div>
+                  <div className="w-full bg-gray-100 rounded-full h-1.5">
+                    <div className={`h-1.5 rounded-full ${trait.color}`} style={{ width: `${trait.value}%` }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         <StatCard
           title="Focus & Engagement"
           value={data.scores.focusScore}
@@ -215,7 +248,8 @@ const StudentDashboard: React.FC = () => {
                 historyTab === 'attention' ? data.attentionHistory :
                 historyTab === 'cpt' ? data.cptHistory :
                 historyTab === 'focus' ? data.focusHistory :
-                data.learningBehaviourHistory
+                historyTab === 'learning-behaviour' ? data.learningBehaviourHistory :
+                []
               } 
               type={historyTab}
             />

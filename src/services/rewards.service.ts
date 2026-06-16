@@ -180,7 +180,7 @@ export const rewardsService = {
 
     const A = REWARDS_CONFIG.achievements;
     check(A.FIRST_ASSESSMENT, totalAssessments >= 1);
-    check(A.PERSISTENT_LEARNER, totalAssessments >= 5);
+    check(A.DEDICATED_STUDENT, totalAssessments >= 5);
     check(A.AI_FEEDBACK, hasInsights);
 
     if (assessmentType === 'reading') {
@@ -210,6 +210,15 @@ export const rewardsService = {
       check(A.ENGAGED_LEARNER, metrics.engagementScore > 85);
       check(A.LASER_VISION, metrics.focusScore > 90);
       check(A.SCREEN_CHAMPION, metrics.screenFocusPercent > 95);
+    }
+
+    if (assessmentType === 'learning-behaviour') {
+      check(A.BEHAVIOUR_EXPLORER, true);
+      check(A.PATTERN_MASTER, metrics.task1?.patternAccuracy > 90);
+      check(A.RULE_KEEPER, metrics.task2?.ruleRetention > 90);
+      check(A.PERSISTENT_LEARNER, metrics.persistenceScore > 85);
+      check(A.ADAPTIVE_THINKER, metrics.adaptabilityScore > 85);
+      check(A.CONSISTENCY_CHAMPION, metrics.consistencyScore > 90);
     }
 
     // Get reading specific attempts for READING_EXPLORER

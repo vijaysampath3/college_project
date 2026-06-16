@@ -41,9 +41,9 @@ export const REWARDS_CONFIG = {
       icon: 'Brain',
       xp_awarded: 50
     },
-    PERSISTENT_LEARNER: {
-      code: 'PERSISTENT_LEARNER',
-      name: 'Persistent Learner',
+    DEDICATED_STUDENT: {
+      code: 'DEDICATED_STUDENT',
+      name: 'Dedicated Student',
       description: 'Complete 5 total assessments',
       icon: 'Clock',
       xp_awarded: 200
@@ -147,6 +147,56 @@ export const REWARDS_CONFIG = {
       name: 'Lightning Scan',
       description: 'Average Reaction Time < 500ms',
       icon: 'Zap',
+      xp_awarded: 150
+    },
+    PERFECT_ATTENTION: {
+      code: 'PERFECT_ATTENTION',
+      name: 'Perfect Attention',
+      description: 'Zero omissions and commissions on hard mode',
+      icon: 'ShieldCheck',
+      xp_awarded: 250
+    },
+    // Phase 8D: Learning Behaviour
+    BEHAVIOUR_EXPLORER: {
+      code: 'BEHAVIOUR_EXPLORER',
+      name: 'Behaviour Explorer',
+      description: 'Complete your first Learning Behaviour Assessment',
+      icon: 'Search',
+      xp_awarded: 50
+    },
+    PATTERN_MASTER: {
+      code: 'PATTERN_MASTER',
+      name: 'Pattern Master',
+      description: 'Achieve Pattern Accuracy > 90%',
+      icon: 'Puzzle',
+      xp_awarded: 100
+    },
+    RULE_KEEPER: {
+      code: 'RULE_KEEPER',
+      name: 'Rule Keeper',
+      description: 'Achieve Rule Retention > 90%',
+      icon: 'BookOpen',
+      xp_awarded: 100
+    },
+    PERSISTENT_LEARNER: {
+      code: 'PERSISTENT_LEARNER',
+      name: 'Persistent Learner',
+      description: 'Achieve a Persistence Score > 85%',
+      icon: 'Clock',
+      xp_awarded: 150
+    },
+    ADAPTIVE_THINKER: {
+      code: 'ADAPTIVE_THINKER',
+      name: 'Adaptive Thinker',
+      description: 'Achieve an Adaptability Score > 85%',
+      icon: 'Activity',
+      xp_awarded: 150
+    },
+    CONSISTENCY_CHAMPION: {
+      code: 'CONSISTENCY_CHAMPION',
+      name: 'Consistency Champion',
+      description: 'Achieve a Consistency Score > 90%',
+      icon: 'CheckCircle',
       xp_awarded: 150
     },
     DISTRACTOR_MASTER: {

@@ -12,6 +12,12 @@ export interface DashboardScores {
   cptScore: string;
   typingScore: string;
   learningBehaviour: string;
+  learningProfileData?: {
+    visual: number;
+    interactive: number;
+    analytical: number;
+    sequential: number;
+  };
   overallProgress: number;
 }
 
@@ -154,6 +160,14 @@ export const dashboardService = {
       else focusEngagement = 'Low';
     }
 
+    let learningBehaviour = 'Pending Assessment';
+    let learningProfileData;
+    const latestLBResult = results.find(r => r.assessment_type === 'learning-behaviour');
+    if (latestLBResult && latestLBResult.result_data?.profile) {
+      learningBehaviour = latestLBResult.result_data.profile.dominantProfile;
+      learningProfileData = latestLBResult.result_data.profile;
+    }
+
     const totalProgress = progress.length > 0 
       ? Math.round((progress.filter(p => p.status === 'completed').length / progress.length) * 100) 
       : 0;
@@ -167,7 +181,8 @@ export const dashboardService = {
       focusEngagement,
       cptScore,
       typingScore,
-      learningBehaviour: 'Pending Assessment',
+      learningBehaviour,
+      learningProfileData,
       overallProgress: totalProgress
     };
 
@@ -241,6 +256,19 @@ export const dashboardService = {
       })
       .reverse();
 
+    const learningBehaviourHistory: AssessmentHistoryEntry[] = results
+      .filter(r => r.assessment_type === 'learning-behaviour' && r.result_data?.scores)
+      .map(r => {
+        const scores = r.result_data.scores;
+        return {
+          id: r.id,
+          date: `Attempt ${r.result_data.attemptNumber || 1}`,
+          attemptNumber: r.result_data.attemptNumber || 1,
+          score: scores.learningBehaviourScore || 0,
+        };
+      })
+      .reverse();
+
     const cptHistory: AssessmentHistoryEntry[] = results
       .filter(r => r.assessment_type === 'cpt' && r.result_data?.metrics)
       .map(r => {
@@ -255,18 +283,6 @@ export const dashboardService = {
       })
       .reverse();
 
-    const learningBehaviourHistory: AssessmentHistoryEntry[] = results
-      .filter(r => r.assessment_type === 'learning-behaviour')
-      .map(r => {
-        return {
-          id: r.id,
-          date: `Attempt ${r.result_data.attemptNumber || 1}`,
-          attemptNumber: r.result_data.attemptNumber || 1,
-          // Since learning behavior may not have a numeric score, we can use 100 to show completion or extract it if available
-          score: r.result_data?.scores?.overallScore || 100,
-        };
-      })
-      .reverse();
 
     // 3. Recent Activity
     const recentActivity: ActivityEntry[] = completedSessions.slice(0, 5).map(s => {
@@ -291,9 +307,12 @@ export const dashboardService = {
         if (s.assessment_type === 'focus') score = result.result_data.metrics.focusScore || 0;
       }
       
-      // Attention uses 'scores' not 'metrics'
+      // Attention and Focus and Learning Behaviour use 'scores' not 'metrics'
       if (s.assessment_type === 'attention' && result?.result_data?.scores) {
         score = result.result_data.scores.overallAttention || 0;
+      }
+      if (s.assessment_type === 'learning-behaviour' && result?.result_data?.scores) {
+        score = result.result_data.scores.learningBehaviourScore || 0;
       }
       
       const titleMap: Record<string, string> = {
@@ -302,7 +321,8 @@ export const dashboardService = {
         'typing': 'Typing Assessment',
         'cpt': 'CPT Assessment',
         'attention': 'Attention Assessment',
-        'focus': 'Focus Assessment'
+        'focus': 'Focus Assessment',
+        'learning-behaviour': 'Learning Behaviour'
       };
 
       return {
