@@ -5,6 +5,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_supabase_client() -> Client:
+    # Explicitly load .env from the backend root
+    env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+    load_dotenv(dotenv_path=env_path, override=True)
+    
     url: str = os.environ.get("VITE_SUPABASE_URL") or os.environ.get("SUPABASE_URL")
     key: str = os.environ.get("VITE_SUPABASE_ANON_KEY") or os.environ.get("SUPABASE_KEY")
     

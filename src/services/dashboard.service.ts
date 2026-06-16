@@ -77,6 +77,12 @@ export interface DashboardData {
   achievements: Achievement[];
   weeklyProgress: { day: string; minutes: number; assessments: number }[];
   xpProgress: XPProgress | null;
+  activityStats: {
+    completed: number;
+    assigned: number;
+    streak: number;
+    topCategory: string;
+  };
 }
 
 export const dashboardService = {
@@ -87,13 +93,17 @@ export const dashboardService = {
       resultsResponse,
       progressResponse,
       rewardsResponse,
-      achievementsResponse
+      achievementsResponse,
+      activitiesResponse,
+      recsResponse
     ] = await Promise.all([
       supabase.from('assessment_sessions').select('*').eq('student_id', userId).order('completed_at', { ascending: false }),
       supabase.from('assessment_results').select('*').eq('student_id', userId).order('created_at', { ascending: false }),
       supabase.from('assessment_progress').select('*').eq('student_id', userId),
       supabase.from('student_rewards').select('*').eq('student_id', userId).maybeSingle(),
-      supabase.from('student_achievements').select('*').eq('student_id', userId)
+      supabase.from('student_achievements').select('*').eq('student_id', userId),
+      supabase.from('student_activity_attempts').select('*, learning_activities(category)').eq('student_id', userId),
+      supabase.from('student_recommendations').select('target_count, completed_count').eq('student_id', userId)
     ]);
 
     const sessions = sessionsResponse.data || [];
@@ -101,6 +111,8 @@ export const dashboardService = {
     const progress = progressResponse.data || [];
     const rewardData = rewardsResponse.data;
     const achievementsData = achievementsResponse.data || [];
+    const activities = activitiesResponse.data || [];
+    const recs = recsResponse.data || [];
 
     const completedSessions = sessions.filter(s => s.status === 'completed');
     const hasAssessments = completedSessions.length > 0;
@@ -336,16 +348,23 @@ export const dashboardService = {
     });
 
     // 4. Recommendations
+    const { data: realRecsData } = await supabase
+      .from('student_recommendations')
+      .select('*')
+      .eq('student_id', userId)
+      .eq('completed', false)
+      .order('impact_score', { ascending: false })
+      .limit(3);
+
     const recommendations: RecommendationEntry[] = [];
-    if (latestReadingResult?.result_data?.insights?.recommendations) {
-      const recs = latestReadingResult.result_data.insights.recommendations as string[];
-      recs.forEach((rec, idx) => {
+    if (realRecsData && realRecsData.length > 0) {
+      realRecsData.forEach((rec) => {
         recommendations.push({
-          id: `rec_${idx}`,
-          title: `Strategy ${idx + 1}`,
-          description: rec,
-          priority: idx === 0 ? 'high' : 'medium',
-          category: 'reading'
+          id: rec.id,
+          title: rec.title,
+          description: rec.description,
+          priority: rec.priority.toLowerCase() as 'high' | 'medium' | 'low',
+          category: rec.category
         });
       });
     }
@@ -426,6 +445,24 @@ export const dashboardService = {
       }
     });
 
+    // 7. Activity Stats
+    const totalCompleted = activities.length;
+    const totalAssigned = recs.reduce((sum: number, r: any) => sum + (r.target_count || 1), 0);
+    
+    const categoryCounts: Record<string, number> = {};
+    activities.forEach((a: any) => {
+      const cat = a.learning_activities?.category || 'General';
+      categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+    });
+    const topCategory = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'None';
+
+    const activityStats = {
+      completed: totalCompleted,
+      assigned: totalAssigned === 0 ? 10 : totalAssigned, // Fallback if no recs
+      streak: rewardData?.current_streak || 0,
+      topCategory: topCategory.charAt(0).toUpperCase() + topCategory.slice(1)
+    };
+
     return {
       hasAssessments,
       scores,
@@ -440,7 +477,8 @@ export const dashboardService = {
       recommendations,
       achievements,
       weeklyProgress,
-      xpProgress
+      xpProgress,
+      activityStats
     };
   }
 };

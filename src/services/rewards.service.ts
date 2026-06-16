@@ -275,5 +275,149 @@ export const rewardsService = {
       .order('earned_at', { ascending: false });
     
     return data || [];
+  },
+  
+  async awardRecommendationXP(userId: string, category: string): Promise<void> {
+    const xpAwarded = 20; // 20 XP per recommendation
+    
+    // 1. Give XP
+    const { data: rewardData } = await supabase
+      .from('student_rewards')
+      .select('xp, current_streak, highest_streak, last_activity_date')
+      .eq('student_id', userId)
+      .single();
+
+    if (rewardData) {
+      await supabase
+        .from('student_rewards')
+        .update({
+          xp: rewardData.xp + xpAwarded,
+          last_activity_date: new Date().toISOString()
+        })
+        .eq('student_id', userId);
+    }
+
+    // 2. Check achievements
+    const { data: recsCountData } = await supabase
+      .from('student_recommendations')
+      .select('id, category', { count: 'exact' })
+      .eq('student_id', userId)
+      .eq('completed', true);
+
+    const totalRecs = recsCountData?.length || 0;
+    const categoryCount = recsCountData?.filter(r => r.category === category).length || 0;
+
+    const { data: existingAchievements } = await supabase
+      .from('student_achievements')
+      .select('achievement_code')
+      .eq('student_id', userId);
+
+    const existingCodes = new Set(existingAchievements?.map(a => a.achievement_code) || []);
+    const newlyUnlocked: UnlockedAchievement[] = [];
+    const A = REWARDS_CONFIG.achievements;
+
+    const check = (conf: any, condition: boolean) => {
+      if (condition && conf && !existingCodes.has(conf.code)) {
+        newlyUnlocked.push({
+          code: conf.code,
+          name: conf.name,
+          description: conf.description,
+          icon: conf.icon,
+          xpAwarded: conf.xp_awarded
+        });
+      }
+    };
+
+    check(A.CONSISTENT_PRACTICE, totalRecs >= 10);
+    check(A.SKILL_MASTER, totalRecs >= 25);
+
+    if (category === 'reading') {
+      check(A.READING_IMPROVER, categoryCount >= 5);
+    }
+    if (category === 'focus' || category === 'attention') {
+      check(A.FOCUS_BUILDER, categoryCount >= 5);
+    }
+
+    // Grant newly unlocked
+    for (const achievement of newlyUnlocked) {
+      await supabase.from('student_achievements').insert({
+        student_id: userId,
+        achievement_code: achievement.code,
+        achievement_name: achievement.name,
+        achievement_description: achievement.description,
+        icon: achievement.icon,
+        xp_awarded: achievement.xpAwarded
+      });
+      // Add achievement XP
+      await supabase
+        .from('student_rewards')
+        .update({ xp: (rewardData?.xp || 0) + xpAwarded + achievement.xpAwarded })
+        .eq('student_id', userId);
+    }
+  },
+
+  async awardActivityXPAndCheckAchievements(userId: string, xpAwarded: number, category: string): Promise<void> {
+    const { data: rewardData } = await supabase
+      .from('student_rewards')
+      .select('xp')
+      .eq('student_id', userId)
+      .single();
+
+    if (rewardData) {
+      await supabase
+        .from('student_rewards')
+        .update({ xp: rewardData.xp + xpAwarded })
+        .eq('student_id', userId);
+    }
+
+    const { data: attemptsCountData } = await supabase
+      .from('student_activity_attempts')
+      .select('id, learning_activities(category)')
+      .eq('student_id', userId);
+
+    const totalActivities = attemptsCountData?.length || 0;
+    const readingActivities = attemptsCountData?.filter(a => a.learning_activities?.category === 'reading').length || 0;
+    const attentionActivities = attemptsCountData?.filter(a => a.learning_activities?.category === 'attention' || a.learning_activities?.category === 'focus').length || 0;
+
+    const { data: existingAchievements } = await supabase
+      .from('student_achievements')
+      .select('achievement_code')
+      .eq('student_id', userId);
+
+    const existingCodes = new Set(existingAchievements?.map(a => a.achievement_code) || []);
+    const newlyUnlocked: UnlockedAchievement[] = [];
+    const A = REWARDS_CONFIG.achievements;
+
+    const check = (conf: any, condition: boolean) => {
+      if (condition && conf && !existingCodes.has(conf.code)) {
+        newlyUnlocked.push({
+          code: conf.code,
+          name: conf.name,
+          description: conf.description,
+          icon: conf.icon,
+          xpAwarded: conf.xp_awarded
+        });
+      }
+    };
+
+    check(A.ACTIVITY_STARTER, totalActivities >= 1);
+    check(A.READING_WARRIOR, readingActivities >= 10);
+    check(A.FOCUS_TRAINER, attentionActivities >= 10);
+    check(A.ACTIVITY_MASTER, totalActivities >= 50);
+
+    for (const achievement of newlyUnlocked) {
+      await supabase.from('student_achievements').insert({
+        student_id: userId,
+        achievement_code: achievement.code,
+        achievement_name: achievement.name,
+        achievement_description: achievement.description,
+        icon: achievement.icon,
+        xp_awarded: achievement.xpAwarded
+      });
+      await supabase
+        .from('student_rewards')
+        .update({ xp: (rewardData?.xp || 0) + xpAwarded + achievement.xpAwarded })
+        .eq('student_id', userId);
+    }
   }
 };

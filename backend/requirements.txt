@@ -9,3 +9,4 @@ xgboost
 pandas
 scikit-learn
 scipy
+supabase

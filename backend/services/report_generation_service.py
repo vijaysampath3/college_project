@@ -10,8 +10,6 @@ from services.risk_engine import RiskEngine
 load_dotenv()
 logger = logging.getLogger(__name__)
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
 class ReportGenerationService:
     @staticmethod
     def _fetch_assessment_snapshot(student_id: str) -> Dict[str, Any]:
@@ -73,53 +71,99 @@ class ReportGenerationService:
                 assessment_summary[k] = v["scores"]
             else:
                 assessment_summary[k] = {"completed": True}
+
+        # Add Intervention Progress Snapshot
+        try:
+            supabase = get_supabase_client()
+            activities_res = supabase.table("student_activity_attempts").select("*, learning_activities(category)").eq("student_id", student_id).execute()
+            recs_res = supabase.table("student_recommendations").select("target_count, completed_count").eq("student_id", student_id).execute()
+            
+            activities = activities_res.data or []
+            recs = recs_res.data or []
+            
+            total_completed = len(activities)
+            total_assigned = sum(r.get("target_count", 1) for r in recs)
+            if total_assigned == 0: total_assigned = 10
+            
+            cat_counts = {}
+            for a in activities:
+                cat = a.get("learning_activities", {}).get("category", "General") if a.get("learning_activities") else "General"
+                cat_counts[cat] = cat_counts.get(cat, 0) + 1
+                
+            top_category = sorted(cat_counts.items(), key=lambda x: x[1], reverse=True)[0][0] if cat_counts else "None"
+            
+            assessment_summary["intervention_progress"] = {
+                "completed": total_completed,
+                "assigned": total_assigned,
+                "completion_rate": int((total_completed / total_assigned) * 100) if total_assigned > 0 else 0,
+                "top_category": top_category.capitalize()
+            }
+        except Exception as e:
+            logger.error(f"Failed to fetch intervention progress for report: {e}")
+            assessment_summary["intervention_progress"] = {
+                "completed": 0, "assigned": 0, "completion_rate": 0, "top_category": "None"
+            }
                 
         # Generate AI Insights
-        system_prompt = """
-        You are an expert Educational Psychologist analyzing a student's cognitive and learning profile.
-        You are given an assessment summary, a deterministic risk analysis, and a learning profile.
-        
-        CRITICAL RULES:
-        1. NEVER use medical diagnoses (e.g., ADHD, Dyslexia, Disorder). Use ONLY "Indicators Observed", "Potential Risk", "Learning Support Considerations".
-        2. Do NOT invent scores or new risks. Rely solely on the provided risk analysis and summary.
-        3. Output MUST be valid JSON matching the exact schema below.
-
-        Schema:
-        {
-            "executiveSummary": "A 3-4 sentence professional summary of the student's learning profile, readiness, and overall pattern.",
-            "strengths": ["Strength 1", "Strength 2", "Strength 3"],
-            "growthAreas": ["Area 1", "Area 2", "Area 3"],
-            "recommendations": ["Recommendation 1", "Recommendation 2", "Recommendation 3"]
-        }
-        """
-
-        user_content = json.dumps({
-            "readiness_score": readiness_score,
-            "learning_profile": learning_profile,
-            "risk_analysis": risks,
-            "assessment_summary": assessment_summary
-        })
-
-        ai_insights = {
-            "executiveSummary": "Insights could not be generated.",
-            "strengths": [],
-            "growthAreas": [],
-            "recommendations": []
-        }
-
-        try:
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_content}
-                ],
-                response_format={ "type": "json_object" },
-                temperature=0.3
+        api_key = os.getenv("OPENAI_API_KEY") or os.getenv("GITHUB_TOKEN")
+        if not api_key:
+            logger.warning("OPENAI_API_KEY is missing. Providing fallback insights.")
+            ai_insights = {
+                "executiveSummary": "This is an automatically generated mock report. To see AI-generated insights, please add an OPENAI_API_KEY to your environment variables.",
+                "strengths": ["Strong foundational skills", "Consistent effort across tasks", "Good visual processing"],
+                "growthAreas": ["Focus continuity during complex tasks", "Speed in sequential processing"],
+                "recommendations": ["Break down complex tasks into smaller chunks", "Practice timed exercises to improve speed"]
+            }
+        else:
+            client = OpenAI(
+                base_url="https://models.inference.ai.azure.com",
+                api_key=api_key
             )
-            ai_insights = json.loads(response.choices[0].message.content)
-        except Exception as e:
-            logger.error(f"Failed to generate AI insights: {e}")
+            system_prompt = """
+            You are an expert Educational Psychologist analyzing a student's cognitive and learning profile.
+            You are given an assessment summary, a deterministic risk analysis, and a learning profile.
+            
+            CRITICAL RULES:
+            1. NEVER use medical diagnoses (e.g., ADHD, Dyslexia, Disorder). Use ONLY "Indicators Observed", "Potential Risk", "Learning Support Considerations".
+            2. Do NOT invent scores or new risks. Rely solely on the provided risk analysis and summary.
+            3. Output MUST be valid JSON matching the exact schema below.
+
+            Schema:
+            {
+                "executiveSummary": "A 3-4 sentence professional summary of the student's learning profile, readiness, and overall pattern.",
+                "strengths": ["Strength 1", "Strength 2", "Strength 3"],
+                "growthAreas": ["Area 1", "Area 2", "Area 3"],
+                "recommendations": ["Recommendation 1", "Recommendation 2", "Recommendation 3"]
+            }
+            """
+
+            user_content = json.dumps({
+                "readiness_score": readiness_score,
+                "learning_profile": learning_profile,
+                "risk_analysis": risks,
+                "assessment_summary": assessment_summary
+            })
+
+            ai_insights = {
+                "executiveSummary": "Insights could not be generated.",
+                "strengths": [],
+                "growthAreas": [],
+                "recommendations": []
+            }
+
+            try:
+                response = client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_content}
+                    ],
+                    response_format={ "type": "json_object" },
+                    temperature=0.3
+                )
+                ai_insights = json.loads(response.choices[0].message.content)
+            except Exception as e:
+                logger.error(f"Failed to generate AI insights: {e}")
 
         supabase = get_supabase_client()
         

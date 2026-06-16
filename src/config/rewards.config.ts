@@ -240,6 +240,76 @@ export const REWARDS_CONFIG = {
       description: 'Screen Focus > 95%',
       icon: 'Monitor',
       xp_awarded: 100
+    },
+    CONSISTENT_PRACTICE: {
+      code: 'CONSISTENT_PRACTICE',
+      name: 'Consistent Practice',
+      description: 'Complete 10 recommendations',
+      icon: 'Target',
+      xp_awarded: 250
+    },
+    WEEKLY_GOAL_COMPLETED: {
+      code: 'WEEKLY_GOAL_COMPLETED',
+      name: 'Goal Crusher',
+      description: 'Complete your weekly action plan tasks',
+      icon: 'Award',
+      xp_awarded: 300
+    },
+    READING_IMPROVER: {
+      code: 'READING_IMPROVER',
+      name: 'Reading Improver',
+      description: 'Complete 5 reading recommendations',
+      icon: 'BookOpen',
+      xp_awarded: 150
+    },
+    FOCUS_BUILDER: {
+      code: 'FOCUS_BUILDER',
+      name: 'Focus Builder',
+      description: 'Complete 5 focus recommendations',
+      icon: 'Brain',
+      xp_awarded: 150
+    },
+    SKILL_MASTER: {
+      code: 'SKILL_MASTER',
+      name: 'Skill Master',
+      description: 'Complete 25 recommendations',
+      icon: 'Star',
+      xp_awarded: 500
+    },
+    ACTIVITY_STARTER: {
+      code: 'ACTIVITY_STARTER',
+      name: 'Activity Starter',
+      description: 'Complete first activity',
+      icon: 'PlayCircle',
+      xp_awarded: 50
+    },
+    READING_WARRIOR: {
+      code: 'READING_WARRIOR',
+      name: 'Reading Warrior',
+      description: 'Complete 10 reading activities',
+      icon: 'BookOpen',
+      xp_awarded: 200
+    },
+    FOCUS_TRAINER: {
+      code: 'FOCUS_TRAINER',
+      name: 'Focus Trainer',
+      description: 'Complete 10 attention activities',
+      icon: 'Brain',
+      xp_awarded: 200
+    },
+    LEARNING_STREAK: {
+      code: 'LEARNING_STREAK',
+      name: 'Learning Streak',
+      description: '7-day activity streak',
+      icon: 'Activity',
+      xp_awarded: 300
+    },
+    ACTIVITY_MASTER: {
+      code: 'ACTIVITY_MASTER',
+      name: 'Activity Master',
+      description: 'Complete 50 activities',
+      icon: 'Star',
+      xp_awarded: 1000
     }
   }
 };

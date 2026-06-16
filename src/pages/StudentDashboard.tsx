@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Brain, Target, TrendingUp, Clock, Award, ChevronRight, PlayCircle, Camera } from 'lucide-react';
+import { BookOpen, Brain, Target, TrendingUp, Clock, Award, ChevronRight, PlayCircle, Camera, Activity } from 'lucide-react';
 import { DashboardLayout } from '../components/layout';
 import { Card, CardContent, StatCard, Badge } from '../components/ui';
 import { AssessmentHistoryChart, WeeklyProgressChart } from '../components/charts';
@@ -176,13 +176,22 @@ const StudentDashboard: React.FC = () => {
           color="secondary"
         />
         <StatCard
-          title="Overall Progress"
-          value={`${data.scores.overallProgress}%`}
-          subtitle="Keep it up!"
+          title="Activity Progress"
+          value={`${data.activityStats.completed} / ${data.activityStats.assigned}`}
+          subtitle="Activities Completed"
           trend="up"
-          trendValue="Completion Rate"
+          trendValue={`Top Category: ${data.activityStats.topCategory}`}
+          icon={<Activity className="w-6 h-6" />}
+          color="success"
+        />
+        <StatCard
+          title="Current Streak"
+          value={`${data.activityStats.streak} Days`}
+          subtitle="Learning Streak"
+          trend="up"
+          trendValue="Keep it up!"
           icon={<TrendingUp className="w-6 h-6" />}
-          color="secondary"
+          color="warning"
         />
       </div>
 
@@ -287,16 +296,26 @@ const StudentDashboard: React.FC = () => {
         <Card>
           <CardContent>
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-bold text-gray-900">Recommendations</h3>
-              <Badge variant="success">{data.recommendations.length} New</Badge>
+              <h3 className="text-lg font-bold text-gray-900">Today's Focus</h3>
+              <Badge variant="success">{data.recommendations.length} Pending</Badge>
             </div>
             <div className="space-y-4">
               {data.recommendations.length > 0 ? (
-                data.recommendations.map((rec) => (
-                  <RecommendationCard key={rec.id} recommendation={rec} />
-                ))
+                <>
+                  {data.recommendations.slice(0, 1).map((rec) => (
+                    <RecommendationCard key={rec.id} recommendation={rec} />
+                  ))}
+                  <button onClick={() => navigate('/student/recommendations')} className="w-full py-3 mt-4 border border-primary-200 text-primary-600 rounded-xl font-bold hover:bg-primary-50 transition-colors">
+                    View Full Action Plan
+                  </button>
+                </>
               ) : (
-                <p className="text-gray-500 text-sm">Complete an assessment to receive recommendations.</p>
+                <div className="text-center py-6">
+                  <p className="text-gray-500 text-sm mb-4">Complete an assessment to receive personalized recommendations.</p>
+                  <button onClick={() => navigate('/student/reports')} className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-bold hover:bg-primary-700">
+                    Generate Report
+                  </button>
+                </div>
               )}
             </div>
           </CardContent>

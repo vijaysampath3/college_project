@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { reportsService } from '../services/reports.service';
 import { StudentReport } from '../types/Report';
-import { FileText, Download, Loader2, Brain, Activity, Clock, FileBarChart, CheckCircle2, TrendingUp } from 'lucide-react';
+import { recommendationsService } from '../services/recommendations.service';
+import { FileText, Download, Loader2, Brain, Activity, Clock, FileBarChart, CheckCircle2, TrendingUp, ArrowLeft } from 'lucide-react';
 import { RiskCard } from '../components/reports/RiskCard';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
 export const ReportsHub: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [reports, setReports] = useState<StudentReport[]>([]);
   const [activeReport, setActiveReport] = useState<StudentReport | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +48,14 @@ export const ReportsHub: React.FC = () => {
       const newReport = await reportsService.generateReport(user.id);
       setReports([newReport, ...reports]);
       setActiveReport(newReport);
+      
+      // Auto-generate recommendations based on the new report
+      try {
+        await recommendationsService.generateRecommendations(user.id, newReport.id);
+      } catch (recErr) {
+        console.error("Failed to generate recommendations for report:", recErr);
+        // We don't fail the whole report generation if just recommendations fail
+      }
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -61,9 +72,24 @@ export const ReportsHub: React.FC = () => {
       
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
       
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      let heightLeft = imgHeight;
+      let position = 0;
+      
+      // First page
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+      heightLeft -= pageHeight;
+      
+      // Subsequent pages
+      while (heightLeft > 0) {
+        position = position - pageHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      
       pdf.save(`Intelligence_Report_${new Date().toISOString().split('T')[0]}.pdf`);
     } catch (err) {
       console.error("Failed to generate PDF", err);
@@ -87,6 +113,13 @@ export const ReportsHub: React.FC = () => {
           <p className="text-gray-600">Comprehensive analysis of your cognitive and learning profile</p>
         </div>
         <div className="flex gap-4">
+          <button
+            onClick={() => navigate('/student')}
+            className="flex items-center gap-2 px-6 py-2.5 bg-white text-gray-700 border border-gray-200 rounded-xl font-bold hover:bg-gray-50 transition-colors shadow-sm"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Dashboard
+          </button>
           <button
             onClick={handleGenerate}
             disabled={isGenerating}
@@ -212,6 +245,34 @@ export const ReportsHub: React.FC = () => {
                       </div>
                     </section>
                   </div>
+
+                  {/* 4. Intervention Progress */}
+                  {activeReport.assessment_summary?.intervention_progress && (
+                    <section className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                      <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <Activity className="w-6 h-6 text-primary-500" />
+                        Intervention Progress
+                      </h2>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="text-center p-4 bg-gray-50 rounded-xl border border-gray-100">
+                          <div className="text-3xl font-bold text-primary-600 mb-1">{activeReport.assessment_summary.intervention_progress.assigned}</div>
+                          <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">Assigned</div>
+                        </div>
+                        <div className="text-center p-4 bg-gray-50 rounded-xl border border-gray-100">
+                          <div className="text-3xl font-bold text-success-600 mb-1">{activeReport.assessment_summary.intervention_progress.completed}</div>
+                          <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">Completed</div>
+                        </div>
+                        <div className="text-center p-4 bg-gray-50 rounded-xl border border-gray-100">
+                          <div className="text-3xl font-bold text-indigo-600 mb-1">{activeReport.assessment_summary.intervention_progress.completion_rate}%</div>
+                          <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">Completion Rate</div>
+                        </div>
+                        <div className="text-center p-4 bg-gray-50 rounded-xl border border-gray-100">
+                          <div className="text-xl font-bold text-warning-600 mb-1 flex items-center justify-center h-9">{activeReport.assessment_summary.intervention_progress.top_category}</div>
+                          <div className="text-xs text-gray-500 font-medium uppercase tracking-wider">Top Category</div>
+                        </div>
+                      </div>
+                    </section>
+                  )}
 
                   {/* 5. Risk Analysis */}
                   <section>

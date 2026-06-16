@@ -8,21 +8,18 @@ from services.whisper_service import transcribe_audio
 from services.scoring_service import analyze_transcript
 from routers.typing import router as typing_router
 from routers.adhd import router as adhd_router
-from routers import auth, reading, typing_assessment, comprehension, attention, cpt, focus, learning_behaviour, reports
+from routers import attention, focus, learning_behaviour, reports, recommendations, activities
 
 app = FastAPI()
 
 app.include_router(typing_router, prefix="/api/typing", tags=["typing"])
 app.include_router(adhd_router, prefix="/api/adhd", tags=["adhd"])
-app.include_router(auth.router)
-app.include_router(reading.router)
-app.include_router(typing_assessment.router)
-app.include_router(comprehension.router)
 app.include_router(attention.router)
-app.include_router(cpt.router)
 app.include_router(focus.router)
 app.include_router(learning_behaviour.router)
 app.include_router(reports.router)
+app.include_router(recommendations.router)
+app.include_router(activities.router)
 
 app.add_middleware(
     CORSMiddleware,
