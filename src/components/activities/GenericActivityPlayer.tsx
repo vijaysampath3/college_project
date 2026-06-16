@@ -4,7 +4,7 @@ import { LearningActivity } from '../../services/activity.service';
 
 interface GenericActivityPlayerProps {
   activity: LearningActivity;
-  onComplete: (score: number, timeSpent: number) => void;
+  onComplete: (payload: { score: number; accuracy_percentage: number; time_spent_seconds: number; metrics: any }) => void;
 }
 
 export const GenericActivityPlayer: React.FC<GenericActivityPlayerProps> = ({ activity, onComplete }) => {
@@ -24,7 +24,12 @@ export const GenericActivityPlayer: React.FC<GenericActivityPlayerProps> = ({ ac
 
   const handleComplete = () => {
     setIsPlaying(false);
-    onComplete(score, timeSpent);
+    onComplete({
+      score: score,
+      accuracy_percentage: score,
+      time_spent_seconds: timeSpent,
+      metrics: {}
+    });
   };
 
   return (

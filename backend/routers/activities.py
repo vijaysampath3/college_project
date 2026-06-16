@@ -12,12 +12,21 @@ router = APIRouter(
 class ActivityAttempt(BaseModel):
     student_id: str
     activity_code: str
-    recommendation_id: Optional[str]
-    score: Optional[float]
-    accuracy_percentage: Optional[float]
+    recommendation_id: Optional[str] = None
+    score: Optional[float] = None
+    accuracy_percentage: Optional[float] = None
     time_spent_seconds: int
+    reaction_time_ms: Optional[float] = None
+    mistake_count: Optional[int] = None
+    difficulty: Optional[str] = None
+    activity_type: Optional[str] = None
+    metrics: Optional[Dict[str, Any]] = None
 
-def calculate_xp(difficulty: str, score: float, is_first_attempt: bool, streak: int) -> int:
+def calculate_xp(difficulty: str, score: float, is_first_attempt: bool, streak: int, time_spent_seconds: int) -> int:
+    # Minimum participation requirement (e.g. 10 seconds)
+    if time_spent_seconds < 10:
+        return 0
+
     xp = 10
     if difficulty.lower() == 'medium': xp = 20
     elif difficulty.lower() == 'hard': xp = 35
@@ -66,12 +75,12 @@ async def save_attempt(req: ActivityAttempt):
         attempt_number = len(prev_attempts.data) + 1
         
         # Get user streak (simplified logic, usually fetched from student_rewards)
-        reward_resp = supabase.table("student_rewards").select("current_streak").eq("student_id", req.student_id).execute()
-        streak = reward_resp.data[0]["current_streak"] if reward_resp.data else 0
+        # Table doesn't exist yet in the database so defaulting to 0
+        streak = 0
         
         # Calculate score and quality
         final_score = req.score if req.score is not None else req.accuracy_percentage or 0
-        xp_earned = calculate_xp(activity["difficulty"], final_score, is_first_attempt, streak)
+        xp_earned = calculate_xp(activity["difficulty"], final_score, is_first_attempt, streak, req.time_spent_seconds)
         quality = determine_quality(final_score)
         
         attempt_record = {
@@ -84,7 +93,13 @@ async def save_attempt(req: ActivityAttempt):
             "xp_earned": xp_earned,
             "completed": True,
             "time_spent_seconds": req.time_spent_seconds,
-            "attempt_number": attempt_number
+            "attempt_number": attempt_number,
+            "difficulty": req.difficulty or activity["difficulty"],
+            "activity_type": req.activity_type or activity["activity_type"],
+            "metrics": req.metrics or {
+                "reaction_time_ms": req.reaction_time_ms,
+                "mistake_count": req.mistake_count
+            }
         }
         
         supabase.table("student_activity_attempts").insert(attempt_record).execute()

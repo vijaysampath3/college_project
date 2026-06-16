@@ -29,5 +29,11 @@ export const recommendationsService = {
     const response = await fetch(`${API_URL}/${studentId}/action-plan`);
     if (!response.ok) throw new Error('Failed to fetch action plan');
     return response.json();
+  },
+
+  async resetActionPlan(studentId: string): Promise<{ success: boolean }> {
+    const response = await fetch(`${API_URL}/${studentId}/reset`, { method: 'POST' });
+    if (!response.ok) throw new Error('Failed to reset action plan');
+    return response.json();
   }
 };

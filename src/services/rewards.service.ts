@@ -419,5 +419,71 @@ export const rewardsService = {
         .update({ xp: (rewardData?.xp || 0) + xpAwarded + achievement.xpAwarded })
         .eq('student_id', userId);
     }
+  },
+
+  async awardJourneyMilestoneXP(userId: string, milestone: 'week_completed' | 'journey_completed', week: number = 0) {
+    const { data: rewardData } = await supabase
+      .from('student_rewards')
+      .select('xp')
+      .eq('student_id', userId)
+      .maybeSingle();
+
+    let xpAwarded = milestone === 'journey_completed' ? 200 : 50;
+
+    if (rewardData) {
+      await supabase
+        .from('student_rewards')
+        .update({ xp: rewardData.xp + xpAwarded })
+        .eq('student_id', userId);
+    }
+
+    const { data: existingAchievements } = await supabase
+      .from('student_achievements')
+      .select('achievement_code')
+      .eq('student_id', userId);
+
+    const existingCodes = new Set(existingAchievements?.map(a => a.achievement_code) || []);
+    const newlyUnlocked: UnlockedAchievement[] = [];
+    const A = REWARDS_CONFIG.achievements;
+
+    const check = (conf: any, condition: boolean) => {
+      if (condition && conf && !existingCodes.has(conf.code)) {
+        newlyUnlocked.push({
+          code: conf.code,
+          name: conf.name,
+          description: conf.description,
+          icon: conf.icon,
+          xpAwarded: conf.xp_awarded
+        });
+      }
+    };
+
+    check(A.PATH_BEGINNER, milestone === 'week_completed' && week === 1);
+    check(A.PATH_EXPLORER, milestone === 'week_completed' && week >= 2);
+    check(A.PATH_ADVANCER, milestone === 'week_completed' && week >= 3);
+    check(A.PATH_MASTER, milestone === 'journey_completed');
+    check(A.JOURNEY_COMPLETED, milestone === 'journey_completed');
+
+    for (const achievement of newlyUnlocked) {
+      await supabase.from('student_achievements').insert({
+        student_id: userId,
+        achievement_code: achievement.code,
+        achievement_name: achievement.name,
+        achievement_description: achievement.description,
+        icon: achievement.icon,
+        xp_awarded: achievement.xpAwarded
+      });
+      const { data: currentRewardData } = await supabase
+        .from('student_rewards')
+        .select('xp')
+        .eq('student_id', userId)
+        .maybeSingle();
+      if (currentRewardData) {
+        await supabase
+          .from('student_rewards')
+          .update({ xp: currentRewardData.xp + achievement.xpAwarded })
+          .eq('student_id', userId);
+      }
+    }
   }
 };

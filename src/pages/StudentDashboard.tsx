@@ -7,6 +7,7 @@ import { RecentActivityList, RecommendationCard, QuickActionCard } from '../comp
 import { XPProgressCard } from '../components/dashboard/XPProgressCard';
 import { useAuth } from '../context/AuthContext';
 import { dashboardService, DashboardData } from '../services/dashboard.service';
+import { learningPathService, ActivePathResponse } from '../services/learningPath.service';
 import { useNavigate } from 'react-router-dom';
 
 type AssessmentType = 'reading' | 'comprehension' | 'typing' | 'attention' | 'cpt' | 'focus' | 'learning-behaviour';
@@ -15,13 +16,18 @@ const StudentDashboard: React.FC = () => {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [data, setData] = React.useState<DashboardData | null>(null);
+  const [pathData, setPathData] = React.useState<ActivePathResponse | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [historyTab, setHistoryTab] = React.useState<AssessmentType>('reading');
 
   React.useEffect(() => {
     if (user?.id) {
-      dashboardService.getDashboardData(user.id).then(res => {
-        setData(res);
+      Promise.all([
+        dashboardService.getDashboardData(user.id),
+        learningPathService.getActivePath(user.id).catch(() => null)
+      ]).then(([dashboardRes, pathRes]) => {
+        setData(dashboardRes);
+        setPathData(pathRes);
         setIsLoading(false);
       }).catch(err => {
         console.error("Failed to load dashboard data:", err);
@@ -178,7 +184,7 @@ const StudentDashboard: React.FC = () => {
         <StatCard
           title="Activity Progress"
           value={`${data.activityStats.completed} / ${data.activityStats.assigned}`}
-          subtitle="Activities Completed"
+          subtitle="Completed vs Assigned"
           trend="up"
           trendValue={`Top Category: ${data.activityStats.topCategory}`}
           icon={<Activity className="w-6 h-6" />}
@@ -278,6 +284,36 @@ const StudentDashboard: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Learning Journey Card */}
+      {pathData?.path && (
+        <div className="mb-8 cursor-pointer" onClick={() => navigate('/student/learning-journey')}>
+          <div className="bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl p-6 text-white shadow-md relative overflow-hidden group hover:shadow-lg transition-all">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/3 group-hover:scale-110 transition-transform duration-500"></div>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div className="flex-1">
+                <span className="px-3 py-1 bg-white/20 text-white rounded-full text-xs font-bold uppercase tracking-wider mb-4 inline-block backdrop-blur-sm">
+                  Active Learning Journey
+                </span>
+                <h2 className="text-2xl font-bold mb-1">{pathData.path.path_name}</h2>
+                <p className="text-primary-100 text-sm mb-4">Focus: {pathData.path.primary_focus_area}</p>
+                <div className="flex items-center gap-4 text-sm font-medium">
+                  <span>Week {pathData.path.current_week} of 4</span>
+                  <div className="flex-1 max-w-xs bg-black/20 rounded-full h-2">
+                    <div className="bg-white rounded-full h-2" style={{ width: `${pathData.progress.completion_percentage}%` }}></div>
+                  </div>
+                  <span>{pathData.progress.completion_percentage}%</span>
+                </div>
+              </div>
+              <div className="shrink-0 flex items-center justify-center">
+                <button className="flex items-center gap-2 px-6 py-3 bg-white text-primary-700 rounded-xl font-bold shadow-sm group-hover:bg-primary-50 transition-colors">
+                  Continue Journey <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Recent Activity & Recommendations */}
       <div className="grid lg:grid-cols-2 gap-6">

@@ -38,15 +38,21 @@ export const ActivityPlayer = () => {
     fetchActivity();
   }, [activityCode]);
 
-  const handleActivityComplete = async (score: number, timeSpent: number) => {
+  const handleActivityComplete = async (payload: any) => {
     if (!user || !activity) return;
     try {
       const result = await activityService.saveAttempt({
         student_id: user.id,
         activity_code: activity.activity_code,
         recommendation_id: recommendationId,
-        score,
-        time_spent_seconds: timeSpent
+        score: payload.score || 0,
+        accuracy_percentage: payload.accuracy_percentage || 0,
+        time_spent_seconds: payload.time_spent_seconds || 0,
+        reaction_time_ms: payload.metrics?.reaction_time_ms,
+        mistake_count: payload.metrics?.mistake_count,
+        metrics: payload.metrics,
+        difficulty: activity.difficulty,
+        activity_type: activity.activity_type
       });
       
       // Update local UI

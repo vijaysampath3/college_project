@@ -8,26 +8,34 @@ from services.whisper_service import transcribe_audio
 from services.scoring_service import analyze_transcript
 from routers.typing import router as typing_router
 from routers.adhd import router as adhd_router
-from routers import attention, focus, learning_behaviour, reports, recommendations, activities
+from routers import attention, focus, learning_behaviour, auth, assessments, reports, recommendations, telemetry, dev, dashboard, activities, learning_paths
 
-app = FastAPI()
+app = FastAPI(title="NeuroLearn API")
+
+# Setup CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],  # Vite default port
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(typing_router, prefix="/api/typing", tags=["typing"])
 app.include_router(adhd_router, prefix="/api/adhd", tags=["adhd"])
 app.include_router(attention.router)
 app.include_router(focus.router)
 app.include_router(learning_behaviour.router)
-app.include_router(reports.router)
-app.include_router(recommendations.router)
-app.include_router(activities.router)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # For local dev
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(assessments.router, prefix="/api/assessments", tags=["assessments"])
+app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
+app.include_router(recommendations.router, prefix="/api/recommendations", tags=["recommendations"])
+app.include_router(telemetry.router, prefix="/api/telemetry", tags=["telemetry"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["dashboard"])
+app.include_router(activities.router, prefix="/api/activities", tags=["activities"])
+app.include_router(learning_paths.router, prefix="/api/learning-paths", tags=["learning_paths"])
+app.include_router(dev.router, prefix="/api/dev", tags=["dev"])
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)

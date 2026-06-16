@@ -15,6 +15,7 @@ import { FocusAssessment } from './pages/assessments/FocusAssessment';
 import { LearningBehaviourAssessment } from './pages/assessments/LearningBehaviourAssessment';
 import { ReportsHub } from './pages/ReportsHub';
 import { RecommendationsPage } from './pages/RecommendationsPage';
+import { LearningJourneyPage } from './pages/LearningJourneyPage';
 import { ActivitiesLibrary } from './pages/ActivitiesLibrary';
 import { ActivityPlayer } from './pages/ActivityPlayer';
 
@@ -35,6 +36,7 @@ function App() {
               <Route path="/student/assessments/learning-behaviour" element={<LearningBehaviourAssessment />} />
               <Route path="/student/reports" element={<ReportsHub />} />
               <Route path="/student/recommendations" element={<RecommendationsPage />} />
+              <Route path="/student/learning-journey" element={<LearningJourneyPage />} />
               <Route path="/student/activities" element={<ActivitiesLibrary />} />
               <Route path="/student/activity/:activityCode" element={<ActivityPlayer />} />
               <Route path="/student/assessments/:type" element={<AssessmentPlaceholder />} />

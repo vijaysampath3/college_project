@@ -98,7 +98,23 @@ async def complete_recommendation(rec_id: str):
             "completed_at": now
         }).eq("id", rec_id).execute()
         
-        return {"success": True, "data": resp.data}
+        return {"success": True}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/{student_id}/reset")
+async def reset_recommendations(student_id: str):
+    try:
+        supabase = get_supabase_client()
+        
+        # Reset all recommendations for this student
+        resp = supabase.table("student_recommendations").update({
+            "completed": False,
+            "status": "pending",
+            "completed_at": None
+        }).eq("student_id", student_id).execute()
+        
+        return {"success": True}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

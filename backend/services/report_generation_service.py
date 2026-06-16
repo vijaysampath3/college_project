@@ -72,36 +72,46 @@ class ReportGenerationService:
             else:
                 assessment_summary[k] = {"completed": True}
 
-        # Add Intervention Progress Snapshot
+        # Add Learning Journey Progress Snapshot
         try:
             supabase = get_supabase_client()
-            activities_res = supabase.table("student_activity_attempts").select("*, learning_activities(category)").eq("student_id", student_id).execute()
-            recs_res = supabase.table("student_recommendations").select("target_count, completed_count").eq("student_id", student_id).execute()
+            path_res = supabase.table("student_learning_paths").select("*").eq("student_id", student_id).eq("status", "active").execute()
             
-            activities = activities_res.data or []
-            recs = recs_res.data or []
-            
-            total_completed = len(activities)
-            total_assigned = sum(r.get("target_count", 1) for r in recs)
-            if total_assigned == 0: total_assigned = 10
-            
-            cat_counts = {}
-            for a in activities:
-                cat = a.get("learning_activities", {}).get("category", "General") if a.get("learning_activities") else "General"
-                cat_counts[cat] = cat_counts.get(cat, 0) + 1
+            if path_res.data:
+                active_path = path_res.data[0]
                 
-            top_category = sorted(cat_counts.items(), key=lambda x: x[1], reverse=True)[0][0] if cat_counts else "None"
-            
-            assessment_summary["intervention_progress"] = {
-                "completed": total_completed,
-                "assigned": total_assigned,
-                "completion_rate": int((total_completed / total_assigned) * 100) if total_assigned > 0 else 0,
-                "top_category": top_category.capitalize()
-            }
+                # Fetch items to get completed count
+                items_res = supabase.table("learning_path_items").select("*").eq("path_id", active_path["id"]).execute()
+                items = items_res.data or []
+                total_completed = sum(1 for i in items if i.get("completed"))
+                
+                cat_counts = {}
+                for a in items:
+                    if a.get("completed"):
+                        cat = a.get("activity_category", "General")
+                        cat_counts[cat] = cat_counts.get(cat, 0) + 1
+                        
+                top_category = sorted(cat_counts.items(), key=lambda x: x[1], reverse=True)[0][0] if cat_counts else "None"
+
+                assessment_summary["learning_journey_progress"] = {
+                    "path_name": active_path["path_name"],
+                    "completion_percentage": active_path["completion_percentage"],
+                    "current_week": active_path["current_week"],
+                    "completed_activities": total_completed,
+                    "top_category": top_category.capitalize()
+                }
+            else:
+                assessment_summary["learning_journey_progress"] = {
+                    "path_name": "No Active Journey",
+                    "completion_percentage": 0,
+                    "current_week": 1,
+                    "completed_activities": 0,
+                    "top_category": "None"
+                }
         except Exception as e:
-            logger.error(f"Failed to fetch intervention progress for report: {e}")
-            assessment_summary["intervention_progress"] = {
-                "completed": 0, "assigned": 0, "completion_rate": 0, "top_category": "None"
+            logger.error(f"Failed to fetch learning journey progress for report: {e}")
+            assessment_summary["learning_journey_progress"] = {
+                "path_name": "Unknown", "completion_percentage": 0, "current_week": 1, "completed_activities": 0, "top_category": "None"
             }
                 
         # Generate AI Insights

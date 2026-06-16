@@ -20,6 +20,11 @@ export interface ActivityAttemptPayload {
   score: number;
   accuracy_percentage?: number;
   time_spent_seconds: number;
+  reaction_time_ms?: number;
+  mistake_count?: number;
+  difficulty?: string;
+  activity_type?: string;
+  metrics?: any;
 }
 
 export interface AttemptResponse {

@@ -114,15 +114,33 @@ export const RecommendationsPage: React.FC = () => {
 
       {recommendations.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100">
-          <TargetIcon className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">No Active Recommendations</h2>
-          <p className="text-gray-500 mb-6">Complete an assessment to generate your personalized action plan!</p>
-          <button
-            onClick={() => navigate('/student/reports')}
-            className="px-6 py-3 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-colors"
-          >
-            Go to Reports
-          </button>
+          <CheckCircle2 className="w-16 h-16 text-success-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">All Assigned Activities Completed!</h2>
+          <p className="text-gray-500 mb-6">Great job! You have finished all the activities in your current action plan.</p>
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={async () => {
+                if (!user) return;
+                try {
+                  setIsLoading(true);
+                  await recommendationsService.resetActionPlan(user.id);
+                  await loadData();
+                } catch (err: any) {
+                  setError("Failed to reset action plan: " + err.message);
+                  setIsLoading(false);
+                }
+              }}
+              className="px-6 py-3 bg-white border-2 border-primary-200 text-primary-700 rounded-xl font-bold hover:border-primary-600 hover:text-primary-600 transition-colors"
+            >
+              Redo Action Plan
+            </button>
+            <button
+              onClick={() => navigate('/student/reports')}
+              className="px-6 py-3 bg-primary-600 text-white rounded-xl font-bold hover:bg-primary-700 transition-colors"
+            >
+              Go to Reports
+            </button>
+          </div>
         </div>
       ) : (
         <div className="space-y-8">

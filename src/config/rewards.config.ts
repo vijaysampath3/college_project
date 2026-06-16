@@ -97,6 +97,55 @@ export const REWARDS_CONFIG = {
       icon: 'Target',
       xp_awarded: 150
     },
+    PATH_BEGINNER: {
+      code: 'PATH_BEGINNER',
+      name: 'Path Beginner',
+      description: 'Complete your first journey activity',
+      icon: 'Target',
+      xp_awarded: 50
+    },
+    PATH_EXPLORER: {
+      code: 'PATH_EXPLORER',
+      name: 'Path Explorer',
+      description: 'Reach Week 2 in your learning journey',
+      icon: 'BookOpen',
+      xp_awarded: 100
+    },
+    PATH_ADVANCER: {
+      code: 'PATH_ADVANCER',
+      name: 'Path Advancer',
+      description: 'Reach Week 3 in your learning journey',
+      icon: 'Brain',
+      xp_awarded: 150
+    },
+    PATH_MASTER: {
+      code: 'PATH_MASTER',
+      name: 'Path Master',
+      description: 'Complete full 4-week learning journey',
+      icon: 'Award',
+      xp_awarded: 300
+    },
+    JOURNEY_COMPLETED: {
+      code: 'JOURNEY_COMPLETED',
+      name: 'Journey Completed',
+      description: 'Complete all assigned path activities',
+      icon: 'CheckCircle2',
+      xp_awarded: 500
+    },
+    WEEKLY_STREAK: {
+      code: 'WEEKLY_STREAK',
+      name: 'Weekly Streak',
+      description: 'Achieve a 7-day activity streak',
+      icon: 'Zap',
+      xp_awarded: 200
+    },
+    MONTHLY_STREAK: {
+      code: 'MONTHLY_STREAK',
+      name: 'Monthly Streak',
+      description: 'Achieve a 30-day activity streak',
+      icon: 'Award',
+      xp_awarded: 1000
+    },
     FOCUS_MASTER: {
       code: 'FOCUS_MASTER',
       name: 'Focus Master',
