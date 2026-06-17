@@ -6,6 +6,7 @@ import { Card, CardContent, Badge } from '../../components/ui';
 import { teacherService, Teacher } from '../../services/teacher.service';
 import { schoolService, School } from '../../services/school.service';
 import { assignmentService, TeacherStudentCount } from '../../services/assignment.service';
+import { generateNextId } from '../../utils/idGenerator';
 
 export const TeachersPage: React.FC = () => {
   const navigate = useNavigate();
@@ -57,6 +58,21 @@ export const TeachersPage: React.FC = () => {
 
   const handleCreateTeacher = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate Uniqueness
+    const isTeacherIdExists = teachers.some(t => t.teacher_id.toLowerCase() === formData.teacher_id.toLowerCase());
+    const isEmployeeIdExists = teachers.some(t => t.employee_id.toLowerCase() === formData.employee_id.toLowerCase());
+    
+    if (isTeacherIdExists) {
+      alert(`Teacher ID ${formData.teacher_id} already exists. Please choose a different one.`);
+      return;
+    }
+    
+    if (isEmployeeIdExists) {
+      alert(`Employee ID ${formData.employee_id} already exists. Please choose a different one.`);
+      return;
+    }
+
     try {
       await teacherService.createTeacher(formData);
       setIsCreateModalOpen(false);
@@ -78,8 +94,19 @@ export const TeachersPage: React.FC = () => {
       });
     } catch (error) {
       console.error("Failed to create teacher", error);
-      alert("Failed to create teacher. Please check if email, teacher ID, or employee ID are unique.");
+      alert("Failed to create teacher. Please check if email is unique.");
     }
+  };
+
+  const handleOpenModal = () => {
+    const nextTchId = generateNextId('TCH', teachers.map(t => t.teacher_id));
+    const nextEmpId = generateNextId('EMP', teachers.map(t => t.employee_id));
+    setFormData({
+      ...formData,
+      teacher_id: nextTchId,
+      employee_id: nextEmpId,
+    });
+    setIsCreateModalOpen(true);
   };
 
   const deactivateTeacher = async (id: string, e: React.MouseEvent) => {
@@ -90,6 +117,19 @@ export const TeachersPage: React.FC = () => {
         loadData();
       } catch (error) {
         console.error("Failed to deactivate teacher", error);
+      }
+    }
+  };
+
+  const deleteTeacher = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if(window.confirm("Are you sure you want to PERMANENTLY delete this teacher? This action cannot be undone.")) {
+      try {
+        await teacherService.deleteTeacher(id);
+        loadData();
+      } catch (error) {
+        console.error("Failed to delete teacher", error);
+        alert("Failed to delete teacher. They might be linked to existing students or assessments.");
       }
     }
   };
@@ -112,7 +152,7 @@ export const TeachersPage: React.FC = () => {
           <p className="text-gray-600">Manage teachers and assignments across all schools</p>
         </div>
         <button
-          onClick={() => setIsCreateModalOpen(true)}
+          onClick={handleOpenModal}
           className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-primary-500/25 transition-all"
         >
           <Plus className="w-5 h-5" />
@@ -209,11 +249,19 @@ export const TeachersPage: React.FC = () => {
                         {teacher.status !== 'inactive' && (
                           <button 
                             onClick={(e) => deactivateTeacher(teacher.id, e)}
-                            className="p-2 text-danger-600 hover:bg-danger-50 rounded-lg transition-colors"
+                            className="p-2 text-warning-600 hover:bg-warning-50 rounded-lg transition-colors"
+                            title="Deactivate"
                           >
                             Deactivate
                           </button>
                         )}
+                        <button 
+                          onClick={(e) => deleteTeacher(teacher.id, e)}
+                          className="p-2 text-danger-600 hover:bg-danger-50 rounded-lg transition-colors"
+                          title="Delete Permanently"
+                        >
+                          Delete
+                        </button>
                       </div>
                     </td>
                   </tr>

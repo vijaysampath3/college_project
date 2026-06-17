@@ -8,8 +8,22 @@ class TeacherService:
         """Create a new teacher"""
         try:
             supabase = get_supabase_client()
-            # Map standard fields
+            # Create the auth user first
+            auth_response = supabase.auth.admin.create_user({
+                "email": data.get("email"),
+                "password": data.get("temp_password"),
+                "email_confirm": True,
+                "user_metadata": {
+                    "role": "teacher",
+                    "full_name": data.get("teacher_name"),
+                    "teacher_id": data.get("teacher_id")
+                }
+            })
+            
+            user_id = auth_response.user.id
+            
             teacher_data = {
+                "user_id": user_id,
                 "school_id": data.get("school_id"),
                 "teacher_id": data.get("teacher_id"),
                 "employee_id": data.get("employee_id"),
@@ -94,6 +108,29 @@ class TeacherService:
     def deactivate_teacher(teacher_id: str) -> Dict[str, Any]:
         """Soft delete a teacher by setting status to inactive"""
         return TeacherService.update_teacher(teacher_id, {"status": "inactive"})
+
+    @staticmethod
+    def delete_teacher(teacher_id: str) -> bool:
+        """Permanently delete a teacher"""
+        try:
+            supabase = get_supabase_client()
+            # First get the teacher to find the user_id
+            teacher_response = supabase.table('teacher_profiles').select('user_id').eq('id', teacher_id).execute()
+            
+            response = supabase.table('teacher_profiles').delete().eq('id', teacher_id).execute()
+            
+            # Delete the auth user if it exists
+            if teacher_response.data and teacher_response.data[0].get('user_id'):
+                try:
+                    supabase.auth.admin.delete_user(teacher_response.data[0]['user_id'])
+                except Exception as e:
+                    print(f"Failed to delete auth user, maybe already deleted: {e}")
+                    
+            # If successful, data should contain the deleted row(s) or we just check if it threw an error
+            return True
+        except Exception as e:
+            print(f"Error deleting teacher: {e}")
+            raise Exception(f"Failed to delete teacher: {str(e)}")
 
     @staticmethod
     def get_teacher_stats(teacher_id: str) -> Dict[str, int]:

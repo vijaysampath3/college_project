@@ -49,7 +49,7 @@ const roleNavItems = {
     { label: 'Parents', path: '/admin/parents', icon: <HeartHandshake className="w-5 h-5" /> },
     { label: 'Schools', path: '/admin/schools', icon: <Building className="w-5 h-5" /> },
     { label: 'Students', path: '/admin/students', icon: <GraduationCap className="w-5 h-5" /> },
-    { label: 'Settings', path: '/admin/settings', icon: <Settings className="w-5 h-5" /> },
+    { label: 'Comparison Graphs', path: '/admin/comparison', icon: <BarChart3 className="w-5 h-5" /> },
   ],
 };
 

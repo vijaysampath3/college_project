@@ -86,6 +86,15 @@ export const teacherService = {
     return teacherService.updateTeacherStatus(id, 'inactive');
   },
 
+  deleteTeacher: async (id: string): Promise<boolean> => {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE'
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail || 'Failed to delete teacher');
+    return true;
+  },
+
   getTeacherStats: async (id: string): Promise<TeacherStats> => {
     const response = await fetch(`${API_URL}/${id}/stats`);
     if (!response.ok) throw new Error('Failed to fetch teacher stats');

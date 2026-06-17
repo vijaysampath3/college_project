@@ -75,6 +75,13 @@ async def update_teacher_status(teacher_id: str, status_update: StatusUpdate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@router.delete("/{teacher_id}")
+async def delete_teacher(teacher_id: str):
+    try:
+        return teacher_service.delete_teacher(teacher_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 @router.get("/{teacher_id}/stats")
 async def get_teacher_stats(teacher_id: str):
     try:

@@ -27,6 +27,7 @@ import { AdminStudentsPage } from './pages/admin/AdminStudentsPage';
 import { AdminStudentDetailsPage } from './pages/admin/AdminStudentDetailsPage';
 import { AdminParentsPage } from './pages/admin/AdminParentsPage';
 import { AdminParentDetailsPage } from './pages/admin/AdminParentDetailsPage';
+import { ComparisonCenter } from './pages/admin/ComparisonCenter';
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
               <Route path="/admin/students/:id" element={<AdminStudentDetailsPage />} />
               <Route path="/admin/parents" element={<AdminParentsPage />} />
               <Route path="/admin/parents/:id" element={<AdminParentDetailsPage />} />
+              <Route path="/admin/comparison" element={<ComparisonCenter />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
             </Route>
           </Route>
