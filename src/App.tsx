@@ -18,6 +18,8 @@ import { RecommendationsPage } from './pages/RecommendationsPage';
 import { LearningJourneyPage } from './pages/LearningJourneyPage';
 import { ActivitiesLibrary } from './pages/ActivitiesLibrary';
 import { ActivityPlayer } from './pages/ActivityPlayer';
+import { SchoolsPage } from './pages/admin/SchoolsPage';
+import { SchoolDetailsPage } from './pages/admin/SchoolDetailsPage';
 
 function App() {
   return (
@@ -55,6 +57,8 @@ function App() {
 
             <Route element={<RoleGuard allowedRole="admin" />}>
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/schools" element={<SchoolsPage />} />
+              <Route path="/admin/schools/:id" element={<SchoolDetailsPage />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
             </Route>
           </Route>

@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Users, GraduationCap, Building, Activity, TrendingUp, ArrowUpRight } from 'lucide-react';
 import { DashboardLayout } from '../components/layout';
 import { Card, CardContent, StatCard, Badge, Progress } from '../components/ui';
 import { RiskDistributionChart, PlatformUsageChart } from '../components/charts';
 import { adminData } from '../data/mockData';
+import { schoolService, School } from '../services/school.service';
 
 const AdminDashboard: React.FC = () => {
-  const { stats, platformUsage, systemAnalytics, riskDistribution, recentUsers, schools } = adminData;
+  const navigate = useNavigate();
+  const [dynamicSchools, setDynamicSchools] = useState<School[]>([]);
+  const { stats, platformUsage, systemAnalytics, riskDistribution, recentUsers } = adminData;
+
+  useEffect(() => {
+    schoolService.getSchools().then(setDynamicSchools).catch(console.error);
+  }, []);
 
   return (
     <DashboardLayout role="admin" title="Admin Dashboard">
@@ -203,36 +211,33 @@ const AdminDashboard: React.FC = () => {
           <CardContent>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-gray-900">Schools Overview</h3>
-              <button className="text-sm text-primary-600 font-medium hover:text-primary-700">
+              <button onClick={() => navigate('/admin/schools')} className="text-sm text-primary-600 font-medium hover:text-primary-700">
                 Manage Schools
               </button>
             </div>
-            <div className="space-y-4">
-              {schools.map((school) => (
-                <div
-                  key={school.id}
-                  className="p-4 rounded-xl border border-gray-100 hover:border-primary-200 hover:shadow-md transition-all cursor-pointer"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-900">{school.name}</h4>
-                    <Badge variant="primary" size="sm">
-                      {school.students} students
-                    </Badge>
+            <div className="space-y-4 max-h-[400px] overflow-y-auto">
+              {dynamicSchools.length === 0 ? (
+                <div className="text-center py-8 text-gray-500 text-sm">No schools registered yet.</div>
+              ) : (
+                dynamicSchools.map((school) => (
+                  <div
+                    key={school.id}
+                    onClick={() => navigate(`/admin/schools/${school.id}`)}
+                    className="p-4 rounded-xl border border-gray-100 hover:border-primary-200 hover:shadow-md transition-all cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold text-gray-900">{school.school_name}</h4>
+                      <Badge variant={school.status === 'active' ? 'success' : school.status === 'inactive' ? 'danger' : 'warning'} size="sm">
+                        {school.status}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center justify-between text-sm text-gray-500">
+                      <span>{school.district || 'No district'}</span>
+                      <span className="font-mono text-xs">{school.school_code}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between text-sm text-gray-500">
-                    <span>{school.district}</span>
-                    <span>{school.teachers} teachers</span>
-                  </div>
-                  <div className="mt-3">
-                    <Progress
-                      value={school.students}
-                      max={1000}
-                      color="primary"
-                      size="sm"
-                    />
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </CardContent>
         </Card>
