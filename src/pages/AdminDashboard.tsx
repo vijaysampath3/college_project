@@ -6,14 +6,17 @@ import { Card, CardContent, StatCard, Badge, Progress } from '../components/ui';
 import { RiskDistributionChart, PlatformUsageChart } from '../components/charts';
 import { adminData } from '../data/mockData';
 import { schoolService, School } from '../services/school.service';
+import { teacherService } from '../services/teacher.service';
 
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [dynamicSchools, setDynamicSchools] = useState<School[]>([]);
+  const [teacherCount, setTeacherCount] = useState<number>(0);
   const { stats, platformUsage, systemAnalytics, riskDistribution, recentUsers } = adminData;
 
   useEffect(() => {
     schoolService.getSchools().then(setDynamicSchools).catch(console.error);
+    teacherService.getTeachers().then(teachers => setTeacherCount(teachers.length)).catch(console.error);
   }, []);
 
   return (
@@ -36,9 +39,9 @@ const AdminDashboard: React.FC = () => {
         />
         <StatCard
           title="Teachers"
-          value={stats.totalTeachers}
+          value={teacherCount.toString()}
           trend="up"
-          trendValue="+5 new"
+          trendValue="Active count"
           icon={<Users className="w-6 h-6" />}
           color="secondary"
         />

@@ -43,11 +43,11 @@ const roleNavItems = {
   ],
   admin: [
     { label: 'Dashboard', path: '/admin', icon: <Home className="w-5 h-5" /> },
-    { label: 'Students', path: '/admin/students', icon: <GraduationCap className="w-5 h-5" /> },
+    { label: 'Assignments', path: '/admin/assignments', icon: <GraduationCap className="w-5 h-5" /> },
     { label: 'Teachers', path: '/admin/teachers', icon: <Users className="w-5 h-5" /> },
     { label: 'Parents', path: '/admin/parents', icon: <Users className="w-5 h-5" /> },
     { label: 'Schools', path: '/admin/schools', icon: <Building className="w-5 h-5" /> },
-    { label: 'Reports', path: '/admin/reports', icon: <BarChart3 className="w-5 h-5" /> },
+    { label: 'Students', path: '/admin/students', icon: <BarChart3 className="w-5 h-5" /> },
     { label: 'Settings', path: '/admin/settings', icon: <Settings className="w-5 h-5" /> },
   ],
 };

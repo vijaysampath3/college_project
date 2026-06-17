@@ -20,6 +20,10 @@ import { ActivitiesLibrary } from './pages/ActivitiesLibrary';
 import { ActivityPlayer } from './pages/ActivityPlayer';
 import { SchoolsPage } from './pages/admin/SchoolsPage';
 import { SchoolDetailsPage } from './pages/admin/SchoolDetailsPage';
+import { TeachersPage } from './pages/admin/TeachersPage';
+import { TeacherDetailsPage } from './pages/admin/TeacherDetailsPage';
+import { AssignmentCenter } from './pages/admin/AssignmentCenter';
+import { StudentsPage } from './pages/admin/StudentsPage';
 
 function App() {
   return (
@@ -59,6 +63,10 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/schools" element={<SchoolsPage />} />
               <Route path="/admin/schools/:id" element={<SchoolDetailsPage />} />
+              <Route path="/admin/teachers" element={<TeachersPage />} />
+              <Route path="/admin/teachers/:id" element={<TeacherDetailsPage />} />
+              <Route path="/admin/assignments" element={<AssignmentCenter />} />
+              <Route path="/admin/students" element={<StudentsPage />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
             </Route>
           </Route>
