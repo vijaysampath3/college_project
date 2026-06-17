@@ -7,16 +7,22 @@ import { RiskDistributionChart, PlatformUsageChart } from '../components/charts'
 import { adminData } from '../data/mockData';
 import { schoolService, School } from '../services/school.service';
 import { teacherService } from '../services/teacher.service';
+import { studentService, StudentStats } from '../services/student.service';
+import { parentService, ParentStats } from '../services/parent.service';
 
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [dynamicSchools, setDynamicSchools] = useState<School[]>([]);
   const [teacherCount, setTeacherCount] = useState<number>(0);
+  const [studentStats, setStudentStats] = useState<StudentStats | null>(null);
+  const [parentStats, setParentStats] = useState<ParentStats | null>(null);
   const { stats, platformUsage, systemAnalytics, riskDistribution, recentUsers } = adminData;
 
   useEffect(() => {
     schoolService.getSchools().then(setDynamicSchools).catch(console.error);
     teacherService.getTeachers().then(teachers => setTeacherCount(teachers.length)).catch(console.error);
+    studentService.getStudentStats().then(setStudentStats).catch(console.error);
+    parentService.getParentStats().then(setParentStats).catch(console.error);
   }, []);
 
   return (
@@ -31,9 +37,9 @@ const AdminDashboard: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <StatCard
           title="Total Students"
-          value={stats.totalStudents.toLocaleString()}
+          value={studentStats ? studentStats.totalStudents.toLocaleString() : "..."}
           trend="up"
-          trendValue="+12% this month"
+          trendValue="Active platform data"
           icon={<GraduationCap className="w-6 h-6" />}
           color="primary"
         />
@@ -47,9 +53,9 @@ const AdminDashboard: React.FC = () => {
         />
         <StatCard
           title="Parents"
-          value={stats.totalParents.toLocaleString()}
+          value={parentStats ? parentStats.totalParents.toLocaleString() : "..."}
           trend="up"
-          trendValue="+8% this month"
+          trendValue="Active platform data"
           icon={<Users className="w-6 h-6" />}
           color="success"
         />

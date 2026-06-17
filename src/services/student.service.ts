@@ -19,9 +19,55 @@ export interface Student {
     school_name: string;
     school_code: string;
   };
+  assignmentStatus?: 'Assigned' | 'Unassigned';
+  assigned_teacher?: string | null;
+  assigned_teacher_id?: string | null;
+  created_by_teacher?: string | null;
 }
 
 const API_URL = 'http://127.0.0.1:8000/api/students';
+
+export interface StudentFilters {
+  school_id?: string;
+  teacher_id?: string;
+  grade?: string;
+  section?: string;
+  status?: string;
+  search?: string;
+}
+
+export interface StudentStats {
+  totalStudents: number;
+  activeStudents: number;
+  inactiveStudents: number;
+  assignedStudents: number;
+  unassignedStudents: number;
+  schoolDistribution: {
+    schoolName: string;
+    totalStudents: number;
+  }[];
+}
+
+export interface StudentDetails extends Student {
+  assessmentSummary: {
+    completionPercentage: number;
+    latestAssessmentDate: string | null;
+  };
+  riskOverview: {
+    learningDifficultiesRisk: string;
+    dyslexiaIndicators: string;
+    readingFluencyProblems: string;
+    attentionInconsistency: string;
+    concentrationProblems: string;
+    cognitiveOverload: string;
+    riskLevel: string;
+  };
+  learningJourneySummary: {
+    currentJourney: string | null;
+    completionPercentage: number;
+    activitiesCompleted: number;
+  };
+}
 
 export const studentService = {
   createStudent: async (data: Partial<Student>): Promise<Student> => {
@@ -35,15 +81,30 @@ export const studentService = {
     return result.student;
   },
 
-  getStudents: async (): Promise<Student[]> => {
-    const response = await fetch(API_URL);
+  getStudents: async (filters?: StudentFilters): Promise<Student[]> => {
+    let url = API_URL;
+    if (filters) {
+      const params = new URLSearchParams();
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value) params.append(key, value);
+      });
+      const queryString = params.toString();
+      if (queryString) url += `?${queryString}`;
+    }
+    const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to fetch students');
     return await response.json();
   },
 
-  getStudentById: async (id: string): Promise<Student> => {
+  getStudentById: async (id: string): Promise<StudentDetails> => {
     const response = await fetch(`${API_URL}/${id}`);
     if (!response.ok) throw new Error('Failed to fetch student details');
+    return await response.json();
+  },
+
+  getStudentStats: async (): Promise<StudentStats> => {
+    const response = await fetch(`${API_URL}/stats`);
+    if (!response.ok) throw new Error('Failed to fetch student stats');
     return await response.json();
   },
 

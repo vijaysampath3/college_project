@@ -8,7 +8,7 @@ from services.whisper_service import transcribe_audio
 from services.scoring_service import analyze_transcript
 from routers.typing import router as typing_router
 from routers.adhd import router as adhd_router
-from routers import attention, focus, learning_behaviour, reports, recommendations, activities, learning_paths, schools, teachers, students, assignments
+from routers import attention, focus, learning_behaviour, reports, recommendations, activities, learning_paths, schools, teachers, students, assignments, parents
 
 app = FastAPI(title="NeuroLearn API")
 
@@ -35,6 +35,7 @@ app.include_router(schools.router, prefix="/api/schools", tags=["schools"])
 app.include_router(teachers.router, prefix="/api/teachers", tags=["teachers"])
 app.include_router(students.router, prefix="/api/students", tags=["students"])
 app.include_router(assignments.router, prefix="/api/assignments", tags=["assignments"])
+app.include_router(parents.router, prefix="/api/parents", tags=["parents"])
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)

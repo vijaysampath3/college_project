@@ -23,7 +23,10 @@ import { SchoolDetailsPage } from './pages/admin/SchoolDetailsPage';
 import { TeachersPage } from './pages/admin/TeachersPage';
 import { TeacherDetailsPage } from './pages/admin/TeacherDetailsPage';
 import { AssignmentCenter } from './pages/admin/AssignmentCenter';
-import { StudentsPage } from './pages/admin/StudentsPage';
+import { AdminStudentsPage } from './pages/admin/AdminStudentsPage';
+import { AdminStudentDetailsPage } from './pages/admin/AdminStudentDetailsPage';
+import { AdminParentsPage } from './pages/admin/AdminParentsPage';
+import { AdminParentDetailsPage } from './pages/admin/AdminParentDetailsPage';
 
 function App() {
   return (
@@ -66,7 +69,10 @@ function App() {
               <Route path="/admin/teachers" element={<TeachersPage />} />
               <Route path="/admin/teachers/:id" element={<TeacherDetailsPage />} />
               <Route path="/admin/assignments" element={<AssignmentCenter />} />
-              <Route path="/admin/students" element={<StudentsPage />} />
+              <Route path="/admin/students" element={<AdminStudentsPage />} />
+              <Route path="/admin/students/:id" element={<AdminStudentDetailsPage />} />
+              <Route path="/admin/parents" element={<AdminParentsPage />} />
+              <Route path="/admin/parents/:id" element={<AdminParentDetailsPage />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
             </Route>
           </Route>

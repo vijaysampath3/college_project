@@ -1,3 +1,6 @@
+-- Enable moddatetime extension
+CREATE EXTENSION IF NOT EXISTS moddatetime schema extensions;
+
 -- Create Student Profiles Table
 CREATE TABLE IF NOT EXISTS public.student_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

@@ -22,6 +22,13 @@ class StudentCreateUpdate(BaseModel):
 class StatusUpdate(BaseModel):
     status: str
 
+@router.get("/stats")
+async def get_student_stats():
+    try:
+        return student_service.get_student_stats()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post("")
 async def create_student(data: StudentCreateUpdate):
     try:
@@ -33,9 +40,24 @@ async def create_student(data: StudentCreateUpdate):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("")
-async def get_all_students():
+async def get_all_students(
+    school_id: Optional[str] = None,
+    teacher_id: Optional[str] = None,
+    grade: Optional[str] = None,
+    section: Optional[str] = None,
+    status: Optional[str] = None,
+    search: Optional[str] = None
+):
     try:
-        students = student_service.get_students()
+        filters = {}
+        if school_id: filters['school_id'] = school_id
+        if teacher_id: filters['teacher_id'] = teacher_id
+        if grade: filters['grade'] = grade
+        if section: filters['section'] = section
+        if status: filters['status'] = status
+        if search: filters['search'] = search
+        
+        students = student_service.get_students(filters)
         return students
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -43,7 +65,7 @@ async def get_all_students():
 @router.get("/{student_id}")
 async def get_student(student_id: str):
     try:
-        student = student_service.get_student_by_id(student_id)
+        student = student_service.get_student_details_by_id(student_id)
         if not student:
             raise HTTPException(status_code=404, detail="Student not found")
         return student
