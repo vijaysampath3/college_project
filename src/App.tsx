@@ -4,6 +4,8 @@ import LoginPage from './pages/LoginPage';
 import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import ParentDashboard from './pages/ParentDashboard';
+import { TeacherStudentsPage } from './pages/teacher/TeacherStudentsPage';
+import { TeacherStudentDetailsPage } from './pages/teacher/TeacherStudentDetailsPage';
 import AdminDashboard from './pages/AdminDashboard';
 import { AuthProvider } from './context/AuthContext';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
@@ -55,6 +57,8 @@ function App() {
 
             <Route element={<RoleGuard allowedRole="teacher" />}>
               <Route path="/teacher" element={<TeacherDashboard />} />
+              <Route path="/teacher/students" element={<TeacherStudentsPage />} />
+              <Route path="/teacher/students/:id" element={<TeacherStudentDetailsPage />} />
               <Route path="/teacher/*" element={<TeacherDashboard />} />
             </Route>
 

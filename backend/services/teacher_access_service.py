@@ -70,17 +70,25 @@ class TeacherAccessService:
         
         # High Risk Students (latest report contains Moderate or High risk)
         reports = supabase.table('student_reports')\
-            .select('student_id, risk_level')\
+            .select('student_id, risk_analysis')\
             .in_('student_id', student_ids)\
             .order('created_at', desc=True)\
             .execute()
             
+        def extract_overall_risk(analysis):
+            if not analysis: return 'Low'
+            levels = [v.get('level', 'Low') for v in analysis.values() if isinstance(v, dict)]
+            if 'Severe' in levels: return 'Severe'
+            if 'High' in levels: return 'High'
+            if 'Moderate' in levels: return 'Moderate'
+            return 'Low'
+
         # Get latest report per student
         latest_reports = {}
         for r in reports.data:
             sid = r['student_id']
             if sid not in latest_reports:
-                latest_reports[sid] = r['risk_level']
+                latest_reports[sid] = extract_overall_risk(r.get('risk_analysis', {}))
                 
         high_risk_count = sum(1 for risk in latest_reports.values() if risk in ['Moderate', 'High', 'Severe'])
         
@@ -113,16 +121,24 @@ class TeacherAccessService:
         student_ids = [s['id'] for s in students]
         
         reports = supabase.table('student_reports')\
-            .select('student_id, risk_level')\
+            .select('student_id, risk_analysis')\
             .in_('student_id', student_ids)\
             .order('created_at', desc=True)\
             .execute()
             
+        def extract_overall_risk(analysis):
+            if not analysis: return 'Low'
+            levels = [v.get('level', 'Low') for v in analysis.values() if isinstance(v, dict)]
+            if 'Severe' in levels: return 'Severe'
+            if 'High' in levels: return 'High'
+            if 'Moderate' in levels: return 'Moderate'
+            return 'Low'
+
         latest_reports = {}
         for r in reports.data:
             sid = r['student_id']
             if sid not in latest_reports:
-                latest_reports[sid] = r['risk_level']
+                latest_reports[sid] = extract_overall_risk(r.get('risk_analysis', {}))
                 
         dist = {"Low Risk": 0, "Moderate Risk": 0, "High Risk": 0}
         for risk in latest_reports.values():
@@ -173,15 +189,24 @@ class TeacherAccessService:
         
         # High Risk Students
         reports = supabase.table('student_reports')\
-            .select('student_id, risk_level, created_at')\
+            .select('student_id, risk_analysis, created_at')\
             .in_('student_id', student_ids)\
             .order('created_at', desc=True)\
             .execute()
             
+        def extract_overall_risk(analysis):
+            if not analysis: return 'Low'
+            levels = [v.get('level', 'Low') for v in analysis.values() if isinstance(v, dict)]
+            if 'Severe' in levels: return 'Severe'
+            if 'High' in levels: return 'High'
+            if 'Moderate' in levels: return 'Moderate'
+            return 'Low'
+
         latest_reports = {}
         for r in reports.data:
             sid = r['student_id']
             if sid not in latest_reports:
+                r['risk_level'] = extract_overall_risk(r.get('risk_analysis', {}))
                 latest_reports[sid] = r
                 
         for sid, rep in latest_reports.items():
@@ -240,8 +265,8 @@ class TeacherAccessService:
         student_ids = [s['id'] for s in students]
         
         # Goals Met = Completed Activities / Assigned Activities
-        # We look at learning_activities
-        activities = supabase.table('learning_activities')\
+        # We look at student_activity_attempts
+        activities = supabase.table('student_activity_attempts')\
             .select('status')\
             .in_('student_id', student_ids)\
             .execute()
