@@ -93,7 +93,7 @@ class TeacherAccessService:
         high_risk_count = sum(1 for risk in latest_reports.values() if risk in ['Moderate', 'High', 'Severe'])
         
         # Assessments Completed
-        assessments = supabase.table('assessment_results')\
+        assessments = supabase.table('assessment_progress')\
             .select('id, status')\
             .in_('student_id', student_ids)\
             .execute()
@@ -267,7 +267,7 @@ class TeacherAccessService:
         # Goals Met = Completed Activities / Assigned Activities
         # We look at student_activity_attempts
         activities = supabase.table('student_activity_attempts')\
-            .select('status')\
+            .select('completed')\
             .in_('student_id', student_ids)\
             .execute()
             
@@ -275,7 +275,7 @@ class TeacherAccessService:
             goals_met = "Insufficient Data"
         else:
             total_act = len(activities.data)
-            completed_act = sum(1 for a in activities.data if a.get('status') == 'completed')
+            completed_act = sum(1 for a in activities.data if a.get('completed') is True)
             goals_met = f"{int((completed_act / total_act) * 100)}%"
             
         # Engagement = Active Students (Last 7 Days) / Total Assigned Students
@@ -295,7 +295,7 @@ class TeacherAccessService:
         # Weekly Improvement = Current Average Readiness - Previous Average Readiness
         # Fetch readiness scores
         reports = supabase.table('student_reports')\
-            .select('student_id, overall_score, created_at')\
+            .select('student_id, readiness_score, created_at')\
             .in_('student_id', student_ids)\
             .order('created_at', desc=True)\
             .execute()
@@ -311,8 +311,8 @@ class TeacherAccessService:
         improvements = []
         for sid, rep_list in student_scores.items():
             if len(rep_list) >= 2:
-                current_score = rep_list[0].get('overall_score', 0)
-                previous_score = rep_list[1].get('overall_score', 0)
+                current_score = rep_list[0].get('readiness_score', 0)
+                previous_score = rep_list[1].get('readiness_score', 0)
                 if current_score is not None and previous_score is not None:
                     improvements.append(current_score - previous_score)
                     
@@ -326,4 +326,59 @@ class TeacherAccessService:
             "goalsMet": goals_met,
             "engagement": engagement,
             "weeklyImprovement": weekly_improvement
+        }
+
+    @staticmethod
+    def get_student_performance_overview(teacher_id: str, school_id: str) -> Dict[str, Any]:
+        supabase = get_supabase_client()
+        students = TeacherAccessService.get_assigned_students(teacher_id, school_id)
+        if not students:
+            return {
+                "reading": 0,
+                "attention": 0,
+                "typing": 0,
+                "learningBehaviour": 0,
+                "comprehension": 0
+            }
+            
+        student_ids = [s['id'] for s in students]
+        
+        # We need the latest completed assessment for each student within each category
+        assessments = supabase.table('assessment_results')\
+            .select('student_id, assessment_type, result_data')\
+            .in_('student_id', student_ids)\
+            .order('created_at', desc=True)\
+            .execute()
+            
+        # Group by student and type to get the latest score
+        # Since it's ordered by created_at DESC, the first one encountered for a student+type is the latest
+        latest_scores = {
+            'reading': {},
+            'attention': {},
+            'typing': {},
+            'learning_behaviour': {},
+            'comprehension': {}
+        }
+        
+        for record in assessments.data:
+            sid = record['student_id']
+            # Ensure type maps to our keys. The database might use 'learning_behaviour' and others.
+            # Assuming standard types: reading, attention, typing, learning_behaviour, cpt, comprehension
+            atype = record.get('assessment_type')
+            if atype in latest_scores:
+                if sid not in latest_scores[atype]:
+                    score = record.get('result_data', {}).get('overallScore', 0)
+                    latest_scores[atype][sid] = score
+                    
+        def calc_avg(category_dict):
+            if not category_dict:
+                return 0
+            return round(sum(category_dict.values()) / len(students)) # "Sum of Latest Student Scores ÷ Number of Assigned Students"
+            
+        return {
+            "reading": calc_avg(latest_scores['reading']),
+            "attention": calc_avg(latest_scores['attention']),
+            "typing": calc_avg(latest_scores['typing']),
+            "learningBehaviour": calc_avg(latest_scores['learning_behaviour']),
+            "comprehension": calc_avg(latest_scores['comprehension'])
         }

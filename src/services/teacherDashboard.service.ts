@@ -104,5 +104,13 @@ export const teacherDashboardService = {
     });
     if (!response.ok) throw new Error('Failed to fetch analytics');
     return response.json();
+  },
+
+  getStudentPerformanceOverview: async (): Promise<any> => {
+    const response = await fetch(`${API_URL}/teacher/dashboard/student-performance`, {
+      headers: await getAuthHeaders(),
+    });
+    if (!response.ok) throw new Error('Failed to fetch student performance');
+    return response.json();
   }
 };

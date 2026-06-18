@@ -14,6 +14,7 @@ const TeacherDashboard: React.FC = () => {
   const [recentAssessments, setRecentAssessments] = useState<any[]>([]);
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [studentPerformance, setStudentPerformance] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +36,8 @@ const TeacherDashboard: React.FC = () => {
           teacherDashboardService.getRiskDistribution(),
           teacherDashboardService.getRecentAssessments(),
           teacherDashboardService.getTeacherAlerts(),
-          teacherDashboardService.getAnalytics()
+          teacherDashboardService.getAnalytics(),
+          teacherDashboardService.getStudentPerformanceOverview()
         ]);
 
         setProfile(teacherData);
@@ -60,6 +62,7 @@ const TeacherDashboard: React.FC = () => {
         })));
         setAlerts(alertsData);
         setAnalytics(analyticsData);
+        setStudentPerformance(studentPerformanceData);
       } catch (error) {
         console.error("Failed to load teacher dashboard data:", error);
       } finally {
@@ -80,15 +83,18 @@ const TeacherDashboard: React.FC = () => {
     );
   }
 
-  // Placeholder for Class Performance Data
-  // We will build actual calculations if required, but for now we format a dummy one so the chart doesn't break,
-  // since backend class performance chart wasn't fully specified, but we need dynamic averages based on assigned students.
-  const classPerformance = [
-    { subject: 'Reading', average: 75 },
-    { subject: 'Attention', average: 82 },
-    { subject: 'Typing', average: 65 },
-    { subject: 'Learning Behaviour', average: 88 },
-    { subject: 'Comprehension', average: 70 },
+  const classPerformance = studentPerformance ? [
+    { subject: 'Reading', average: studentPerformance.reading || 0 },
+    { subject: 'Attention', average: studentPerformance.attention || 0 },
+    { subject: 'Typing', average: studentPerformance.typing || 0 },
+    { subject: 'Learning Behaviour', average: studentPerformance.learningBehaviour || 0 },
+    { subject: 'Comprehension', average: studentPerformance.comprehension || 0 },
+  ] : [
+    { subject: 'Reading', average: 0 },
+    { subject: 'Attention', average: 0 },
+    { subject: 'Typing', average: 0 },
+    { subject: 'Learning Behaviour', average: 0 },
+    { subject: 'Comprehension', average: 0 },
   ];
 
   const riskDataFormatted = riskDistribution ? [
@@ -110,10 +116,6 @@ const TeacherDashboard: React.FC = () => {
             <Button variant="secondary">
               <UserPlus className="w-5 h-5 mr-2" />
               Add Student
-            </Button>
-            <Button>
-              <Clock className="w-5 h-5 mr-2" />
-              Schedule Assessment
             </Button>
           </div>
         </div>
@@ -169,8 +171,8 @@ const TeacherDashboard: React.FC = () => {
           <CardContent>
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-lg font-bold text-gray-900">Class Performance</h3>
-                <p className="text-sm text-gray-500">Average scores by subject</p>
+                <h3 className="text-lg font-bold text-gray-900">Student Performance Overview</h3>
+                <p className="text-sm text-gray-500">Average assessment performance of assigned students</p>
               </div>
               <Badge variant="primary">Current Semester</Badge>
             </div>

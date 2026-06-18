@@ -25,7 +25,7 @@ const roleNavItems = {
   student: [
     { label: 'Dashboard', path: '/student', icon: <Home className="w-5 h-5" /> },
     { label: 'Assessments', path: '/student/assessments', icon: <FileText className="w-5 h-5" /> },
-    { label: 'Reports', path: '/student/reports', icon: <BarChart3 className="w-5 h-5" /> },
+    { label: 'Monitoring', path: '/student/reports', icon: <BarChart3 className="w-5 h-5" /> },
     { label: 'Recommendations', path: '/student/recommendations', icon: <Lightbulb className="w-5 h-5" /> },
     { label: 'Profile', path: '/student/profile', icon: <User className="w-5 h-5" /> },
   ],
@@ -34,13 +34,13 @@ const roleNavItems = {
     { label: 'Students', path: '/teacher/students', icon: <Users className="w-5 h-5" /> },
     { label: 'Parents', path: '/teacher/parents', icon: <HeartHandshake className="w-5 h-5" /> },
     { label: 'Assessments', path: '/teacher/assessments', icon: <ClipboardCheck className="w-5 h-5" /> },
-    { label: 'Reports', path: '/teacher/reports', icon: <BarChart3 className="w-5 h-5" /> },
+    { label: 'Monitoring', path: '/teacher/monitoring', icon: <BarChart3 className="w-5 h-5" /> },
     { label: 'Analytics', path: '/teacher/analytics', icon: <BarChart3 className="w-5 h-5" /> },
   ],
   parent: [
     { label: 'Dashboard', path: '/parent', icon: <Home className="w-5 h-5" /> },
     { label: 'Progress', path: '/parent/progress', icon: <BarChart3 className="w-5 h-5" /> },
-    { label: 'Reports', path: '/parent/reports', icon: <FileText className="w-5 h-5" /> },
+    { label: 'Monitoring', path: '/parent/reports', icon: <FileText className="w-5 h-5" /> },
     { label: 'Recommendations', path: '/parent/recommendations', icon: <Lightbulb className="w-5 h-5" /> },
   ],
   admin: [

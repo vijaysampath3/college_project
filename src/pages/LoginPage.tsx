@@ -66,9 +66,9 @@ const roleConfigs: Record<UserRole, RoleConfig> = {
     fields: [
       {
         name: 'email',
-        label: 'Email',
-        type: 'email',
-        placeholder: 'Enter your email',
+        label: 'Email / Parent ID',
+        type: 'text',
+        placeholder: 'Enter your email or Parent ID',
         icon: <Mail className="w-5 h-5" />,
       },
       {
@@ -139,6 +139,9 @@ const LoginPage: React.FC = () => {
         type = 'teacher';
       } else {
         identifier = formData.email;
+        if (identifier && !identifier.includes('@')) {
+          identifier = `${identifier.toLowerCase()}@parent.neurolearn.com`;
+        }
         type = 'email';
       }
 

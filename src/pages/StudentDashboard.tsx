@@ -19,22 +19,36 @@ const StudentDashboard: React.FC = () => {
   const [pathData, setPathData] = React.useState<ActivePathResponse | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [historyTab, setHistoryTab] = React.useState<AssessmentType>('reading');
+  const [assignments, setAssignments] = React.useState<{activities: any[], assessments: any[]}>({activities: [], assessments: []});
 
   React.useEffect(() => {
     if (user?.id) {
       Promise.all([
         dashboardService.getDashboardData(user.id),
         learningPathService.getActivePath(user.id).catch(() => null)
-      ]).then(([dashboardRes, pathRes]) => {
+      ]).then(async ([dashboardRes, pathRes]) => {
         setData(dashboardRes);
         setPathData(pathRes);
+        
+        // Fetch teacher assignments
+        try {
+          const { data: act } = await supabase.from('teacher_assigned_activities').select('*').eq('student_id', profile.id).eq('status', 'pending');
+          const { data: ass } = await supabase.from('teacher_assigned_assessments').select('*').eq('student_id', profile.id).eq('status', 'pending');
+          setAssignments({
+            activities: act || [],
+            assessments: ass || []
+          });
+        } catch (e) {
+          console.error("Failed to fetch assignments", e);
+        }
+
         setIsLoading(false);
       }).catch(err => {
         console.error("Failed to load dashboard data:", err);
         setIsLoading(false);
       });
     }
-  }, [user]);
+  }, [user, profile]);
 
   const getRiskColor = (label: string) => {
     if (label === 'Low Risk') return 'success';
@@ -79,6 +93,67 @@ const StudentDashboard: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Teacher Assignments Alerts */}
+          {(assignments.activities.length > 0 || assignments.assessments.length > 0) && (
+            <div className="mb-8 space-y-4">
+              <h2 className="text-lg font-bold text-gray-900">Teacher Assignments</h2>
+              
+              {assignments.assessments.map(ass => (
+                <div key={ass.id} className="bg-purple-50 border border-purple-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-purple-100 rounded-lg text-purple-600">
+                      <Target className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge variant={ass.priority === 'High' || ass.priority === 'Critical' ? 'danger' : 'primary'}>
+                          {ass.priority} Priority
+                        </Badge>
+                        <span className="text-xs font-semibold text-purple-700 uppercase">Assessment</span>
+                      </div>
+                      <h3 className="font-bold text-gray-900">{ass.assessment_title}</h3>
+                      {ass.teacher_note && <p className="text-sm text-gray-600 italic">" {ass.teacher_note} "</p>}
+                      {ass.due_date && <p className="text-xs text-gray-500 mt-1">Due: {new Date(ass.due_date).toLocaleDateString()}</p>}
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => navigate(`/student/assessments/${ass.assessment_type}`)}
+                    className="w-full sm:w-auto px-6 py-2 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors shrink-0"
+                  >
+                    Start Assessment
+                  </button>
+                </div>
+              ))}
+
+              {assignments.activities.map(act => (
+                <div key={act.id} className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-blue-100 rounded-lg text-blue-600">
+                      <Activity className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge variant={act.priority === 'High' || act.priority === 'Critical' ? 'danger' : 'primary'}>
+                          {act.priority} Priority
+                        </Badge>
+                        <span className="text-xs font-semibold text-blue-700 uppercase">Activity</span>
+                      </div>
+                      <h3 className="font-bold text-gray-900">{act.activity_title}</h3>
+                      {act.teacher_note && <p className="text-sm text-gray-600 italic">" {act.teacher_note} "</p>}
+                      {act.due_date && <p className="text-xs text-gray-500 mt-1">Due: {new Date(act.due_date).toLocaleDateString()}</p>}
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => navigate(`/student/activities`)}
+                    className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors shrink-0"
+                  >
+                    Start Activity
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* XP Progress Card */}
           <XPProgressCard xpProgress={data.xpProgress} />

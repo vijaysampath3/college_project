@@ -241,7 +241,7 @@ class TeacherParentService:
         }
 
     @staticmethod
-    def get_available_students_for_assignment(user_id: str) -> List[Dict[str, Any]]:
+    def get_available_students_for_assignment(user_id: str, parent_id_str: str = None) -> List[Dict[str, Any]]:
         teacher = TeacherParentService._get_teacher_context(user_id)
         teacher_profile_id = teacher['id']
         supabase = get_supabase_client()
@@ -253,7 +253,16 @@ class TeacherParentService:
         student_uuids = [a['student_id'] for a in assignments.data]
         students = supabase.table('student_profiles').select('id, student_id, student_name, grade, section').in_('id', student_uuids).eq('status', 'active').execute()
         
-        return students.data
+        student_data = students.data
+        if parent_id_str:
+            parent_res = supabase.table('parent_profiles').select('id').eq('parent_id', parent_id_str).execute()
+            if parent_res.data:
+                parent_uuid = parent_res.data[0]['id']
+                existing_links = supabase.table('student_parent_relationships').select('student_id').eq('parent_id', parent_uuid).execute()
+                assigned_student_uuids = {link['student_id'] for link in existing_links.data}
+                student_data = [s for s in student_data if s['id'] not in assigned_student_uuids]
+                
+        return student_data
 
     @staticmethod
     def assign_students_to_parent(user_id: str, parent_id_str: str, assignments: List[Dict[str, Any]]) -> bool:

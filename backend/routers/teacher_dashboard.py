@@ -54,3 +54,7 @@ async def get_alerts(teacher=Depends(get_teacher_context)):
 @router.get("/analytics")
 async def get_analytics(teacher=Depends(get_teacher_context)):
     return TeacherAccessService.get_teacher_analytics(teacher["id"], teacher["schoolId"])
+
+@router.get("/dashboard/student-performance")
+async def get_student_performance(teacher=Depends(get_teacher_context)):
+    return TeacherAccessService.get_student_performance_overview(teacher["id"], teacher["schoolId"])

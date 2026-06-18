@@ -80,8 +80,11 @@ export const teacherParentsService = {
     return response.json();
   },
 
-  getAvailableStudents: async (): Promise<any[]> => {
-    const response = await fetch(`${API_URL}/teacher/parents/available-students`, {
+  getAvailableStudents: async (parentId?: string): Promise<any[]> => {
+    const url = parentId 
+      ? `${API_URL}/teacher/parents/available-students?parent_id=${parentId}`
+      : `${API_URL}/teacher/parents/available-students`;
+    const response = await fetch(url, {
       headers: await getAuthHeaders(),
     });
     if (!response.ok) throw new Error('Failed to fetch available students');
