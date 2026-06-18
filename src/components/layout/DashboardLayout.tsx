@@ -40,7 +40,7 @@ const roleNavItems = {
   parent: [
     { label: 'Dashboard', path: '/parent', icon: <Home className="w-5 h-5" /> },
     { label: 'Progress', path: '/parent/progress', icon: <BarChart3 className="w-5 h-5" /> },
-    { label: 'Monitoring', path: '/parent/reports', icon: <FileText className="w-5 h-5" /> },
+    { label: 'Monitoring', path: '/parent/monitoring', icon: <FileText className="w-5 h-5" /> },
     { label: 'Recommendations', path: '/parent/recommendations', icon: <Lightbulb className="w-5 h-5" /> },
   ],
   admin: [

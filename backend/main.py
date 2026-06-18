@@ -3,19 +3,31 @@ from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import os
 import uuid
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from services.whisper_service import transcribe_audio
 from services.scoring_service import analyze_transcript
 from routers.typing import router as typing_router
 from routers.adhd import router as adhd_router
-from routers import attention, focus, learning_behaviour, reports, recommendations, activities, learning_paths, schools, teachers, students, assignments, parents, admin_dashboard, comparison_analytics, teacher_dashboard, teacher_students, teacher_parents, teacher_monitoring, teacher_intervention, teacher_analytics
+from routers import attention, focus, learning_behaviour, reports, recommendations, activities, learning_paths, schools, teachers, students, assignments, parents, admin_dashboard, comparison_analytics, teacher_dashboard, teacher_students, teacher_parents, teacher_monitoring, teacher_intervention, teacher_analytics, parent_dashboard, parent_progress, parent_monitoring, parent_recommendations
 
 app = FastAPI(title="NeuroLearn API")
 
-# Setup CORS
+# --- Health Check ---
+@app.get("/health", tags=["health"])
+async def health_check():
+    return {"status": "ok", "service": "NeuroLearn API"}
+
+# --- CORS ---
+# Read from env var in production; fallback to localhost for local dev
+_raw_origins = os.environ.get("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
+allowed_origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],  # Vite default port
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,6 +56,10 @@ app.include_router(teacher_parents.router, prefix="/api/teacher/parents", tags=[
 app.include_router(teacher_monitoring.router, prefix="/api/teacher/monitoring", tags=["teacher_monitoring"])
 app.include_router(teacher_intervention.router, prefix="/api/teacher/intervention", tags=["teacher_intervention"])
 app.include_router(teacher_analytics.router, prefix="/api/teacher/analytics", tags=["teacher_analytics"])
+app.include_router(parent_dashboard.router, prefix="/api/parent", tags=["parent_dashboard"])
+app.include_router(parent_progress.router, prefix="/api/parent/progress", tags=["Parent Progress"])
+app.include_router(parent_monitoring.router, prefix="/api/parent/monitoring", tags=["Parent Monitoring"])
+app.include_router(parent_recommendations.router, prefix="/api/parent/recommendations", tags=["Parent Recommendations"])
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)

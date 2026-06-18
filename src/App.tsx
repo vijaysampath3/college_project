@@ -4,6 +4,9 @@ import LoginPage from './pages/LoginPage';
 import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import ParentDashboard from './pages/ParentDashboard';
+import ParentProgressPage from './pages/ParentProgressPage';
+import { ParentMonitoringPage } from './pages/ParentMonitoringPage';
+import ParentRecommendationsPage from './pages/ParentRecommendationsPage';
 import { TeacherStudentsPage } from './pages/teacher/TeacherStudentsPage';
 import { TeacherStudentDetailsPage } from './pages/teacher/TeacherStudentDetailsPage';
 import { TeacherParentsPage } from './pages/teacher/TeacherParentsPage';
@@ -37,6 +40,7 @@ import { AdminStudentDetailsPage } from './pages/admin/AdminStudentDetailsPage';
 import { AdminParentsPage } from './pages/admin/AdminParentsPage';
 import { AdminParentDetailsPage } from './pages/admin/AdminParentDetailsPage';
 import { ComparisonCenter } from './pages/admin/ComparisonCenter';
+import { ParentProvider } from './context/ParentContext';
 
 function App() {
   return (
@@ -77,8 +81,11 @@ function App() {
             </Route>
 
             <Route element={<RoleGuard allowedRole="parent" />}>
-              <Route path="/parent" element={<ParentDashboard />} />
-              <Route path="/parent/*" element={<ParentDashboard />} />
+              <Route path="/parent" element={<ParentProvider><ParentDashboard /></ParentProvider>} />
+              <Route path="/parent/progress" element={<ParentProvider><ParentProgressPage /></ParentProvider>} />
+              <Route path="/parent/monitoring" element={<ParentProvider><ParentMonitoringPage /></ParentProvider>} />
+              <Route path="/parent/recommendations" element={<ParentProvider><ParentRecommendationsPage /></ParentProvider>} />
+              <Route path="/parent/*" element={<ParentProvider><ParentDashboard /></ParentProvider>} />
             </Route>
 
             <Route element={<RoleGuard allowedRole="admin" />}>

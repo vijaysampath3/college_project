@@ -1,13 +1,52 @@
-import React from 'react';
-import { BookOpen, Brain, Target, TrendingUp, ArrowRight, Lightbulb, Heart, Calendar } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { BookOpen, Brain, Target, TrendingUp, ArrowRight, Lightbulb, Heart, Calendar, ChevronDown, Activity, CheckCircle, FileText } from 'lucide-react';
 import { DashboardLayout } from '../components/layout';
 import { Card, CardContent, StatCard, Badge } from '../components/ui';
 import { ChildProgressChart } from '../components/charts';
-import { parentData } from '../data/mockData';
+import { useParentContext } from '../context/ParentContext';
+import { parentDashboardService, ParentProfile, ParentDashboardSummary } from '../services/parentDashboard.service';
 
 const ParentDashboard: React.FC = () => {
-  const { profile, children, homeRecommendations } = parentData;
-  const child = children[0];
+  const { selectedStudent, setSelectedStudent, linkedStudents, setLinkedStudents, isLoadingStudents, setIsLoadingStudents } = useParentContext();
+  const [profile, setProfile] = useState<ParentProfile | null>(null);
+  const [summary, setSummary] = useState<ParentDashboardSummary | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        setIsLoadingStudents(true);
+        const [parentData, studentsData] = await Promise.all([
+          parentDashboardService.getCurrentParent(),
+          parentDashboardService.getLinkedStudents()
+        ]);
+        setProfile(parentData);
+        setLinkedStudents(studentsData);
+      } catch (error) {
+        console.error('Error fetching parent data:', error);
+      } finally {
+        setIsLoadingStudents(false);
+      }
+    };
+    fetchInitialData();
+  }, []);
+
+  useEffect(() => {
+    const fetchSummary = async () => {
+      if (selectedStudent) {
+        setIsLoading(true);
+        try {
+          const summaryData = await parentDashboardService.getDashboardSummary(selectedStudent.id);
+          setSummary(summaryData);
+        } catch (error) {
+          console.error('Error fetching dashboard summary:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchSummary();
+  }, [selectedStudent]);
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'success';
@@ -16,13 +55,56 @@ const ParentDashboard: React.FC = () => {
     return 'danger';
   };
 
+  if (isLoadingStudents || !profile) {
+    return (
+      <DashboardLayout role="parent" title="Parent Dashboard">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout role="parent" title="Parent Dashboard">
       {/* Welcome Section */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome, {profile.name}!</h1>
-        <p className="text-gray-600">Monitor your child's learning progress and discover helpful recommendations.</p>
+      <div className="mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome, {profile.parentName}!</h1>
+          <p className="text-gray-600">Monitor your child's learning progress and discover helpful recommendations.</p>
+        </div>
+        
+        {linkedStudents.length > 1 && (
+          <div className="relative">
+            <select
+              className="appearance-none bg-white border border-gray-200 rounded-xl py-3 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-primary-500 font-medium text-gray-700 shadow-sm"
+              value={selectedStudent?.id || ''}
+              onChange={(e) => {
+                const student = linkedStudents.find(s => s.id === e.target.value);
+                if (student) setSelectedStudent(student);
+              }}
+            >
+              {linkedStudents.map(student => (
+                <option key={student.id} value={student.id}>{student.studentName}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+          </div>
+        )}
       </div>
+
+      {!selectedStudent ? (
+        <Card>
+          <CardContent className="p-8 text-center text-gray-500">
+            No students linked to this account. Please contact the school.
+          </CardContent>
+        </Card>
+      ) : isLoading || !summary ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+        </div>
+      ) : (
+        <>
 
       {/* Child Overview Card */}
       <div className="mb-8">
@@ -30,23 +112,23 @@ const ParentDashboard: React.FC = () => {
           <div className="bg-gradient-to-r from-primary-500 via-primary-600 to-secondary-600 p-6">
             <div className="flex items-center gap-6">
               <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-2xl">
-                {child.name.charAt(0)}
+                {selectedStudent.studentName.charAt(0)}
               </div>
               <div className="flex-1 text-white">
-                <h2 className="text-2xl font-bold mb-1">{child.name}</h2>
-                <p className="text-white/80">{child.grade} • {child.school}</p>
+                <h2 className="text-2xl font-bold mb-1">{selectedStudent.studentName}</h2>
+                <p className="text-white/80">{selectedStudent.grade} • {selectedStudent.schoolName}</p>
               </div>
               <div className="hidden md:flex items-center gap-8">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-white">{child.scores.readingProgress}%</p>
+                  <p className="text-3xl font-bold text-white">{summary.readingScore}%</p>
                   <p className="text-white/80 text-sm">Reading</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-white">{child.scores.attentionScore}%</p>
+                  <p className="text-3xl font-bold text-white">{summary.attentionScore}%</p>
                   <p className="text-white/80 text-sm">Attention</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-white">{child.scores.learningScore}%</p>
+                  <p className="text-3xl font-bold text-white">{summary.learningScore}%</p>
                   <p className="text-white/80 text-sm">Learning</p>
                 </div>
               </div>
@@ -55,15 +137,15 @@ const ParentDashboard: React.FC = () => {
           <CardContent>
             <div className="grid grid-cols-3 gap-8 md:hidden">
               <div className="text-center">
-                <p className="text-2xl font-bold text-gray-900">{child.scores.readingProgress}%</p>
+                <p className="text-2xl font-bold text-gray-900">{summary.readingScore}%</p>
                 <p className="text-gray-500 text-sm">Reading</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-gray-900">{child.scores.attentionScore}%</p>
+                <p className="text-2xl font-bold text-gray-900">{summary.attentionScore}%</p>
                 <p className="text-gray-500 text-sm">Attention</p>
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-gray-900">{child.scores.learningScore}%</p>
+                <p className="text-2xl font-bold text-gray-900">{summary.learningScore}%</p>
                 <p className="text-gray-500 text-sm">Learning</p>
               </div>
             </div>
@@ -75,30 +157,51 @@ const ParentDashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <StatCard
           title="Reading Progress"
-          value={`${child.scores.readingProgress}%`}
-          subtitle="Above grade level"
+          value={`${summary.readingScore}%`}
+          subtitle="Overall reading capability"
           trend="up"
-          trendValue="+5% this month"
           icon={<BookOpen className="w-6 h-6" />}
-          color={getScoreColor(child.scores.readingProgress)}
+          color={getScoreColor(summary.readingScore)}
         />
         <StatCard
           title="Attention Score"
-          value={`${child.scores.attentionScore}%`}
-          subtitle="Good focus capability"
+          value={`${summary.attentionScore}%`}
+          subtitle="Overall focus capability"
           trend="up"
-          trendValue="+3% improvement"
           icon={<Target className="w-6 h-6" />}
-          color={getScoreColor(child.scores.attentionScore)}
+          color={getScoreColor(summary.attentionScore)}
         />
         <StatCard
           title="Learning Score"
-          value={`${child.scores.learningScore}%`}
-          subtitle="Excellent engagement"
-          trend="up"
-          trendValue="+7% this semester"
+          value={`${summary.learningScore}%`}
+          subtitle={summary.progressSummary}
+          trend={summary.riskStatus === 'Low' || summary.riskStatus === 'Moderate' ? 'up' : 'down'}
           icon={<Brain className="w-6 h-6" />}
-          color={getScoreColor(child.scores.learningScore)}
+          color={getScoreColor(summary.learningScore)}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <StatCard
+          title="Assigned Activities"
+          value={summary.assignedActivitiesCount.toString()}
+          subtitle="From Teacher"
+          icon={<Activity className="w-6 h-6" />}
+          color="primary"
+        />
+        <StatCard
+          title="Pending Assessments"
+          value={summary.pendingAssessmentsCount.toString()}
+          subtitle="Requires attention"
+          icon={<FileText className="w-6 h-6" />}
+          color={summary.pendingAssessmentsCount > 0 ? "warning" : "success"}
+        />
+        <StatCard
+          title="Learning Path"
+          value={`${summary.learningPathCompletion}%`}
+          subtitle="Completion status"
+          icon={<CheckCircle className="w-6 h-6" />}
+          color="success"
         />
       </div>
 
@@ -113,7 +216,13 @@ const ParentDashboard: React.FC = () => {
               </div>
               <Badge variant="primary">Academic Year</Badge>
             </div>
-            <ChildProgressChart data={child.progressHistory} height={300} />
+            {summary.progressHistory && summary.progressHistory.length > 0 ? (
+              <ChildProgressChart data={summary.progressHistory} height={300} />
+            ) : (
+              <div className="flex justify-center items-center h-48 text-gray-500">
+                No progress history available.
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -129,35 +238,10 @@ const ParentDashboard: React.FC = () => {
               </div>
             </div>
             <div className="space-y-4">
-              {child.recentAssessments.map((assessment, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
-                >
-                  <div
-                    className={`p-3 rounded-xl ${
-                      assessment.trend === 'up'
-                        ? 'bg-success-100 text-success-600'
-                        : 'bg-gray-200 text-gray-600'
-                    }`}
-                  >
-                    <TrendingUp className={`w-5 h-5 ${assessment.trend === 'stable' ? 'rotate-0' : ''}`} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">{assessment.title}</p>
-                    <p className="text-sm text-gray-500">{assessment.date}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-gray-900">{assessment.score}%</p>
-                    <Badge
-                      variant={assessment.score >= 70 ? 'success' : assessment.score >= 50 ? 'warning' : 'danger'}
-                      size="sm"
-                    >
-                      {assessment.trend === 'up' ? 'Improving' : 'Stable'}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
+              {/* Future: Map real recent assessments here */}
+              <div className="text-center text-gray-500 py-4">
+                No recent assessments found.
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -172,47 +256,23 @@ const ParentDashboard: React.FC = () => {
               <Badge variant="success">Easy to Do</Badge>
             </div>
             <div className="space-y-4">
-              {homeRecommendations.map((rec) => (
-                <div
-                  key={rec.id}
-                  className="p-4 rounded-xl border border-gray-100 hover:border-primary-200 hover:shadow-md transition-all cursor-pointer group"
-                >
+              {summary.latestRecommendation ? (
+                <div className="p-4 rounded-xl border border-primary-100 bg-primary-50">
                   <div className="flex items-start gap-4">
-                    <div
-                      className={`p-2 rounded-lg ${
-                        rec.category === 'reading'
-                          ? 'bg-primary-100 text-primary-600'
-                          : rec.category === 'attention'
-                          ? 'bg-secondary-100 text-secondary-600'
-                          : 'bg-success-100 text-success-600'
-                      }`}
-                    >
-                      {rec.category === 'reading' ? (
-                        <BookOpen className="w-5 h-5" />
-                      ) : rec.category === 'attention' ? (
-                        <Target className="w-5 h-5" />
-                      ) : (
-                        <Heart className="w-5 h-5" />
-                      )}
+                    <div className="p-2 rounded-lg bg-primary-100 text-primary-600">
+                      <Lightbulb className="w-5 h-5" />
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-gray-900">{rec.title}</h4>
-                        <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary-500 transition-colors" />
-                      </div>
-                      <p className="text-sm text-gray-600 mt-1">{rec.description}</p>
-                      <div className="mt-2">
-                        <Badge
-                          variant={rec.difficulty === 'easy' ? 'success' : 'warning'}
-                          size="sm"
-                        >
-                          {rec.difficulty}
-                        </Badge>
-                      </div>
+                      <h4 className="font-semibold text-gray-900">Latest Recommendation</h4>
+                      <p className="text-sm text-gray-600 mt-1">{summary.latestRecommendation}</p>
                     </div>
                   </div>
                 </div>
-              ))}
+              ) : (
+                <div className="text-center text-gray-500 py-4">
+                  No activities recommended at this time.
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -228,7 +288,7 @@ const ParentDashboard: React.FC = () => {
             <div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Great Progress!</h3>
               <p className="text-gray-600">
-                {child.name} has shown consistent improvement across all areas. Keep encouraging their learning journey at home.
+                {selectedStudent.studentName} has shown consistent improvement across all areas. Keep encouraging their learning journey at home.
                 Your support makes a real difference!
               </p>
               <div className="mt-4 flex gap-4">
@@ -241,6 +301,8 @@ const ParentDashboard: React.FC = () => {
           </div>
         </CardContent>
       </Card>
+      </>
+      )}
     </DashboardLayout>
   );
 };

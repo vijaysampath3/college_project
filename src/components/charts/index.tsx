@@ -230,55 +230,46 @@ export const PlatformUsageChart: React.FC<{ data: UsageData[]; height?: number }
   </ResponsiveContainer>
 );
 
-interface ProgressHistoryData {
-  month: string;
-  reading: number;
-  attention: number;
-  behaviour: number;
-}
-
-export const ChildProgressChart: React.FC<{ data: ProgressHistoryData[]; height?: number }> = ({
+export const ChildProgressChart: React.FC<{ data: any[]; height?: number }> = ({
   data,
   height = 300,
-}) => (
-  <ResponsiveContainer width="100%" height={height}>
-    <LineChart data={data}>
-      <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-      <XAxis dataKey="month" stroke="#9CA3AF" fontSize={12} />
-      <YAxis stroke="#9CA3AF" fontSize={12} domain={[0, 100]} />
-      <Tooltip
-        contentStyle={{
-          background: 'white',
-          border: 'none',
-          borderRadius: '12px',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-        }}
-      />
-      <Legend />
-      <Line
-        type="monotone"
-        dataKey="reading"
-        stroke="#4F46E5"
-        strokeWidth={3}
-        dot={{ fill: '#4F46E5', strokeWidth: 2 }}
-        name="Reading"
-      />
-      <Line
-        type="monotone"
-        dataKey="attention"
-        stroke="#06B6D4"
-        strokeWidth={3}
-        dot={{ fill: '#06B6D4', strokeWidth: 2 }}
-        name="Attention"
-      />
-      <Line
-        type="monotone"
-        dataKey="behaviour"
-        stroke="#10B981"
-        strokeWidth={3}
-        dot={{ fill: '#10B981', strokeWidth: 2 }}
-        name="Behaviour"
-      />
-    </LineChart>
-  </ResponsiveContainer>
-);
+}) => {
+  // Extract all unique keys from data (excluding 'date' or 'month')
+  const keys = Array.from(
+    new Set(
+      data.flatMap((item) => Object.keys(item).filter((k) => k !== 'date' && k !== 'month'))
+    )
+  );
+
+  const colors = ['#4F46E5', '#06B6D4', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'];
+
+  return (
+    <ResponsiveContainer width="100%" height={height}>
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+        <XAxis dataKey={data[0]?.date ? 'date' : 'month'} stroke="#9CA3AF" fontSize={12} />
+        <YAxis stroke="#9CA3AF" fontSize={12} domain={[0, 100]} />
+        <Tooltip
+          contentStyle={{
+            background: 'white',
+            border: 'none',
+            borderRadius: '12px',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          }}
+        />
+        <Legend />
+        {keys.map((key, index) => (
+          <Line
+            key={key}
+            type="monotone"
+            dataKey={key}
+            stroke={colors[index % colors.length]}
+            strokeWidth={3}
+            dot={{ fill: colors[index % colors.length], strokeWidth: 2 }}
+            name={key.charAt(0).toUpperCase() + key.slice(1)}
+          />
+        ))}
+      </LineChart>
+    </ResponsiveContainer>
+  );
+};
