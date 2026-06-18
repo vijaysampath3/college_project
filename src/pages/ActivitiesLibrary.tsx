@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { activityService, LearningActivity } from '../services/activity.service';
-import { BookOpen, Brain, Keyboard, Activity, Target, Loader2, Play } from 'lucide-react';
+import { BookOpen, Brain, Keyboard, Activity, Target, Loader2, Play, ArrowLeft } from 'lucide-react';
 
 export const ActivitiesLibrary = () => {
   const [activities, setActivities] = useState<LearningActivity[]>([]);
@@ -64,6 +64,13 @@ export const ActivitiesLibrary = () => {
           <h1 className="text-3xl font-bold text-gray-900">Learning Activities</h1>
           <p className="text-gray-600 mt-1">Explore and practice targeted cognitive skills.</p>
         </div>
+        <button
+          onClick={() => navigate('/student')}
+          className="flex items-center gap-2 px-6 py-2.5 bg-white text-gray-700 border border-gray-200 rounded-xl font-bold hover:bg-gray-50 transition-colors shadow-sm"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          Dashboard
+        </button>
       </div>
 
       {Object.entries(groupedActivities).map(([category, acts]) => (

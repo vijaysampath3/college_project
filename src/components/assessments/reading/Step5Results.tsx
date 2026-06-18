@@ -14,7 +14,6 @@ interface Step5ResultsProps {
 export const Step5Results: React.FC<Step5ResultsProps> = ({ session, onReturn }) => {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isPassageOpen, setIsPassageOpen] = useState(false);
-  const [isDevOpen, setIsDevOpen] = useState(false);
   const [showCelebration, setShowCelebration] = useState(true);
 
   useEffect(() => {
@@ -303,34 +302,7 @@ export const Step5Results: React.FC<Step5ResultsProps> = ({ session, onReturn })
           </Card>
         </div>
 
-        {/* --- DEV DIAGNOSTICS --- */}
-        <Card className="border-gray-200 mt-8 overflow-hidden bg-gray-900 text-gray-300">
-          <div 
-            className="p-4 flex justify-between items-center cursor-pointer hover:bg-gray-800 transition-colors"
-            onClick={() => setIsDevOpen(!isDevOpen)}
-          >
-            <h3 className="text-sm font-bold text-gray-100 flex items-center gap-2 mb-0 uppercase tracking-wider">
-              <Code className="w-4 h-4 text-primary-400" /> Developer Diagnostics
-            </h3>
-            {isDevOpen ? <ChevronUp className="w-4 h-4 text-gray-500" /> : <ChevronDown className="w-4 h-4 text-gray-500" />}
-          </div>
-          {isDevOpen && (
-            <div className="p-6 pt-2 border-t border-gray-800 text-xs font-mono space-y-4">
-              <div className="grid grid-cols-2 gap-4 pb-4 border-b border-gray-800">
-                <div><span className="text-gray-500 block mb-1">Session ID</span><span className="text-gray-300">{session.sessionId || 'N/A'}</span></div>
-                <div><span className="text-gray-500 block mb-1">Attempt Number</span><span className="text-gray-300">{session.attemptNumber || 1}</span></div>
-                <div><span className="text-gray-500 block mb-1">Status</span><span className="text-success-400">{session.status}</span></div>
-                <div><span className="text-gray-500 block mb-1">Timestamp</span><span className="text-gray-300">{formatDate(session.completedAt)}</span></div>
-              </div>
-              <div>
-                <span className="text-gray-500 block mb-2">Raw API Payload</span>
-                <pre className="bg-gray-950 p-4 rounded overflow-x-auto text-primary-300">
-                  {JSON.stringify({ transcript, metrics, insights: session.insightsData, ai: session.aiData }, null, 2)}
-                </pre>
-              </div>
-            </div>
-          )}
-        </Card>
+
 
       </div>
 

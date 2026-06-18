@@ -41,6 +41,7 @@ import { AdminParentsPage } from './pages/admin/AdminParentsPage';
 import { AdminParentDetailsPage } from './pages/admin/AdminParentDetailsPage';
 import { ComparisonCenter } from './pages/admin/ComparisonCenter';
 import { ParentProvider } from './context/ParentContext';
+import { StudentProfile } from './pages/StudentProfile';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
               <Route path="/student/assessments/cpt" element={<CPTAssessment />} />
               <Route path="/student/assessments/focus" element={<FocusAssessment />} />
               <Route path="/student/assessments/learning-behaviour" element={<LearningBehaviourAssessment />} />
+              <Route path="/student/profile" element={<StudentProfile />} />
               <Route path="/student/reports" element={<ReportsHub />} />
               <Route path="/student/recommendations" element={<RecommendationsPage />} />
               <Route path="/student/learning-journey" element={<LearningJourneyPage />} />

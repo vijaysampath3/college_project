@@ -5,7 +5,6 @@ from services.supabase_client import get_supabase_client
 from services.report_generation_service import ReportGenerationService
 
 router = APIRouter(
-    prefix="/api/reports",
     tags=["Reports"]
 )
 

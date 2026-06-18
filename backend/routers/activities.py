@@ -5,7 +5,6 @@ from services.supabase_client import get_supabase_client
 from datetime import datetime, timezone
 
 router = APIRouter(
-    prefix="/api/activities",
     tags=["Activities"]
 )
 

@@ -12,6 +12,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   getCurrentUser: () => User | null;
   getCurrentRole: () => Role;
+  profile: any | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,6 +20,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState<Role>(null);
+  const [profile, setProfile] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,6 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         fetchRole(session.user.id);
       } else {
         setRole(null);
+        setProfile(null);
         setLoading(false);
       }
     });
@@ -48,14 +51,52 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchRole = async (userId: string) => {
     try {
+      // First check if they have a role in user metadata
+      const { data: userData } = await supabase.auth.getUser();
+      const metaRole = userData?.user?.user_metadata?.role;
+
       const { data, error } = await supabase
         .from('profiles')
-        .select('role')
+        .select('*')
         .eq('id', userId)
         .single();
       
       if (data) {
         setRole(data.role as Role);
+        setProfile(data);
+      } else {
+        // Fallback for students
+        const { data: studentData, error: studentError } = await supabase
+          .from('student_profiles')
+          .select('*, schools(name)')
+          .eq('user_id', userId)
+          .single();
+          
+        if (studentData && !studentError) {
+          let age;
+          if (studentData.date_of_birth) {
+            const dob = new Date(studentData.date_of_birth);
+            const diff_ms = Date.now() - dob.getTime();
+            const age_dt = new Date(diff_ms);
+            age = Math.abs(age_dt.getUTCFullYear() - 1970);
+          }
+
+          setRole('student');
+          setProfile({
+            ...studentData,
+            role: 'student',
+            full_name: studentData.student_name,
+            grade: studentData.grade,
+            school_name: studentData.schools?.name || 'Unknown School',
+            age: age
+          });
+          return;
+        }
+
+        // Fallback for metadata role if available
+        if (metaRole) {
+          setRole(metaRole as Role);
+        }
       }
     } catch (err) {
       console.error('Error fetching role:', err);
@@ -107,6 +148,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <AuthContext.Provider value={{
       user,
       role,
+      profile,
       loading,
       login,
       logout,

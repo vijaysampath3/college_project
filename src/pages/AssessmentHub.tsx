@@ -120,10 +120,11 @@ const AssessmentHub: React.FC = () => {
             });
             
             // Sync Supabase data down to localStorage
-            const existingLsStr = localStorage.getItem('neurolearn_assessment_status');
+            const lsKey = `neurolearn_assessment_status_${user.id}`;
+            const existingLsStr = localStorage.getItem(lsKey);
             const existingLs = existingLsStr ? JSON.parse(existingLsStr) : {};
             const mergedStatus = { ...existingLs, ...sbProgressMap };
-            localStorage.setItem('neurolearn_assessment_status', JSON.stringify(mergedStatus));
+            localStorage.setItem(lsKey, JSON.stringify(mergedStatus));
           }
           
           // Fetch real recent activity data
@@ -138,7 +139,9 @@ const AssessmentHub: React.FC = () => {
       }
 
       // 2. Load from localStorage (either updated by SB or fallback)
-      const savedStatus = localStorage.getItem('neurolearn_assessment_status');
+      const lsKey = `neurolearn_assessment_status_${user?.id || 'guest'}`;
+      const savedStatus = localStorage.getItem(lsKey);
+      
       if (savedStatus) {
         try {
           const parsedStatus = JSON.parse(savedStatus);
@@ -151,17 +154,8 @@ const AssessmentHub: React.FC = () => {
           console.error('Failed to parse assessment status', e);
         }
       } else if (!hasSupabaseData) {
-        // 3. Demo fallback if completely empty
-        const demoState = [...initialAssessments];
-        demoState[0].status = 'In Progress';
-        demoState[0].progress = 45;
-        setAssessments(demoState);
-        
-        const statusMap = demoState.reduce((acc, curr) => {
-          acc[curr.id] = { status: curr.status, progress: curr.progress };
-          return acc;
-        }, {} as Record<string, any>);
-        localStorage.setItem('neurolearn_assessment_status', JSON.stringify(statusMap));
+        // No local storage and no supabase data (clean slate)
+        setAssessments([...initialAssessments]);
       }
     };
 

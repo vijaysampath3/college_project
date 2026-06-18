@@ -115,8 +115,8 @@ export const RecommendationsPage: React.FC = () => {
       {recommendations.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100">
           <CheckCircle2 className="w-16 h-16 text-success-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">All Assigned Activities Completed!</h2>
-          <p className="text-gray-500 mb-6">Great job! You have finished all the activities in your current action plan.</p>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">No Action Plan Available</h2>
+          <p className="text-gray-500 mb-6">You either haven't generated an intelligence report yet, or you've completed all assigned activities!</p>
           <div className="flex justify-center gap-4">
             <button
               onClick={async () => {

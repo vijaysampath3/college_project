@@ -7,7 +7,6 @@ from services.recommendation_ai_service import RecommendationAIService
 from datetime import datetime, timezone
 
 router = APIRouter(
-    prefix="/api/recommendations",
     tags=["Recommendations"]
 )
 

@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import { dashboardService, DashboardData } from '../services/dashboard.service';
 import { learningPathService, ActivePathResponse } from '../services/learningPath.service';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
 type AssessmentType = 'reading' | 'comprehension' | 'typing' | 'attention' | 'cpt' | 'focus' | 'learning-behaviour';
 
@@ -32,8 +33,8 @@ const StudentDashboard: React.FC = () => {
         
         // Fetch teacher assignments
         try {
-          const { data: act } = await supabase.from('teacher_assigned_activities').select('*').eq('student_id', profile.id).eq('status', 'pending');
-          const { data: ass } = await supabase.from('teacher_assigned_assessments').select('*').eq('student_id', profile.id).eq('status', 'pending');
+          const { data: act } = await supabase.from('teacher_assigned_activities').select('*').eq('student_id', profile?.id).eq('status', 'pending');
+          const { data: ass } = await supabase.from('teacher_assigned_assessments').select('*').eq('student_id', profile?.id).eq('status', 'pending');
           setAssignments({
             activities: act || [],
             assessments: ass || []
