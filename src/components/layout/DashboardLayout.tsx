@@ -32,6 +32,7 @@ const roleNavItems = {
   teacher: [
     { label: 'Dashboard', path: '/teacher', icon: <Home className="w-5 h-5" /> },
     { label: 'Students', path: '/teacher/students', icon: <Users className="w-5 h-5" /> },
+    { label: 'Parents', path: '/teacher/parents', icon: <HeartHandshake className="w-5 h-5" /> },
     { label: 'Assessments', path: '/teacher/assessments', icon: <ClipboardCheck className="w-5 h-5" /> },
     { label: 'Reports', path: '/teacher/reports', icon: <BarChart3 className="w-5 h-5" /> },
     { label: 'Analytics', path: '/teacher/analytics', icon: <BarChart3 className="w-5 h-5" /> },

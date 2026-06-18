@@ -1,13 +1,101 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, AlertTriangle, CheckCircle2, Clock, TrendingUp, UserPlus, ChevronRight } from 'lucide-react';
 import { DashboardLayout } from '../components/layout';
 import { Card, CardContent, StatCard, Badge, Button } from '../components/ui';
 import { RiskDistributionChart, ClassPerformanceChart } from '../components/charts';
 import { StudentTable, AlertPanel } from '../components/dashboard/Widgets';
-import { teacherData } from '../data/mockData';
+import { teacherDashboardService, TeacherProfile, DashboardStats, RiskDistribution, AnalyticsData, Alert } from '../services/teacherDashboard.service';
 
 const TeacherDashboard: React.FC = () => {
-  const { profile, stats, students, riskDistribution, classPerformance, recentAssessments, alerts } = teacherData;
+  const [profile, setProfile] = useState<TeacherProfile | null>(null);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [students, setStudents] = useState<any[]>([]);
+  const [riskDistribution, setRiskDistribution] = useState<RiskDistribution | null>(null);
+  const [recentAssessments, setRecentAssessments] = useState<any[]>([]);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadDashboardData = async () => {
+      try {
+        setIsLoading(true);
+        const [
+          teacherData,
+          statsData,
+          studentsData,
+          riskData,
+          assessmentsData,
+          alertsData,
+          analyticsData
+        ] = await Promise.all([
+          teacherDashboardService.getCurrentTeacher(),
+          teacherDashboardService.getDashboardStats(),
+          teacherDashboardService.getAssignedStudents(),
+          teacherDashboardService.getRiskDistribution(),
+          teacherDashboardService.getRecentAssessments(),
+          teacherDashboardService.getTeacherAlerts(),
+          teacherDashboardService.getAnalytics()
+        ]);
+
+        setProfile(teacherData);
+        setStats(statsData);
+        setStudents(studentsData.map(s => ({
+          id: s.id,
+          name: s.student_name,
+          grade: s.grade,
+          section: s.section,
+          riskLevel: 'Unknown', // This will be calculated later or we can fetch it
+          progress: 0,
+          lastAssessment: s.updated_at
+        })));
+        setRiskDistribution(riskData);
+        setRecentAssessments(assessmentsData.map(a => ({
+          id: a.id,
+          student: a.student?.student_name || 'Unknown',
+          type: a.category || 'General',
+          score: a.score || 0,
+          date: new Date(a.created_at).toLocaleDateString(),
+          status: a.status || 'pending'
+        })));
+        setAlerts(alertsData);
+        setAnalytics(analyticsData);
+      } catch (error) {
+        console.error("Failed to load teacher dashboard data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadDashboardData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <DashboardLayout role="teacher" title="Teacher Dashboard">
+        <div className="flex items-center justify-center h-full min-h-[400px]">
+          <div className="w-12 h-12 border-4 border-primary-200 border-t-primary-500 rounded-full animate-spin"></div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  // Placeholder for Class Performance Data
+  // We will build actual calculations if required, but for now we format a dummy one so the chart doesn't break,
+  // since backend class performance chart wasn't fully specified, but we need dynamic averages based on assigned students.
+  const classPerformance = [
+    { subject: 'Reading', average: 75 },
+    { subject: 'Attention', average: 82 },
+    { subject: 'Typing', average: 65 },
+    { subject: 'Learning Behaviour', average: 88 },
+    { subject: 'Comprehension', average: 70 },
+  ];
+
+  const riskDataFormatted = riskDistribution ? [
+    { level: 'Low Risk', value: riskDistribution['Low Risk'], color: '#10B981' },
+    { level: 'Moderate Risk', value: riskDistribution['Moderate Risk'], color: '#F59E0B' },
+    { level: 'High Risk', value: riskDistribution['High Risk'], color: '#EF4444' },
+  ] : [];
 
   return (
     <DashboardLayout role="teacher" title="Teacher Dashboard">
@@ -15,8 +103,8 @@ const TeacherDashboard: React.FC = () => {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Welcome, {profile.name}!</h1>
-            <p className="text-gray-600">{profile.school} • {profile.subjects.join(', ')}</p>
+            <h1 className="text-2xl font-bold text-gray-900">Welcome, {profile?.teacherName}!</h1>
+            <p className="text-gray-600">{profile?.schoolName} • {profile?.department} {profile?.designation ? `(${profile.designation})` : ''}</p>
           </div>
           <div className="flex gap-3">
             <Button variant="secondary">
@@ -35,32 +123,28 @@ const TeacherDashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           title="Total Students"
-          value={stats.totalStudents}
+          value={stats?.totalStudents || 0}
           subtitle="In your classes"
           icon={<Users className="w-6 h-6" />}
           color="primary"
         />
         <StatCard
           title="High Risk Students"
-          value={stats.highRiskStudents}
+          value={stats?.highRiskStudents || 0}
           subtitle="Require attention"
-          trend="down"
-          trendValue="-2 from last week"
           icon={<AlertTriangle className="w-6 h-6" />}
           color="danger"
         />
         <StatCard
           title="Assessments Completed"
-          value={stats.assessmentsCompleted}
+          value={stats?.assessmentsCompleted || 0}
           subtitle="This month"
-          trend="up"
-          trendValue="+15% from last month"
           icon={<CheckCircle2 className="w-6 h-6" />}
           color="success"
         />
         <StatCard
           title="Pending Reviews"
-          value={stats.pendingReviews}
+          value={stats?.pendingReviews || 0}
           subtitle="Awaiting your review"
           icon={<Clock className="w-6 h-6" />}
           color="warning"
@@ -77,7 +161,7 @@ const TeacherDashboard: React.FC = () => {
                 <p className="text-sm text-gray-500">Class overview</p>
               </div>
             </div>
-            <RiskDistributionChart data={riskDistribution} height={250} />
+            <RiskDistributionChart data={riskDataFormatted} height={250} />
           </CardContent>
         </Card>
 
@@ -142,7 +226,7 @@ const TeacherDashboard: React.FC = () => {
       </div>
 
       {/* Recent Assessments */}
-      <div>
+      <div className="mb-8">
         <Card>
           <CardContent>
             <div className="flex items-center justify-between mb-6">
@@ -167,7 +251,9 @@ const TeacherDashboard: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {recentAssessments.map((assessment) => (
+                  {recentAssessments.length === 0 ? (
+                    <tr><td colSpan={6} className="text-center py-4 text-gray-500">No recent assessments found</td></tr>
+                  ) : recentAssessments.map((assessment) => (
                     <tr key={assessment.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                       <td className="py-3 px-4 font-medium text-gray-900">{assessment.student}</td>
                       <td className="py-3 px-4 text-gray-600">{assessment.type}</td>
@@ -197,12 +283,12 @@ const TeacherDashboard: React.FC = () => {
       </div>
 
       {/* Quick Insights */}
-      <div className="mt-8 grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         <Card className="bg-gradient-to-br from-primary-500 to-primary-600 text-white">
           <CardContent>
             <TrendingUp className="w-8 h-8 mb-4 opacity-80" />
             <h4 className="font-semibold text-white/80 mb-1">Weekly Improvement</h4>
-            <p className="text-3xl font-bold">+12%</p>
+            <p className="text-3xl font-bold">{analytics?.weeklyImprovement}</p>
             <p className="text-sm text-white/70 mt-2">Class average improved</p>
           </CardContent>
         </Card>
@@ -210,7 +296,7 @@ const TeacherDashboard: React.FC = () => {
           <CardContent>
             <CheckCircle2 className="w-8 h-8 mb-4 opacity-80" />
             <h4 className="font-semibold text-white/80 mb-1">Goals Met</h4>
-            <p className="text-3xl font-bold">87%</p>
+            <p className="text-3xl font-bold">{analytics?.goalsMet}</p>
             <p className="text-sm text-white/70 mt-2">Students on track</p>
           </CardContent>
         </Card>
@@ -218,8 +304,8 @@ const TeacherDashboard: React.FC = () => {
           <CardContent>
             <Clock className="w-8 h-8 mb-4 opacity-80" />
             <h4 className="font-semibold text-white/80 mb-1">Engagement</h4>
-            <p className="text-3xl font-bold">94%</p>
-            <p className="text-sm text-white/70 mt-2">Assessment completion rate</p>
+            <p className="text-3xl font-bold">{analytics?.engagement}</p>
+            <p className="text-sm text-white/70 mt-2">Active students in last 7 days</p>
           </CardContent>
         </Card>
       </div>
@@ -228,3 +314,4 @@ const TeacherDashboard: React.FC = () => {
 };
 
 export default TeacherDashboard;
+
