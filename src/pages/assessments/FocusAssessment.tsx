@@ -94,7 +94,7 @@ export const FocusAssessment: React.FC = () => {
       };
 
       // Send metrics to scoring engine
-      const scoreRes = await fetch('http://localhost:8000/api/focus/score', {
+      const scoreRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/focus/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

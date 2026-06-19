@@ -17,7 +17,7 @@ export interface TeacherStudentCount {
   count: number;
 }
 
-const API_URL = 'http://127.0.0.1:8000/api/assignments';
+const API_URL = `${import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}`}/assignments`;
 
 export const assignmentService = {
   assignStudents: async (teacherId: string, studentIds: string[], assignedBy?: string) => {

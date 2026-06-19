@@ -1,6 +1,6 @@
 
 
-const API_URL = 'http://localhost:8000/api/admin/comparison';
+const API_URL = `${import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}`}/admin/comparison`;
 
 export interface SchoolComparisonData {
   id: string;

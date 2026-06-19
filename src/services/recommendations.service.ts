@@ -1,6 +1,6 @@
 import { RecommendationResponse, WeeklyPlan } from '../types/Recommendation';
 
-const API_URL = 'http://127.0.0.1:8000/api/recommendations';
+const API_URL = `${import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}`}/recommendations`;
 
 export const recommendationsService = {
   async generateRecommendations(studentId: string, reportId: string): Promise<{ success: boolean; batch_id: string }> {

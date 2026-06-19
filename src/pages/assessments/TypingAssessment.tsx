@@ -83,7 +83,7 @@ export const TypingAssessment: React.FC = () => {
 
     try {
       console.log("[Typing Flow] Fetching metrics from backend...");
-      const res = await fetch('http://localhost:8000/api/typing/score', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/typing/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -144,7 +144,7 @@ export const TypingAssessment: React.FC = () => {
     let updatedResult = { ...assessmentResult };
 
     try {
-      const res = await fetch('http://localhost:8000/api/typing/insights', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/typing/insights`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ metrics: assessmentResult.metrics, difficulty: assessmentResult.difficulty })

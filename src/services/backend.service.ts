@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://localhost:8000';
+const BACKEND_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : 'http://localhost:8000';
 
 export const backendService = {
   async processAudio(blob: Blob, expectedText: string, durationSeconds: number, category: string, difficulty: string) {

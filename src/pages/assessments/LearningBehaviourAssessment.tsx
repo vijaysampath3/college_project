@@ -63,7 +63,7 @@ export const LearningBehaviourAssessment: React.FC = () => {
     setCurrentStep(3); // Move to Processing
 
     try {
-      const scoreRes = await fetch('http://localhost:8000/api/learning-behaviour/score', {
+      const scoreRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/learning-behaviour/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(telemetry)

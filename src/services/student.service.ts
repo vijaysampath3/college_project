@@ -25,7 +25,7 @@ export interface Student {
   created_by_teacher?: string | null;
 }
 
-const API_URL = 'http://127.0.0.1:8000/api/students';
+const API_URL = `${import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}`}/students`;
 
 export interface StudentFilters {
   school_id?: string;

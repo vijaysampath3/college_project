@@ -47,7 +47,7 @@ export const CPTAssessment: React.FC = () => {
     try {
       console.log("[CPT Flow] Requesting metrics and model inference");
       // 1. Calculate metrics and run inference
-      const scoreRes = await fetch('http://localhost:8000/api/adhd/score', {
+      const scoreRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/adhd/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ events, durationMinutes })
@@ -59,7 +59,7 @@ export const CPTAssessment: React.FC = () => {
       // 2. Generate insights
       let insights = null;
       try {
-        const insightsRes = await fetch('http://localhost:8000/api/adhd/insights', {
+        const insightsRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/adhd/insights`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ metrics, inference })

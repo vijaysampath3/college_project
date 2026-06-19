@@ -63,7 +63,7 @@ export const AttentionAssessment: React.FC = () => {
 
     try {
       // Send raw metrics to scoring engine
-      const scoreRes = await fetch('http://localhost:8000/api/attention/score', {
+      const scoreRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}/attention/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(rawMetrics)

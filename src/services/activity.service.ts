@@ -34,7 +34,7 @@ export interface AttemptResponse {
   recommendation_completed: boolean;
 }
 
-const API_URL = 'http://127.0.0.1:8000/api/activities';
+const API_URL = `${import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || 'http://localhost:8000/api'}`}/activities`;
 
 export const activityService = {
   async getActivities(): Promise<LearningActivity[]> {
