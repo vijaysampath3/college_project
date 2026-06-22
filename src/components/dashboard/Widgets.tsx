@@ -183,10 +183,12 @@ export const StudentTable: React.FC<{ students: Student[] }> = ({ students }) =>
             <td className="py-3 px-4">
               <Badge
                 variant={
-                  student.riskLevel === 'low'
+                  student.riskLevel?.toLowerCase() === 'low' || student.riskLevel?.toLowerCase() === 'none'
                     ? 'success'
-                    : student.riskLevel === 'medium'
+                    : student.riskLevel?.toLowerCase() === 'moderate' || student.riskLevel?.toLowerCase() === 'medium'
                     ? 'warning'
+                    : student.riskLevel?.toLowerCase() === 'unknown'
+                    ? 'secondary'
                     : 'danger'
                 }
               >

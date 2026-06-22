@@ -50,7 +50,62 @@ class TeacherAccessService:
             .eq('status', 'active')\
             .execute()
             
-        return students_response.data
+        students = students_response.data
+        if not students:
+            return []
+            
+        # Attach risk_level and progress
+        user_ids = [s['user_id'] for s in students if s.get('user_id')]
+        
+        if not user_ids:
+            for s in students:
+                s['risk_level'] = 'Low'
+                s['progress'] = 0
+            return students
+            
+        # Risk levels
+        reports = supabase.table('student_reports')\
+            .select('student_id, risk_analysis')\
+            .in_('student_id', user_ids)\
+            .order('created_at', desc=True)\
+            .execute()
+            
+        def extract_overall_risk(analysis):
+            if not analysis: return 'Low'
+            levels = [v.get('level', 'Low') for v in analysis.values() if isinstance(v, dict)]
+            if 'Severe' in levels: return 'Severe'
+            if 'High' in levels: return 'High'
+            if 'Moderate' in levels: return 'Moderate'
+            return 'Low'
+            
+        latest_risk = {}
+        for r in reports.data:
+            if r['student_id'] not in latest_risk:
+                latest_risk[r['student_id']] = extract_overall_risk(r.get('risk_analysis', {}))
+                
+        # Progress (Based on unique assessment types completed)
+        assessments = supabase.table('assessment_results')\
+            .select('student_id, assessment_type')\
+            .in_('student_id', user_ids)\
+            .execute()
+            
+        student_completed_types = {}
+        for a in assessments.data:
+            sid = a['student_id']
+            if sid not in student_completed_types:
+                student_completed_types[sid] = set()
+            student_completed_types[sid].add(a['assessment_type'])
+            
+        TOTAL_CORE_ASSESSMENTS = 5 # reading, typing, attention, comprehension, learning_behaviour
+                
+        for s in students:
+            uid = s.get('user_id')
+            s['risk_level'] = latest_risk.get(uid, 'Low')
+            completed_count = len(student_completed_types.get(uid, set()))
+            progress_pct = int((completed_count / TOTAL_CORE_ASSESSMENTS) * 100)
+            s['progress'] = min(progress_pct, 100)
+            
+        return students
 
     @staticmethod
     def get_teacher_dashboard_stats(teacher_id: str, school_id: str) -> Dict[str, Any]:
@@ -118,7 +173,7 @@ class TeacherAccessService:
         if not students:
             return {"Low Risk": 0, "Moderate Risk": 0, "High Risk": 0}
             
-        student_ids = [s['id'] for s in students]
+        student_ids = [s['user_id'] for s in students if s.get('user_id')]
         
         reports = supabase.table('student_reports')\
             .select('student_id, risk_analysis')\
@@ -184,8 +239,8 @@ class TeacherAccessService:
         if not students:
             return alerts
             
-        student_ids = [s['id'] for s in students]
-        student_map = {s['id']: s for s in students}
+        student_ids = [s['user_id'] for s in students if s.get('user_id')]
+        student_map = {s['user_id']: s for s in students if s.get('user_id')}
         
         # High Risk Students
         reports = supabase.table('student_reports')\
@@ -262,7 +317,7 @@ class TeacherAccessService:
                 "weeklyImprovement": "Insufficient Data"
             }
             
-        student_ids = [s['id'] for s in students]
+        student_ids = [s['user_id'] for s in students if s.get('user_id')]
         
         # Goals Met = Completed Activities / Assigned Activities
         # We look at student_activity_attempts
@@ -341,7 +396,7 @@ class TeacherAccessService:
                 "comprehension": 0
             }
             
-        student_ids = [s['id'] for s in students]
+        student_ids = [s['user_id'] for s in students if s.get('user_id')]
         
         # We need the latest completed assessment for each student within each category
         assessments = supabase.table('assessment_results')\

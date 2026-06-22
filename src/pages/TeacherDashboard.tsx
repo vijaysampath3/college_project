@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Users, AlertTriangle, CheckCircle2, Clock, TrendingUp, UserPlus, ChevronRight } from 'lucide-react';
 import { DashboardLayout } from '../components/layout';
 import { Card, CardContent, StatCard, Badge, Button } from '../components/ui';
@@ -7,6 +8,7 @@ import { StudentTable, AlertPanel } from '../components/dashboard/Widgets';
 import { teacherDashboardService, TeacherProfile, DashboardStats, RiskDistribution, AnalyticsData, Alert } from '../services/teacherDashboard.service';
 
 const TeacherDashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<TeacherProfile | null>(null);
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [students, setStudents] = useState<any[]>([]);
@@ -48,8 +50,8 @@ const TeacherDashboard: React.FC = () => {
           name: s.student_name,
           grade: s.grade,
           section: s.section,
-          riskLevel: 'Unknown', // This will be calculated later or we can fetch it
-          progress: 0,
+          riskLevel: s.risk_level || 'Unknown',
+          progress: s.progress || 0,
           lastAssessment: s.updated_at
         })));
         setRiskDistribution(riskData);
@@ -114,7 +116,7 @@ const TeacherDashboard: React.FC = () => {
             <p className="text-gray-600">{profile?.schoolName} • {profile?.department} {profile?.designation ? `(${profile.designation})` : ''}</p>
           </div>
           <div className="flex gap-3">
-            <Button variant="secondary">
+            <Button variant="secondary" onClick={() => navigate('/teacher/students')}>
               <UserPlus className="w-5 h-5 mr-2" />
               Add Student
             </Button>

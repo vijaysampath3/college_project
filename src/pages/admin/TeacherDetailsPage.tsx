@@ -5,6 +5,7 @@ import { DashboardLayout } from '../../components/layout';
 import { Card, CardContent, StatCard, Badge } from '../../components/ui';
 import { teacherService, Teacher, TeacherStats } from '../../services/teacher.service';
 import { schoolService, School } from '../../services/school.service';
+import { supabase } from '../../lib/supabase';
 
 export const TeacherDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +13,7 @@ export const TeacherDetailsPage: React.FC = () => {
   const [teacher, setTeacher] = useState<Teacher | null>(null);
   const [stats, setStats] = useState<TeacherStats | null>(null);
   const [schools, setSchools] = useState<School[]>([]);
+  const [assignedStudents, setAssignedStudents] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -45,6 +47,23 @@ export const TeacherDetailsPage: React.FC = () => {
       setTeacher(teacherData);
       setStats(statsData);
       setSchools(schoolsData);
+
+      // Fetch assigned students
+      const { data: assignments } = await supabase
+        .from('teacher_student_assignments')
+        .select(`
+          student_profiles (
+            id,
+            student_name,
+            grade,
+            student_id
+          )
+        `)
+        .eq('teacher_id', teacherId)
+        .eq('status', 'active');
+      
+      const studentsList = assignments?.map((a: any) => a.student_profiles).filter(Boolean) || [];
+      setAssignedStudents(studentsList);
       
       setFormData({
         school_id: teacherData.school_id || '',
@@ -144,12 +163,30 @@ export const TeacherDetailsPage: React.FC = () => {
           <Card>
             <CardContent>
               <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Users className="w-5 h-5 text-gray-400" /> Assigned Students Placeholder
+                <Users className="w-5 h-5 text-gray-400" /> Assigned Students
               </h3>
-              <div className="p-12 text-center text-gray-400 border border-dashed border-gray-200 rounded-xl bg-gray-50/50">
-                <p>No data available yet</p>
-                <p className="text-xs mt-1">Students will appear here once assigned.</p>
-              </div>
+              {assignedStudents.length > 0 ? (
+                <div className="space-y-3">
+                  {assignedStudents.map((student: any) => (
+                    <div key={student.id} className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:border-primary-100 bg-white hover:bg-primary-50/50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold">
+                          {student.student_name.charAt(0)}
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900">{student.student_name}</div>
+                          <div className="text-sm text-gray-500">ID: {student.student_id} • Grade {student.grade}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-12 text-center text-gray-400 border border-dashed border-gray-200 rounded-xl bg-gray-50/50">
+                  <p>No students assigned yet</p>
+                  <p className="text-xs mt-1">Students will appear here once assigned.</p>
+                </div>
+              )}
             </CardContent>
           </Card>
           

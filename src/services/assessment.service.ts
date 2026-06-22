@@ -131,6 +131,40 @@ class AssessmentService {
       if (profile) resolvedSchoolName = profile.school_name;
     }
 
+    // Compute overallScore if missing, as backend analytics rely on it
+    if (resultData.overallScore === undefined) {
+      let score = 0;
+      switch (assessmentType) {
+        case 'reading':
+          score = resultData.metrics?.wcmp || 0;
+          score = Math.min(Math.max((score / 150) * 100, 0), 100);
+          break;
+        case 'typing':
+          score = resultData.metrics?.accuracy || 0; 
+          break;
+        case 'learning-behaviour':
+        case 'learning_behaviour':
+          score = resultData.metrics?.overall_score || resultData.metrics?.score || 0;
+          break;
+        case 'comprehension':
+          score = resultData.metrics?.score || 0;
+          break;
+        case 'attention':
+          score = resultData.metrics?.accuracy || resultData.metrics?.score || 0;
+          break;
+        case 'cpt':
+        case 'adhd':
+          score = resultData.metrics?.overall_score || resultData.metrics?.score || 85; 
+          break;
+        case 'focus':
+          score = resultData.metrics?.focus_score || resultData.metrics?.score || 0;
+          break;
+        default:
+          score = resultData.metrics?.score || resultData.metrics?.overallScore || resultData.metrics?.overall_score || 0;
+      }
+      resultData.overallScore = Math.round(score);
+    }
+
     const { error } = await supabase
       .from('assessment_results')
       .insert({

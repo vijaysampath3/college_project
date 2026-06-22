@@ -90,11 +90,9 @@ export const Step2Task3PatternMatching: React.FC<Props> = ({ onComplete }) => {
     
     setPhase('hidden'); // brief transition
     setTimeout(() => {
-      setTrial(prev => {
-        const next = prev + 1;
-        startTrial(next);
-        return next;
-      });
+      const next = trial + 1;
+      setTrial(next);
+      startTrial(next);
     }, 500);
   };
 
