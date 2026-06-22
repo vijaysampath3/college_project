@@ -28,7 +28,8 @@ const TeacherDashboard: React.FC = () => {
           riskData,
           assessmentsData,
           alertsData,
-          analyticsData
+          analyticsData,
+          studentPerformanceData
         ] = await Promise.all([
           teacherDashboardService.getCurrentTeacher(),
           teacherDashboardService.getDashboardStats(),
